@@ -1,0 +1,18 @@
+@import "../GlobalStyles/GlobalStyles.scss";
+
+.label {
+   &:hover {
+      .icon {
+         transform: rotate(90deg);
+      }
+   }
+
+   .icon {
+      margin-left: auto;
+      transition: 0.15s;
+   }
+
+   .input:has(input:checked) ~ .icon {
+      transform: rotate(90deg);
+   }
+}

@@ -1,0 +1,7 @@
+@import "../../../../../components/GlobalStyles/GlobalStyles.scss";
+
+.nav-item {
+   &:hover {
+      background-color: $twenty-seventh-color;
+   }
+}

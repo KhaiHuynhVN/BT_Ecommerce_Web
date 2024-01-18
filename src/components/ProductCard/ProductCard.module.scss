@@ -1,0 +1,14 @@
+@import "../../components/GlobalStyles/GlobalStyles.scss";
+
+.product-card {
+   background-color: $nonary-color;
+   background-image: linear-gradient(to bottom, #fff, #fff, #e6e6e6);
+}
+
+.product-card-stick {
+   background: url("https://thegioidien.com/images/salebg.png");
+}
+
+.product-card__curr-price {
+   background-image: linear-gradient(to top, #d5d5d5, #ebebeb, #ebebeb);
+}

@@ -1,0 +1,9 @@
+.wrapper {
+   span + .select {
+      margin-left: 8px;
+   }
+
+   .select + span {
+      margin-left: 8px;
+   }
+}

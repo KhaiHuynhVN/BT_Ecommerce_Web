@@ -1,0 +1,102 @@
+@import "../../components/GlobalStyles/GlobalStyles.scss";
+
+.wrapper {
+   display: flex;
+   justify-content: center;
+   border-radius: 4px;
+   user-select: none;
+
+   &.disabled {
+      pointer-events: none;
+      opacity: 0.25;
+   }
+
+   .left-icon + .children,
+   .fallback-left-icon + .children {
+      margin-left: var(--iconSpacing);
+   }
+
+   .children + .right-icon,
+   .children + .fallback-right-icon {
+      margin-left: var(--iconSpacing);
+   }
+
+   .left-icon {
+      display: flex;
+   }
+
+   .fallback-left-icon {
+      display: none;
+   }
+
+   .right-icon {
+      display: flex;
+   }
+
+   .fallback-right-icon {
+      display: none;
+   }
+
+   &:has(.fallback-left-icon):hover .left-icon,
+   &:has(.fallback-right-icon):hover .right-icon {
+      display: none;
+   }
+
+   &:hover .fallback-left-icon,
+   &:hover .fallback-right-icon {
+      display: flex;
+   }
+}
+
+.primary {
+   padding: 8px 11.2px;
+   color: white;
+   background-color: $eleventh-color;
+
+   &:hover {
+      background-color: $thirty-fourth-color;
+   }
+}
+
+.secondary {
+   padding: 8px;
+   color: $forty-fifth-color;
+   font-size: 16px;
+   background-color: $nonary-color;
+
+   &:hover {
+      background-color: $forty-fourth-color;
+   }
+}
+
+.tertiary {
+   padding: 8px 10px;
+   color: white;
+   font-size: 16px;
+   background-color: $forty-seventh-color;
+
+   &:hover {
+      background-color: $forty-eighth-color;
+   }
+}
+
+.quaternary {
+   padding: 8px 10px;
+   color: white;
+   font-size: 16px;
+   background-color: $thirtieth-color;
+
+   &:hover {
+      background-color: $fiftieth-color;
+   }
+}
+
+.text {
+   &:hover .children {
+      text-decoration: 1px solid black underline;
+   }
+}
+
+.no-rounded {
+   border-radius: 0;
+}

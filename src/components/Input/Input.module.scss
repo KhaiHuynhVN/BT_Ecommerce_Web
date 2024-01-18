@@ -1,0 +1,25 @@
+.label,
+.field {
+   display: flex;
+   align-items: center;
+}
+
+.input-wrapper {
+   display: flex;
+}
+
+.label {
+   span + span {
+      margin-left: var(--iconSpacing);
+   }
+}
+
+.input-wrapper {
+   span + .input {
+      margin-left: var(--iconSpacing);
+   }
+
+   .input + span {
+      margin-left: var(--iconSpacing);
+   }
+}

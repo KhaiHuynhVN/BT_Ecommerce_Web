@@ -1,0 +1,99 @@
+$body-color: #fffffa;
+$primary-color: #6a1300;
+$secondary-color: #dfca00;
+$tertiary-color: #b21e02;
+$quaternary-color: #1d8dd9;
+$quinary-color: #0d427a;
+$senary-color: #8d8d8d;
+$septenary-color: #003b4f;
+$octonary-color: #8d1802;
+$nonary-color: #dbdbdb;
+$denary-color: #ffff00;
+$eleventh-color: #1c8dd9;
+$twelfth-color: #686961;
+$thirteenth-color: #ffffe6;
+$fourteenth-color: #9a1a01;
+$fifteenth-color: #48322a;
+$sixteenth-color: #b82f15;
+$seventeenth-color: #646461;
+$eighteenth-color: #ffffef;
+$nineteenth-color: #936b62;
+$twentieth-color: #585858;
+$twenty-first-color: #83857a;
+$twenty-second-color: #94aab1;
+$twenty-third-color: #ededed;
+$twenty-fourth-color: #f3dc08;
+$twenty-fifth-color: #3498db;
+$twenty-sixth-color: #6a1300;
+$twenty-seventh-color: #efefef;
+$twenty-eighth-color: #540f00;
+$twenty-ninth-color: #e24b01;
+$thirtieth-color: #ff6600;
+$thirty-first-color: #0f4dd3;
+$thirty-second-color: #430b01;
+$thirty-third-color: #b5b5b4;
+$thirty-fourth-color: #3096db;
+$thirty-fifth-color: #f6f6f6;
+$thirty-sixth-color: #003b4f;
+$thirty-seventh-color: #ff6600;
+$thirty-eighth-color: #cbcbcb;
+$thirty-ninth-color: #f9f9f9;
+$fortieth-color: rgb(232, 240, 254);
+$forty-first-color: #fffff6;
+$forty-second-color: #cc0000;
+$forty-third-color: #dfca00;
+$forty-fourth-color: #eaeaea;
+$forty-fifth-color: #002f3f;
+$forty-sixth-color: #3e0b00;
+$forty-seventh-color: #1d5161;
+$forty-eighth-color: #30606d;
+$forty-ninth-color: #ffffcc;
+$fiftieth-color: #ff7212;
+$fifty-first-color: #d1d1d1;
+$fifty-second-color: #fedbd7;
+$fifty-third-color: #fff1f0;
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   text-rendering: optimizeLegibility;
+   word-break: break-word;
+}
+
+body {
+   max-width: 1400px;
+   margin: 0 auto;
+   font-family: Arial, Helvetica, sans-serif;
+   height: 1000px;
+   background-color: $body-color;
+}
+
+input,
+button,
+textarea {
+   border: none;
+   outline: none;
+   background-color: unset;
+   resize: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+   appearance: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+}
+
+button {
+   cursor: pointer;
+}
+
+li {
+   list-style: none;
+}
+
+a {
+   text-decoration: none;
+   color: unset;
+}

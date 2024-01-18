@@ -1,0 +1,32 @@
+@mixin keyframes($totalSlides, $imageWidth, $spacing) {
+   @keyframes scrollSlideTrack {
+      from {
+         transform: translateX(0);
+      }
+      to {
+         transform: translateX(calc(((-1 * $imageWidth) - $spacing) * ($totalSlides / 2)));
+      }
+   }
+}
+
+.carousel {
+   $totalSlides: var(--totalSlides);
+   $imageWidth: var(--imageWidth);
+   $spacing: var(--spacing);
+   @include keyframes($totalSlides, $imageWidth, $spacing);
+
+   &:hover .slide-track {
+      animation-play-state: paused;
+   }
+
+   .slide-track {
+      width: calc((var(--imageWidth) + var(--spacing)) * var(--totalSlides));
+      margin-left: calc(-1 * var(--spacing));
+      animation: scrollSlideTrack 20s linear infinite;
+   }
+}
+
+.slide {
+   width: var(--imageWidth);
+   margin-left: var(--spacing);
+}
