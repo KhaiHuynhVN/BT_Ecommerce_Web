@@ -20,7 +20,7 @@ const signUpFormSchema = yup
       ["Tỉnh/thành"]: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
       ["Quận/huyện"]: yup.string().default("").required("Vui lòng chọn quận huyện!"),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
-      accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
+      accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(true).required(),
       accepPromotion: yup.boolean().default(false),
    })
    .required();
@@ -39,7 +39,7 @@ const buyNowFormSchema = yup
       ["Tỉnh/thành"]: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
       ["Quận/huyện"]: yup.string().default("").required("Vui lòng chọn quận huyện!"),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
-      accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
+      accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(true).required(),
    })
    .required();
 

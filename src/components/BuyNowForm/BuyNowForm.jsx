@@ -85,7 +85,6 @@ function BuyNowForm({ isReset }) {
 
    const onSubmitErrorHandle = () => {
       !getValues("Tỉnh/thành") && clearErrors("Quận/huyện");
-      getValues("accepTerm") === undefined && clearErrors("accepTerm");
    };
 
    const handleBlurInput = (e, key) => {

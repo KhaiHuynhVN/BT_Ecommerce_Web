@@ -96,7 +96,6 @@ function SignUpForm({ isReset }) {
          clearErrors("Xác nhận mật khẩu");
       }
       !getValues("Tỉnh/thành") && clearErrors("Quận/huyện");
-      getValues("accepTerm") === undefined && clearErrors("accepTerm");
    };
 
    const handleBlurInput = (e, key) => {
