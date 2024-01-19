@@ -48,7 +48,7 @@ function SignUpForm({ isReset }) {
       setReCaptcha(false);
    }, [isReset]);
 
-   const handleChangeFormData = (e, key, type) => {
+   const handleChangeFormData = (e, key, type, isPassword) => {
       switch (type) {
          case "checkbox":
             setValue(key, e.target.checked);
@@ -67,7 +67,7 @@ function SignUpForm({ isReset }) {
             clearErrors("Quận/huyện");
             break;
          default:
-            setValue(key, e.target.value.trim());
+            setValue(key, isPassword ? e.target.value : e.target.value.trimStart());
             clearErrors(key);
             break;
       }
@@ -102,9 +102,9 @@ function SignUpForm({ isReset }) {
    };
 
    const handleBlurInput = (e, key) => {
-      const value = e.target.value.trim();
+      const value = e.target.value;
       const arrErrors = Object.keys(errors);
-      !value && arrErrors.length && setValue(key, e.target.value, { shouldValidate: true });
+      arrErrors.length && setValue(key, value, { shouldValidate: true });
    };
 
    return (
@@ -172,7 +172,7 @@ function SignUpForm({ isReset }) {
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                   onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
-                  onChange={(e) => handleChangeFormData(e, "Mật khẩu")}
+                  onChange={(e) => handleChangeFormData(e, "Mật khẩu", null, true)}
                />
                {errors["Mật khẩu"]?.message && (
                   <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Mật khẩu"].message}</p>
@@ -189,7 +189,7 @@ function SignUpForm({ isReset }) {
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                   onBlur={(e) => handleBlurInput(e, "Xác nhận mật khẩu")}
-                  onChange={(e) => handleChangeFormData(e, "Xác nhận mật khẩu")}
+                  onChange={(e) => handleChangeFormData(e, "Xác nhận mật khẩu", null, true)}
                />
                {errors["Xác nhận mật khẩu"]?.message && (
                   <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Xác nhận mật khẩu"].message}</p>

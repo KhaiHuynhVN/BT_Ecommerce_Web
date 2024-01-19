@@ -8,7 +8,19 @@ import styles from "./SectionWrapper.module.scss";
 
 const cx = classNames.bind(styles);
 
-function SectionWrapper({ children, className, title, leftIcon, rightIcon, to, titlePrimary, button, btnTitle, btnLeftIcon }) {
+function SectionWrapper({
+   children,
+   className,
+   title,
+   leftIcon,
+   rightIcon,
+   to,
+   titlePrimary,
+   button,
+   btnTitle,
+   btnLeftIcon,
+   btnTo,
+}) {
    const TitleComp = to ? Link : "div";
    const classes = cx("wrapper", className);
 
@@ -24,7 +36,7 @@ function SectionWrapper({ children, className, title, leftIcon, rightIcon, to, t
             </TitleComp>
 
             {button && (
-               <Button className={`ml-auto items-center`} secondary noRounded leftIcon={btnLeftIcon}>
+               <Button className={`ml-auto items-center`} secondary noRounded leftIcon={btnLeftIcon} to={btnTo}>
                   {btnTitle}
                </Button>
             )}
@@ -47,6 +59,7 @@ SectionWrapper.propTypes = {
    button: Proptypes.bool,
    btnTitle: Proptypes.string,
    btnLeftIcon: Proptypes.node,
+   btnTo: Proptypes.string,
 };
 
 export default SectionWrapper;

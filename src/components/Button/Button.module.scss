@@ -91,6 +91,17 @@
    }
 }
 
+.quinary {
+   padding: 6.4px 11.2px;
+   color: $twenty-sixth-color;
+   font-size: 16px;
+   background-color: $forty-fourth-color;
+
+   &:hover {
+      background-color: $fifty-fifth-color;
+   }
+}
+
 .text {
    &:hover .children {
       text-decoration: 1px solid black underline;

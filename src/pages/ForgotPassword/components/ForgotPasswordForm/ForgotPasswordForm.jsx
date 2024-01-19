@@ -25,7 +25,7 @@ function ForgotPasswordForm() {
    });
 
    const handleChangeFormData = (e, key) => {
-      setValue(key, e.target.value);
+      setValue(key, e.target.value.trimStart());
       clearErrors(key);
    };
 
@@ -41,9 +41,9 @@ function ForgotPasswordForm() {
    };
 
    const handleBlurInput = (e, key) => {
-      const value = e.target.value.trim();
+      const value = e.target.value;
       const arrErrors = Object.keys(errors);
-      !value && arrErrors.length && setValue(key, e.target.value, { shouldValidate: true });
+      arrErrors.length && setValue(key, value, { shouldValidate: true });
    };
 
    return (

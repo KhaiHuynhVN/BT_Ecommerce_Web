@@ -12,29 +12,24 @@ import styles from "./SignInForm.module.scss";
 
 const cx = classNames.bind(styles);
 
-const initSignInForm = {
-   ["Tài khoản"]: "",
-   ["Mật khẩu"]: "",
-};
-
 function SignInForm() {
-   const [formData, setFormData] = useState(initSignInForm);
    const [accountIncorrect, setAccountIncorrect] = useState(false);
 
    const {
       register,
       handleSubmit,
-      // formState: { errors },
       reset,
+      setValue,
+      clearErrors,
+      getValues,
+      formState: { errors },
    } = useForm({
       resolver: yupResolver(schema.signInFormSchema),
    });
 
    const handleChangeFormData = (e, key) => {
-      setFormData({
-         ...formData,
-         [key]: e.target.value.trim(),
-      });
+      setValue(key, e.target.value.trimStart());
+      errors && clearErrors(key);
 
       setAccountIncorrect(false);
    };
@@ -49,7 +44,7 @@ function SignInForm() {
       <form className={cx("wrapper", "p-[0.5rem] bg-nonary-color grid gap-2")} onSubmit={handleSubmit(onSubmitHandle)}>
          <div>
             <Input
-               value={formData["Tài khoản"]}
+               value={getValues("Tài khoản") || ""}
                register={{ ...register("Tài khoản") }}
                labelCl={"flex justify-between items-center"}
                fieldCl={"text-octonary-color w-[135px] text-[1rem] flex-shrink-0"}
@@ -64,13 +59,13 @@ function SignInForm() {
             {accountIncorrect && <p className="text-[16px] pt-1 ml-[135px] text-red-500">Tài khoản không tồn tại!</p>}
          </div>
          <Input
-            value={formData["Mật khẩu"]}
+            value={getValues("Mật khẩu") || ""}
             register={{ ...register("Mật khẩu") }}
             labelCl={"flex justify-between items-center"}
             fieldCl={"text-octonary-color w-[135px] text-[1rem] flex-shrink-0"}
             field={"Mật khẩu"}
             fieldLeftIcon={<i className="bi bi-key-fill text-septenary-color"></i>}
-            type="text"
+            type="password"
             inputCl={`bg-white text-[16px] p-[0.5rem] border-solid border-[1px] border-black w-full focus:outline 
             focus:outline-[1px] focus:outline-black`}
             onChange={(e) => handleChangeFormData(e, "Mật khẩu")}

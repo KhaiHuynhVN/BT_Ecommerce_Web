@@ -19,15 +19,14 @@ function SignInForm() {
       formState: { errors },
       reset,
       clearErrors,
-      setError,
       setValue,
       getValues,
    } = useForm({
       resolver: yupResolver(schema.signInFormSchema),
    });
 
-   const handleChangeFormData = (e, key) => {
-      setValue(key, e.target.value.trim());
+   const handleChangeFormData = (e, key, isPassword) => {
+      setValue(key, isPassword ? e.target.value : e.target.value.trimStart());
       clearErrors(key);
    };
 
@@ -38,9 +37,9 @@ function SignInForm() {
    };
 
    const handleBlurInput = (e, key) => {
-      const value = e.target.value.trim();
+      const value = e.target.value;
       const arrErrors = Object.keys(errors);
-      !value && arrErrors.length && setError(key, { message: `Vui lòng nhập ${key.toLowerCase()}`, type: "required" });
+      arrErrors.length && setValue(key, value, { shouldValidate: true });
    };
 
    return (
@@ -80,7 +79,7 @@ function SignInForm() {
                      outline-1 w-[500px] rounded-[3px]`}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
-                     onChange={(e) => handleChangeFormData(e, "Mật khẩu")}
+                     onChange={(e) => handleChangeFormData(e, "Mật khẩu", true)}
                   />
                   {errors["Mật khẩu"]?.message && (
                      <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] w-max`}>

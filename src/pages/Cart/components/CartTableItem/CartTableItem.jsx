@@ -33,7 +33,7 @@ function CartTableItem({ data, id, onClick = () => {}, itemId, indx }) {
    };
 
    const handleChangeQuantity = (e) => {
-      const value = e.target.value.trim();
+      const value = e.target.value;
       const replaceValue = value.replace(/^0+/, "");
       const newValue = Math.floor(+replaceValue);
       +value < 1 ? setQuantityValue(1) : setQuantityValue(String(newValue));

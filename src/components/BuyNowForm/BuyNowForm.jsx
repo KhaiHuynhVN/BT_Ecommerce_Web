@@ -66,7 +66,7 @@ function BuyNowForm({ isReset }) {
             clearErrors("Quận/huyện");
             break;
          default:
-            setValue(key, e.target.value.trim());
+            setValue(key, e.target.value.trimStart());
             clearErrors(key);
             break;
       }
@@ -93,7 +93,7 @@ function BuyNowForm({ isReset }) {
    const handleBlurInput = (e, key) => {
       const value = e.target.value.trim();
       const arrErrors = Object.keys(errors);
-      !value && arrErrors.length && setValue(key, e.target.value, { shouldValidate: true });
+      arrErrors.length && setValue(key, value, { shouldValidate: true });
    };
 
    return (

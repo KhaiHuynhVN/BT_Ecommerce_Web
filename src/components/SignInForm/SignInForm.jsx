@@ -31,8 +31,8 @@ function SignInForm({ isReset }) {
       reset();
    }, [isReset]);
 
-   const handleChangeFormData = (e, key) => {
-      setValue(key, e.target.value);
+   const handleChangeFormData = (e, key, isPassword) => {
+      setValue(key, isPassword ? e.target.value : e.target.value.trimStart());
       clearErrors(key);
    };
 
@@ -43,9 +43,9 @@ function SignInForm({ isReset }) {
    };
 
    const handleBlurInput = (e, key) => {
-      const value = e.target.value.trim();
+      const value = e.target.value;
       const arrErrors = Object.keys(errors);
-      !value && arrErrors.length && setValue(key, e.target.value, { shouldValidate: true });
+      arrErrors.length && setValue(key, value, { shouldValidate: true });
    };
 
    return (
@@ -82,7 +82,7 @@ function SignInForm({ isReset }) {
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                   onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
-                  onChange={(e) => handleChangeFormData(e, "Mật khẩu")}
+                  onChange={(e) => handleChangeFormData(e, "Mật khẩu", true)}
                />
                {errors["Mật khẩu"]?.message && (
                   <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Mật khẩu"].message}</p>

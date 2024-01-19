@@ -10,6 +10,8 @@ import ProductNav from "./components/ProductNav";
 import NavMain from "./components/NavMain";
 import FacebookIframe from "./components/FacebookIframe";
 import SignInForm from "./components/SignInForm";
+import UserMenu from "./components/UserMenu";
+
 import { images } from "../../../assets";
 import routesConfig from "../../../routesConfig";
 import productNavSlice, { productNavSelector } from "./components/ProductNav/productNavSlice";
@@ -19,6 +21,7 @@ import styles from "./Header.module.scss";
 const cx = classNames.bind(styles);
 
 function Header() {
+   const isSignIn = false;
    const dispatch = useDispatch();
 
    const showProductNavBtnRef = useRef(null);
@@ -36,13 +39,13 @@ function Header() {
                <FacebookIframe />
                <NavMain />
             </div>
-            <Link
+            <Button
                className={cx("nav-item", "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer")}
                to={routesConfig.signUp.path}
             >
                <i className="bi bi-file-earmark-person text-secondary-color mr-2"></i>
                Đăng ký
-            </Link>
+            </Button>
          </div>
 
          <div className="grid grid-cols-12 gap-[1rem]">
@@ -65,9 +68,7 @@ function Header() {
                   </div>
                </div>
             </div>
-            <div className="col-span-3">
-               <SignInForm />
-            </div>
+            <div className="col-span-3">{isSignIn ? <UserMenu /> : <SignInForm />}</div>
          </div>
 
          <div className="grid grid-cols-12 gap-[1rem] relative">
@@ -88,7 +89,7 @@ function Header() {
                <div className="rounded-[3px] p-1 bg-tertiary-color h-full">
                   <div className="bg-thirteenth-color flex h-full">
                      <Input wrapperCl="flex-1 p-[0.3rem] text-[1.2rem]" type="text" placeholder="Tìm sản phẩm..." />
-                     <Button className="p-[0_10px]">
+                     <Button className="p-[0_10px] items-center">
                         <i className="bi bi-search flex-shrink-0 text-quaternary-color font-[600] text-[1rem]"></i>
                      </Button>
                   </div>

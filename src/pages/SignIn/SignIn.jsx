@@ -24,6 +24,7 @@ function SignIn() {
                button
                btnTitle="Đăng ký thành viên"
                btnLeftIcon={<i className="bi bi-person-plus-fill text-octonary-color"></i>}
+               btnTo={routesConfig.signUp.path}
             >
                <div className={`bg-white p-4`}>
                   <SignUpForm />

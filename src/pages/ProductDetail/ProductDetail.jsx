@@ -21,7 +21,8 @@ function ProductDetail() {
    const [amount, setAmount] = useState(1);
 
    const handleChangeAmount = (e, type) => {
-      const value = +e?.target.value.trim();
+      let value = e?.target.value;
+      value = value.replace(/^0+/, "");
 
       switch (type) {
          case "plus":
@@ -31,7 +32,7 @@ function ProductDetail() {
             amount <= 1 ? setAmount(1) : setAmount(amount - 1);
             break;
          default:
-            value < 1 ? setAmount(1) : setAmount(value);
+            +value < 1 ? setAmount(1) : setAmount(value);
             break;
       }
    };
@@ -94,6 +95,7 @@ function ProductDetail() {
                            </div>
                            <span className="flex items-center mr-2">Cái</span>
                            <Button
+                              className={`items-center`}
                               primary
                               leftIcon={<i className="bi bi-cart text-[22px]"></i>}
                               fallbackLeftIcon={<i className="bi bi-cart-plus text-[22px]"></i>}
