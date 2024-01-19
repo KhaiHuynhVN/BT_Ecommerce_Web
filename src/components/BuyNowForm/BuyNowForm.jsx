@@ -74,9 +74,7 @@ function BuyNowForm({ isReset }) {
    };
 
    const handleReCaptcha = (value) => {
-      setValue("recaptcha", value && true);
-      setReCaptcha(value ? true : false);
-      value && clearErrors("recaptcha");
+      setValue("recaptcha", value ? true : false, { shouldValidate: value ? true : false });
    };
 
    const onSubmitHandle = (data) => {

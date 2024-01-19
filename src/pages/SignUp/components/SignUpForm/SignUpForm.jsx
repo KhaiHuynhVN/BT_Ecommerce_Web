@@ -62,7 +62,7 @@ function SignUpForm() {
    };
 
    const handleReCaptcha = (value) => {
-      setValue("recaptcha", value ? true : false, { shouldValidate: getValues("recaptcha") !== undefined ? true : false });
+      setValue("recaptcha", value ? true : false, { shouldValidate: value ? true : false });
    };
 
    const onSubmitHandle = (data) => {
@@ -100,7 +100,7 @@ function SignUpForm() {
             <div className="flex flex-col gap-4">
                <div className="flex items-center relative">
                   <Input
-                     value={getValues("Họ tên") || ""}
+                     value={getValues("Họ tên")}
                      field="Họ tên"
                      register={{ ...register("Họ tên") }}
                      type="text"
@@ -120,7 +120,7 @@ function SignUpForm() {
                </div>
                <div className="flex items-center relative">
                   <Input
-                     value={getValues("Điện thoại") || ""}
+                     value={getValues("Điện thoại")}
                      field="Điện thoại"
                      register={{ ...register("Điện thoại") }}
                      type="number"
@@ -140,7 +140,7 @@ function SignUpForm() {
                </div>
                <div className="flex items-center relative">
                   <Input
-                     value={getValues("Email") || ""}
+                     value={getValues("Email")}
                      field="Email"
                      register={{ ...register("Email") }}
                      type="text"
@@ -160,7 +160,7 @@ function SignUpForm() {
                </div>
                <div className="flex items-center relative">
                   <Input
-                     value={getValues("Mật khẩu") || ""}
+                     value={getValues("Mật khẩu")}
                      field="Mật khẩu"
                      register={{ ...register("Mật khẩu") }}
                      type="password"
@@ -180,7 +180,7 @@ function SignUpForm() {
                </div>
                <div className="flex items-center relative">
                   <Input
-                     value={getValues("Xác nhận mật khẩu") || ""}
+                     value={getValues("Xác nhận mật khẩu")}
                      field="Xác nhận mật khẩu"
                      register={{ ...register("Xác nhận mật khẩu") }}
                      type="password"
@@ -200,7 +200,7 @@ function SignUpForm() {
                </div>
                <div className="flex items-center relative">
                   <Input
-                     value={getValues("Địa chỉ") || ""}
+                     value={getValues("Địa chỉ")}
                      field="Địa chỉ"
                      register={{ ...register("Địa chỉ") }}
                      type="text"
@@ -225,7 +225,7 @@ function SignUpForm() {
                   <>
                      <div className="flex items-center relative">
                         <Select
-                           value={getValues("Tỉnh/thành") || ""}
+                           value={getValues("Tỉnh/thành")}
                            labelCl={`flex relative`}
                            fieldCl={`absolute mr-2 top-[50%] translate-y-[-50%] right-[100%] text-nowrap text-[16px]`}
                            selectCl={`border border-solid border-black p-2 w-[500px]`}
@@ -246,7 +246,7 @@ function SignUpForm() {
                      </div>
                      <div className="flex items-center relative">
                         <Select
-                           value={getValues("Quận/huyện") || ""}
+                           value={getValues("Quận/huyện")}
                            labelCl={`flex relative`}
                            fieldCl={`absolute mr-2 top-[50%] translate-y-[-50%] right-[100%] text-nowrap text-[16px]`}
                            selectCl={`border border-solid border-black p-2 w-[500px]`}

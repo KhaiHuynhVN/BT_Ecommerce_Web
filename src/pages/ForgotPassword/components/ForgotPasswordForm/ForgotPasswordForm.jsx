@@ -30,8 +30,7 @@ function ForgotPasswordForm() {
    };
 
    const handleReCaptcha = (value) => {
-      setValue("recaptcha", value && true);
-      value && clearErrors("recaptcha");
+      setValue("recaptcha", value ? true : false, { shouldValidate: value ? true : false });
    };
 
    const onSubmitHandle = (data) => {
