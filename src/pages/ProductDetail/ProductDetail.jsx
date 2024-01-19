@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
 
-import BreakCump from "../../components/BreakCump";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import routesConfig from "../../routesConfig";
 import BrandCarousel from "../../components/BrandCarousel";
 import PostWrapper from "../../components/PostWrapper";
@@ -39,7 +39,7 @@ function ProductDetail() {
 
    return (
       <div className={cx("wrapper", "mt-[1rem]")}>
-         <BreakCump breakCumps={routesConfig.product.breakCumps} routesConfig={routesConfig} />
+         <Breadcrumbs breadcrumbs={routesConfig.product.breadcrumbs} routesConfig={routesConfig} />
 
          <div className="mt-[1rem]">
             <SectionWrapper

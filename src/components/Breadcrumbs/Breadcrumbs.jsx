@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 
-import styles from "./BreakCump.module.scss";
+import styles from "./Breadcrumbs.module.scss";
 
 const cx = classNames.bind(styles);
 
-function BreakCump({ breakCumps = [], routesConfig = {} }) {
+function Breadcrumbs({ breadcrumbs = [], routesConfig = {} }) {
    return (
       <div className={cx("wrapper", "flex text-[19.2px]")}>
-         {breakCumps.map((item, index, _this) => {
+         {breadcrumbs.map((item, index, _this) => {
             const Component = index === _this.length - 1 ? "span" : Link;
 
             return (
@@ -27,9 +27,9 @@ function BreakCump({ breakCumps = [], routesConfig = {} }) {
    );
 }
 
-BreakCump.propTypes = {
-   breakCumps: PropTypes.array,
+Breadcrumbs.propTypes = {
+   breadcrumbs: PropTypes.array,
    routesConfig: PropTypes.object,
 };
 
-export default BreakCump;
+export default Breadcrumbs;

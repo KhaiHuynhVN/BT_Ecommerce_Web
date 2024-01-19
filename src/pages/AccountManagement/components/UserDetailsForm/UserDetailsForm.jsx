@@ -82,7 +82,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   type="text"
                   field={`Họ tên`}
                   labelCl={`block`}
-                  inputWrapperCl={`w-full`}
+                  inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
                   onBlur={(e) => handleBlurInput(e, "Họ tên")}
@@ -97,7 +97,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   type="number"
                   field={`Điện thoại`}
                   labelCl={`block`}
-                  inputWrapperCl={`w-full`}
+                  inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
                   onBlur={(e) => handleBlurInput(e, "Điện thoại")}
@@ -114,7 +114,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   type="text"
                   field={`Email`}
                   labelCl={`block`}
-                  inputWrapperCl={`w-full`}
+                  inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
                   onBlur={(e) => handleBlurInput(e, "Email")}
@@ -129,7 +129,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   type="text"
                   field={`Địa chỉ`}
                   labelCl={`block`}
-                  inputWrapperCl={`w-full`}
+                  inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
                   onBlur={(e) => handleBlurInput(e, "Địa chỉ")}

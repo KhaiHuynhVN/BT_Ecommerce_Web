@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
 
-import BreakCump from "../../components/BreakCump";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import Button from "../../components/Button";
 import SectionWrapper from "../../components/SectionWrapper";
 import Select from "../../components/Select";
@@ -30,7 +30,7 @@ function AccountManagement() {
 
    return (
       <div className={cx(`wrapper`, `mt-[1rem]`)}>
-         <BreakCump breakCumps={routesConfig.account.breakCumps} routesConfig={routesConfig} />
+         <Breadcrumbs breadcrumbs={routesConfig.account.breadcrumbs} routesConfig={routesConfig} />
 
          <div className={`mt-[1rem]`}>
             <div className={`flex gap-[1px]`}>

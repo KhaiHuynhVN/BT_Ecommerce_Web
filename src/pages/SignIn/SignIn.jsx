@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 
-import BreakCump from "../../components/BreakCump";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import SectionWrapper from "../../components/SectionWrapper";
 import SignUpForm from "./components/SignInForm";
 import BrandCarousel from "../../components/BrandCarousel";
@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 function SignIn() {
    return (
       <div className={cx(`wrapper`, `mt-[1rem]`)}>
-         <BreakCump breakCumps={routesConfig.checkout.breakCumps} routesConfig={routesConfig} />
+         <Breadcrumbs breadcrumbs={routesConfig.checkout.breadcrumbs} routesConfig={routesConfig} />
 
          <div className={`mt-[1rem]`}>
             <SectionWrapper

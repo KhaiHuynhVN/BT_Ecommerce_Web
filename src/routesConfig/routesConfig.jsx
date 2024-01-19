@@ -6,37 +6,37 @@ const routesConfig = {
    signUp: {
       path: "/dang-ky",
       title: "Đăng ký",
-      breakCumps: ["home", "signUp"],
+      breadcrumbs: ["home", "signUp"],
    },
    product: {
       path: "/san-pham/:id",
       title: "Sản phẩm",
-      breakCumps: ["home", "product"],
+      breadcrumbs: ["home", "product"],
    },
    cart: {
       path: "/gio-hang",
       title: "Giỏ hàng",
-      breakCumps: ["home", "cart"],
+      breadcrumbs: ["home", "cart"],
    },
    checkout: {
       path: "/mua-hang",
       title: "Mua hàng",
-      breakCumps: ["home", "cart", "checkout"],
+      breadcrumbs: ["home", "cart", "checkout"],
    },
    signIn: {
       path: "/dang-nhap",
       title: "Đăng nhập",
-      breakCumps: ["home", "signIn"],
+      breadcrumbs: ["home", "signIn"],
    },
    forgotPassword: {
       path: "/quen-mat-khau",
       title: "Quên mật khẩu",
-      breakCumps: ["home", "forgotPassword"],
+      breadcrumbs: ["home", "forgotPassword"],
    },
    account: {
       path: "/thanh-vien",
       title: "Thành viên",
-      breakCumps: ["home", "account"],
+      breadcrumbs: ["home", "account"],
    },
 };
 

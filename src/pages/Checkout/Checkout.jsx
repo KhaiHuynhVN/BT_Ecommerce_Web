@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
 
-import BreakCump from "../../components/BreakCump";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import routesConfig from "../../routesConfig";
 import SectionWrapper from "../../components/SectionWrapper";
 import RadioSectionWrapper from "../../components/RadioSectionWrapper";
@@ -26,7 +26,7 @@ function Checkout() {
 
    return (
       <div className={cx("wrapper", `mt-[1rem]`)}>
-         <BreakCump breakCumps={routesConfig.checkout.breakCumps} routesConfig={routesConfig} />
+         <Breadcrumbs breadcrumbs={routesConfig.checkout.breadcrumbs} routesConfig={routesConfig} />
 
          <div className={`mt-[1rem]`}>
             <SectionWrapper

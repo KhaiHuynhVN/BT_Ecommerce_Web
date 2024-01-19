@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 
-import BreakCump from "../../components/BreakCump";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import BrandCarousel from "../../components/BrandCarousel";
 import PostWrapper from "../../components/PostWrapper";
 import PostItem from "../../components/PostItem";
@@ -17,7 +17,7 @@ const cx = classNames.bind(styles);
 function Cart() {
    return (
       <div className={cx("wrapper", `mt-[1rem]`)}>
-         <BreakCump breakCumps={routesConfig.cart.breakCumps} routesConfig={routesConfig} />
+         <Breadcrumbs breadcrumbs={routesConfig.cart.breadcrumbs} routesConfig={routesConfig} />
 
          <div className={`mt-[1rem]`}>
             <SectionWrapper
