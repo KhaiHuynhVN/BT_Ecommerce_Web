@@ -39,6 +39,7 @@ function Checkout() {
                         <RadioSectionWrapper
                            title="Đã là thành viên - Đăng nhập"
                            name="form"
+                           isDefaultChecked
                            checked={radio === "sign-in-form"}
                            onChange={() => handleChangeRadio("sign-in-form")}
                         >

@@ -10,6 +10,7 @@ const routes = [
    { path: routesConfig.checkout.path, component: Pages.Checkout, layout: Layouts.DefaultLayout },
    { path: routesConfig.signIn.path, component: Pages.SignIn, layout: Layouts.DefaultLayout },
    { path: routesConfig.forgotPassword.path, component: Pages.ForgotPassword, layout: Layouts.DefaultLayout },
+   { path: routesConfig.account.path, component: Pages.AccountManagement, layout: Layouts.DefaultLayout },
 ];
 
 export default routes;

@@ -71,7 +71,11 @@ function CartTableItem({ data, id, onClick = () => {}, itemId, indx }) {
          <div className={cx("td", `text-forty-sixth-color p-[10px_5px] flex items-center justify-center w-[200px]`)}>
             {isEdit && id === itemId ? (
                <>
-                  <Button quaternary leftIcon={<i className="bi bi-pencil-square text-denary-color"></i>} onClick={handleSave}>
+                  <Button
+                     quaternary
+                     leftIcon={<i className="bi bi-arrow-counterclockwise text-denary-color"></i>}
+                     onClick={handleSave}
+                  >
                      Cập nhật
                   </Button>
                   <Button

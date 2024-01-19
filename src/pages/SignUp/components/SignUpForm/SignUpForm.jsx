@@ -62,8 +62,7 @@ function SignUpForm() {
    };
 
    const handleReCaptcha = (value) => {
-      setValue("recaptcha", value && true);
-      value && clearErrors("recaptcha");
+      setValue("recaptcha", value ? true : false, { shouldValidate: getValues("recaptcha") !== undefined ? true : false });
    };
 
    const onSubmitHandle = (data) => {

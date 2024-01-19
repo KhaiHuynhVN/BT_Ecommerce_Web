@@ -22,17 +22,17 @@ function ProductDetail() {
 
    const handleChangeAmount = (e, type) => {
       let value = e?.target.value;
-      value = value.replace(/^0+/, "");
+      value = value?.replace(/^0+/, "");
 
       switch (type) {
          case "plus":
             setAmount(amount + 1);
             break;
          case "minus":
-            amount <= 1 ? setAmount(1) : setAmount(amount - 1);
+            amount <= 1 ? setAmount(1) : setAmount(+amount - 1);
             break;
          default:
-            +value < 1 ? setAmount(1) : setAmount(value);
+            +value < 1 ? setAmount(1) : setAmount(+value);
             break;
       }
    };

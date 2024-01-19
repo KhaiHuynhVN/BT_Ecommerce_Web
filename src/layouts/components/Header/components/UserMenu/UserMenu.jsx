@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 
 import Button from "../../../../../components/Button";
+import routesConfig from "../../../../../routesConfig";
 
 import styles from "./UserMenu.module.scss";
 
@@ -14,7 +15,7 @@ function UserMenu() {
             className={`mt-2 w-full justify-start`}
             quinary
             leftIcon={<i className="bi bi-file-earmark-person text-septenary-color"></i>}
-            to={"/"}
+            to={routesConfig.account.path}
          >
             Quản lý tài khoản
          </Button>

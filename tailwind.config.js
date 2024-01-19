@@ -60,6 +60,7 @@ export default {
             "fifty-third-color": "#FFF1F0",
             "fifty-fourth-color": "#FF0000",
             "fifty-fifth-color": "#F1F1F1",
+            "fifty-sixth-color": "#3B3B3B",
          },
       },
    },

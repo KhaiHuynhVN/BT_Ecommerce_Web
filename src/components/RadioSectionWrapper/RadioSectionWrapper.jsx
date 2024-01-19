@@ -8,7 +8,17 @@ import styles from "./RadioSectionWrapper.module.scss";
 
 const cx = classNames.bind(styles);
 
-function RadioSectionWrapper({ children, className, leftIcon, rightIcon, title, name, checked, onChange = () => {} }) {
+function RadioSectionWrapper({
+   children,
+   className,
+   leftIcon,
+   rightIcon,
+   title,
+   name,
+   checked,
+   isDefaultChecked,
+   onChange = () => {},
+}) {
    const classes = cx("wrapper", className);
 
    const contentRef = useRef();
@@ -18,7 +28,6 @@ function RadioSectionWrapper({ children, className, leftIcon, rightIcon, title, 
       if (checked) {
          contentRef.current.style.height = `${childrenRef.current.scrollHeight}px`;
          contentRef.current.style.minHeight = `${childrenRef.current.scrollHeight}px`;
-         contentRef.current.style.opacity = "1";
       } else {
          contentRef.current.style = "";
       }
@@ -44,12 +53,13 @@ function RadioSectionWrapper({ children, className, leftIcon, rightIcon, title, 
             </div>
          </label>
          <div
+            style={{ height: isDefaultChecked && "auto" }}
             ref={contentRef}
-            className={`overflow-hidden h-0 min-h-0 opacity-[0.9] transition-all duration-[0.3s] flex flex-col justify-end`}
+            className={`overflow-hidden h-0 min-h-0 transition-all duration-[0.3s] flex flex-col justify-end`}
             onTransitionEnd={handleTransitionEnd}
          >
-            <div className="bg-fifty-first-color p-[1px]">
-               <div ref={childrenRef}>{children}</div>
+            <div ref={childrenRef} className="bg-fifty-first-color p-[1px]">
+               <div>{children}</div>
             </div>
          </div>
       </div>
@@ -64,6 +74,7 @@ RadioSectionWrapper.propTypes = {
    rightIcon: PropTypes.node,
    name: PropTypes.string,
    checked: PropTypes.bool,
+   isDefaultChecked: PropTypes.bool,
    onChange: PropTypes.func,
 };
 

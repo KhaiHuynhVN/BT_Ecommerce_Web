@@ -7,6 +7,7 @@ const cx = classNames.bind(styles);
 
 function Select({
    value,
+   disabled,
    register = {},
    wrapperCl,
    selectCl,
@@ -20,9 +21,12 @@ function Select({
    leftIcon,
    rightIcon,
    onChange = () => {},
+   ...props
 }) {
    const wrapperClasses = cx("wrapper", wrapperCl);
-   const selectClasses = cx("select", selectCl);
+   const selectClasses = cx("select", selectCl, {
+      disabled,
+   });
    const fieldClasses = cx("field", fieldCl);
    const labelClasses = cx("label", labelCl);
 
@@ -31,7 +35,7 @@ function Select({
          <label className={labelClasses}>
             <div className={fieldClasses}>{field && <span>{field}</span>}</div>
             {leftIcon && <span>{leftIcon}</span>}
-            <select {...register} value={value} className={selectClasses} onChange={(e) => onChange(e)}>
+            <select {...register} {...props} value={value} className={selectClasses} onChange={(e) => onChange(e)}>
                <option value="">{placeholder}</option>
                {data.map((item, index) => (
                   <option key={index} value={valueKey ? item[valueKey] : item}>
@@ -47,6 +51,7 @@ function Select({
 
 Select.propTypes = {
    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+   disabled: PropTypes.bool,
    register: PropTypes.object,
    wrapperCl: PropTypes.string,
    selectCl: PropTypes.string,

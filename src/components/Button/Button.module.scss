@@ -61,7 +61,6 @@
 .secondary {
    padding: 8px;
    color: $forty-fifth-color;
-   font-size: 16px;
    background-color: $nonary-color;
 
    &:hover {
@@ -72,7 +71,6 @@
 .tertiary {
    padding: 8px 10px;
    color: white;
-   font-size: 16px;
    background-color: $forty-seventh-color;
 
    &:hover {
@@ -83,7 +81,6 @@
 .quaternary {
    padding: 8px 10px;
    color: white;
-   font-size: 16px;
    background-color: $thirtieth-color;
 
    &:hover {
@@ -94,11 +91,20 @@
 .quinary {
    padding: 6.4px 11.2px;
    color: $twenty-sixth-color;
-   font-size: 16px;
    background-color: $forty-fourth-color;
 
    &:hover {
       background-color: $fifty-fifth-color;
+   }
+}
+
+.senary {
+   padding: 8px 11.2px;
+   color: white;
+   background: $quaternary-color;
+
+   &:hover {
+      background: linear-gradient(to bottom, #b21e02, #b21e02, #b93016, #b21e02, #b21e02);
    }
 }
 

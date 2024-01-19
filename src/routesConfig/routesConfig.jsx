@@ -33,6 +33,11 @@ const routesConfig = {
       title: "Quên mật khẩu",
       breakCumps: ["home", "forgotPassword"],
    },
+   account: {
+      path: "/thanh-vien",
+      title: "Thành viên",
+      breakCumps: ["home", "account"],
+   },
 };
 
 export default routesConfig;
