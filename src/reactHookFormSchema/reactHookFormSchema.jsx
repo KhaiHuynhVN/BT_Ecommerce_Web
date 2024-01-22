@@ -4,7 +4,11 @@ const signUpFormSchema = yup
    .object()
    .shape({
       ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      ["Điện thoại"]: yup.string().required("Vui lòng nhập số điện thoại!"),
+      ["Điện thoại"]: yup
+         .string()
+         .default("")
+         .required("Vui lòng nhập số điện thoại!")
+         .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
       ["Email"]: yup
          .string()
          .default("")
@@ -29,7 +33,11 @@ const buyNowFormSchema = yup
    .object()
    .shape({
       ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      ["Điện thoại"]: yup.string().default("").required("Vui lòng nhập số điện thoại!"),
+      ["Điện thoại"]: yup
+         .string()
+         .default("")
+         .required("Vui lòng nhập số điện thoại!")
+         .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
       ["Email"]: yup
          .string()
          .default("")
@@ -93,7 +101,11 @@ const userDetailsFormSchema = yup
    .object()
    .shape({
       ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      ["Điện thoại"]: yup.string().default("").required("Vui lòng nhập số điện thoại!"),
+      ["Điện thoại"]: yup
+         .string()
+         .default("")
+         .required("Vui lòng nhập số điện thoại!")
+         .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
       ["Email"]: yup
          .string()
          .default("")

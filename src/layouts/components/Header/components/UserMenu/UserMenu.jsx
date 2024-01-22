@@ -12,7 +12,7 @@ function UserMenu() {
       <div className={cx(`wrapper`, `p-2 bg-nonary-color text-[17.6px]`)}>
          <span className={`text-septenary-color`}>Xin chào Huỳnh Tiến Khải</span>
          <Button
-            className={`mt-2 w-full justify-start`}
+            className={`mt-2 w-full justify-start text-[16px]`}
             quinary
             leftIcon={<i className="bi bi-file-earmark-person text-septenary-color"></i>}
             to={routesConfig.account.path}
@@ -20,7 +20,7 @@ function UserMenu() {
             Quản lý tài khoản
          </Button>
          <Button
-            className={`mt-2 w-full justify-start`}
+            className={`mt-2 w-full justify-start text-[16px]`}
             quinary
             leftIcon={<i className="bi bi-currency-exchange text-septenary-color"></i>}
             to={"/"}

@@ -120,7 +120,7 @@ function SignUpForm() {
                </div>
                <div className="flex items-center relative">
                   <Input
-                     value={getValues("Điện thoại")}
+                     value={getValues("Điện thoại") || ""}
                      field="Điện thoại"
                      register={{ ...register("Điện thoại") }}
                      type="number"
