@@ -10,6 +10,7 @@ function Select({
    disabled,
    register = {},
    wrapperCl,
+   selectWrapperCl,
    selectCl,
    fieldCl,
    labelCl,
@@ -29,21 +30,24 @@ function Select({
    });
    const fieldClasses = cx("field", fieldCl);
    const labelClasses = cx("label", labelCl);
+   const selectWrapperClasses = cx("select-wrapper", selectWrapperCl);
 
    return (
       <div className={wrapperClasses}>
          <label className={labelClasses}>
             <div className={fieldClasses}>{field && <span>{field}</span>}</div>
-            {leftIcon && <span>{leftIcon}</span>}
-            <select {...register} {...props} value={value} className={selectClasses} onChange={(e) => onChange(e)}>
-               <option value="">{placeholder}</option>
-               {data.map((item, index) => (
-                  <option key={index} value={valueKey ? item[valueKey] : item}>
-                     {contentKey ? item[contentKey] : item}
-                  </option>
-               ))}
-            </select>
-            {rightIcon && <span>{rightIcon}</span>}
+            <div className={selectWrapperClasses}>
+               {leftIcon && <span>{leftIcon}</span>}
+               <select {...register} {...props} value={value} className={selectClasses} onChange={(e) => onChange(e)}>
+                  <option value="">{placeholder}</option>
+                  {data.map((item, index) => (
+                     <option key={index} value={valueKey ? item[valueKey] : item}>
+                        {contentKey ? item[contentKey] : item}
+                     </option>
+                  ))}
+               </select>
+               {rightIcon && <span>{rightIcon}</span>}
+            </div>
          </label>
       </div>
    );
@@ -54,6 +58,7 @@ Select.propTypes = {
    disabled: PropTypes.bool,
    register: PropTypes.object,
    wrapperCl: PropTypes.string,
+   selectWrapperCl: PropTypes.string,
    selectCl: PropTypes.string,
    fieldCl: PropTypes.string,
    labelCl: PropTypes.string,

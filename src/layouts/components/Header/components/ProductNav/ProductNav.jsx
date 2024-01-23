@@ -191,7 +191,7 @@ function ProductNav({ showProductNavBtnRef }) {
       <nav ref={navRef} className={cx("wrapper", "absolute top-full left-0 w-full text-white bg-white")}>
          <ul>
             {menuData.map((item, index) => (
-               <li key={index}>
+               <li key={index} className={cx("nav-item")}>
                   <ProductNavItem id={item.id} data={item} />
                </li>
             ))}

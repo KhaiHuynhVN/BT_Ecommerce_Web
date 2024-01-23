@@ -1,0 +1,39 @@
+.more-btn {
+   display: none;
+}
+
+@media (max-width: 1200px) {
+   .wrapper {
+      .product-item {
+         grid-column: span 3 / span 3;
+      }
+
+      .more-btn {
+         display: block;
+      }
+   }
+}
+
+@media (max-width: 992px) {
+   .wrapper {
+      .product-item {
+         grid-column: span 4 / span 4;
+      }
+   }
+}
+
+@media (max-width: 625px) {
+   .wrapper {
+      .product-item {
+         grid-column: span 6 / span 6;
+      }
+   }
+}
+
+@media (max-width: 430px) {
+   .wrapper {
+      .product-item {
+         grid-column: span 12 / span 12;
+      }
+   }
+}

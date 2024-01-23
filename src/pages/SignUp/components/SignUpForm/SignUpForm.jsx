@@ -96,125 +96,140 @@ function SignUpForm() {
          className={cx("wrapper", "flex flex-col items-center mt-[1rem]")}
          onSubmit={handleSubmit(onSubmitHandle, onSubmitErrorHandle)}
       >
-         <div className="flex flex-col items-start">
-            <div className="flex flex-col gap-4">
-               <div className="flex items-center relative">
+         <div className={cx("form-container-wrapper", "flex flex-col")}>
+            <div className={cx("form-container", "flex flex-col gap-4 items-start")}>
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Họ tên")}
                      field="Họ tên"
                      register={{ ...register("Họ tên") }}
-                     type="text"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Họ tên")}
                      onChange={(e) => handleChangeFormData(e, "Họ tên")}
                   />
                   {errors["Họ tên"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Họ tên"].message}
                      </p>
                   )}
                </div>
-               <div className="flex items-center relative">
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Điện thoại") || ""}
                      field="Điện thoại"
                      register={{ ...register("Điện thoại") }}
                      type="number"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Điện thoại")}
                      onChange={(e) => handleChangeFormData(e, "Điện thoại")}
                   />
                   {errors["Điện thoại"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Điện thoại"].message}
                      </p>
                   )}
                </div>
-               <div className="flex items-center relative">
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Email")}
                      field="Email"
                      register={{ ...register("Email") }}
-                     type="text"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Email")}
                      onChange={(e) => handleChangeFormData(e, "Email")}
                   />
                   {errors["Email"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Email"].message}
                      </p>
                   )}
                </div>
-               <div className="flex items-center relative">
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Mật khẩu")}
                      field="Mật khẩu"
                      register={{ ...register("Mật khẩu") }}
                      type="password"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
                      onChange={(e) => handleChangeFormData(e, "Mật khẩu", null, true)}
                   />
                   {errors["Mật khẩu"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] w-max`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Mật khẩu"].message}
                      </p>
                   )}
                </div>
-               <div className="flex items-center relative">
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Xác nhận mật khẩu")}
                      field="Xác nhận mật khẩu"
                      register={{ ...register("Xác nhận mật khẩu") }}
                      type="password"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Xác nhận mật khẩu")}
                      onChange={(e) => handleChangeFormData(e, "Xác nhận mật khẩu", null, true)}
                   />
                   {errors["Xác nhận mật khẩu"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Xác nhận mật khẩu"].message}
                      </p>
                   )}
                </div>
-               <div className="flex items-center relative">
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Địa chỉ")}
                      field="Địa chỉ"
                      register={{ ...register("Địa chỉ") }}
-                     type="text"
                      placeholder="Số nhà, tên đường, phường/xã"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Địa chỉ")}
                      onChange={(e) => handleChangeFormData(e, "Địa chỉ")}
                   />
                   {errors["Địa chỉ"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Địa chỉ"].message}
                      </p>
                   )}
@@ -223,12 +238,16 @@ function SignUpForm() {
                   <div className="text-thirtieth-color font-[700]">Không lấy được dữ liệu tỉnh thành</div>
                ) : (
                   <>
-                     <div className="flex items-center relative">
+                     <div className={cx("field-item", "flex items-center relative")}>
                         <Select
                            value={getValues("Tỉnh/thành")}
-                           labelCl={`flex relative`}
-                           fieldCl={`absolute mr-2 top-[50%] translate-y-[-50%] right-[100%] text-nowrap text-[16px]`}
-                           selectCl={`border border-solid border-black p-2 w-[500px]`}
+                           selectWrapperCl={`flex`}
+                           labelCl={cx("select-label", `flex relative`)}
+                           fieldCl={cx(
+                              "select-field",
+                              `absolute mr-2 top-[50%] translate-y-[-50%] right-[100%] text-nowrap text-[16px]`,
+                           )}
+                           selectCl={cx("select", `border border-solid border-black p-2 w-[500px]`)}
                            placeholder="-- Chọn tỉnh thành"
                            field={"Tỉnh/thành"}
                            register={{ ...register("Tỉnh/thành") }}
@@ -239,17 +258,21 @@ function SignUpForm() {
                            onChange={(e) => handleChangeFormData(e, "Tỉnh/thành", "province")}
                         />
                         {errors["Tỉnh/thành"]?.message && (
-                           <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                           <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                               {errors["Tỉnh/thành"].message}
                            </p>
                         )}
                      </div>
-                     <div className="flex items-center relative">
+                     <div className={cx("field-item", "flex items-center relative")}>
                         <Select
                            value={getValues("Quận/huyện")}
-                           labelCl={`flex relative`}
-                           fieldCl={`absolute mr-2 top-[50%] translate-y-[-50%] right-[100%] text-nowrap text-[16px]`}
-                           selectCl={`border border-solid border-black p-2 w-[500px]`}
+                           selectWrapperCl={`flex w-full`}
+                           labelCl={cx("select-label", `flex relative`)}
+                           fieldCl={cx(
+                              "select-field",
+                              `absolute mr-2 top-[50%] translate-y-[-50%] right-[100%] text-nowrap text-[16px]`,
+                           )}
+                           selectCl={cx("select", `border border-solid border-black p-2 w-[500px]`)}
                            placeholder="-- Chọn quận huyện"
                            field={"Quận/huyện"}
                            register={{
@@ -262,7 +285,7 @@ function SignUpForm() {
                            onChange={(e) => handleChangeFormData(e, "Quận/huyện", "district")}
                         />
                         {errors["Quận/huyện"]?.message && (
-                           <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                           <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                               {errors["Quận/huyện"].message}
                            </p>
                         )}
@@ -270,7 +293,7 @@ function SignUpForm() {
                   </>
                )}
             </div>
-            <div className="my-4">
+            <div className={"my-4"}>
                <div>
                   <ReCAPTCHA sitekey={import.meta.env.VITE_RECAPTCHA_KEY} onChange={handleReCaptcha} />
                   {errors["recaptcha"]?.message && (

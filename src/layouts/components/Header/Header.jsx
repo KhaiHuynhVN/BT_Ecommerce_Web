@@ -21,7 +21,7 @@ import styles from "./Header.module.scss";
 const cx = classNames.bind(styles);
 
 function Header() {
-   const isSignIn = true;
+   const isSignIn = false;
    const dispatch = useDispatch();
 
    const showProductNavBtnRef = useRef(null);
@@ -33,34 +33,76 @@ function Header() {
    };
 
    return (
-      <header className="grid gap-[1rem]">
-         <div className="flex justify-between items-center bg-primary-color">
-            <div className="flex gap-[2px]">
-               <FacebookIframe />
-               <NavMain />
+      <header className={cx("wrapper", "grid gap-[1rem]")}>
+         <div>
+            <div className={`flex justify-between items-center bg-primary-color`}>
+               <div className="flex gap-[2px]">
+                  <FacebookIframe />
+                  <NavMain />
+               </div>
+               {isSignIn ? (
+                  <Button
+                     className={cx("nav-item", "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer")}
+                     to={routesConfig.signUp.path}
+                     leftIcon={<i className="bi bi-box-arrow-in-right text-secondary-color"></i>}
+                  >
+                     Thoát
+                  </Button>
+               ) : (
+                  <>
+                     <Button
+                        className={cx(
+                           "nav-item",
+                           "sign-up-btn",
+                           "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer",
+                        )}
+                        to={routesConfig.signUp.path}
+                        leftIcon={<i className="bi bi-file-earmark-person text-secondary-color"></i>}
+                     >
+                        Đăng ký
+                     </Button>
+                     <Button
+                        className={cx(
+                           "nav-item",
+                           "account-btn",
+                           "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer",
+                        )}
+                        to={routesConfig.signIn.path}
+                        leftIcon={<i className="bi bi-file-earmark-person text-secondary-color"></i>}
+                     >
+                        Tài khoản
+                     </Button>
+                  </>
+               )}
             </div>
-            <Button
-               className={cx("nav-item", "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer")}
-               to={routesConfig.signUp.path}
-            >
-               <i className="bi bi-file-earmark-person text-secondary-color mr-2"></i>
-               Đăng ký
-            </Button>
+            {isSignIn && (
+               <Button
+                  className={cx(
+                     "nav-item",
+                     "user-detail-btn",
+                     "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer",
+                  )}
+                  to={routesConfig.signUp.path}
+                  leftIcon={<i className="bi bi-file-earmark-person text-secondary-color"></i>}
+               >
+                  Huỳnh Tiến Khải
+               </Button>
+            )}
          </div>
 
-         <div className="grid grid-cols-12 gap-[1rem]">
-            <Link className="col-span-3 p-[0.5rem] flex" to={routesConfig.home.path}>
+         <div className={cx("header-center", "grid grid-cols-12 gap-[1rem]")}>
+            <Link className={cx("header-center-logo", "col-span-3 p-[0.5rem] flex")} to={routesConfig.home.path}>
                <Image className="m-[auto_0] cursor-pointer" src={images.logo} alt="logo" />
             </Link>
-            <div className="col-span-6 flex justify-around">
-               <div className="flex items-center p-[0.5rem]">
+            <div className={cx("header-center-info", "col-span-6 flex justify-around")}>
+               <div className={cx("header-center-info__item", "flex items-center p-[0.5rem]")}>
                   <i className="bi bi-telephone-fill text-quaternary-color text-[2rem] font-[400] mr-2 flex-shrink-0"></i>
                   <div className="flex flex-col">
                      <span className="text-quinary-color text-[1.2rem]">028 3720 2968 - 0967 266 277</span>
                      <span className="text-senary-color">Thứ 2-6: 8-17H; Thứ 7: 8-12H</span>
                   </div>
                </div>
-               <div className="flex items-center p-[0.5rem]">
+               <div className={cx("header-center-info__item", "flex items-center p-[0.5rem]")}>
                   <i className="bi bi-mailbox text-quaternary-color text-[2rem] font-[400] mr-2 flex-shrink-0"></i>
                   <div className="flex flex-col">
                      <span className="text-quinary-color text-[1.2rem]">sales@thegioidien.com</span>
@@ -68,11 +110,11 @@ function Header() {
                   </div>
                </div>
             </div>
-            <div className="col-span-3">{isSignIn ? <UserMenu /> : <SignInForm />}</div>
+            <div className={cx("header-center-right", "col-span-3")}>{isSignIn ? <UserMenu /> : <SignInForm />}</div>
          </div>
 
-         <div className="grid grid-cols-12 gap-[1rem] relative">
-            <div className="col-span-3">
+         <div className={cx("header-bottom", "grid grid-cols-12 gap-[1rem] relative")}>
+            <div className={cx("header-bottom-left", "col-span-3")}>
                <div
                   ref={showProductNavBtnRef}
                   className="flex justify-between items-center bg-tertiary-color hover:bg-fourteenth-color transition-all duration-[0.2s] p-[0.7rem] text-white text-[1.1rem] cursor-pointer"
@@ -85,7 +127,7 @@ function Header() {
 
                {isShowProductNav && <ProductNav showProductNavBtnRef={showProductNavBtnRef} />}
             </div>
-            <div className="col-span-6">
+            <div className={cx("header-bottom-search", "col-span-6")}>
                <div className="rounded-[3px] p-1 bg-tertiary-color h-full">
                   <div className="bg-thirteenth-color flex h-full">
                      <Input wrapperCl="flex-1 p-[0.3rem] text-[1.2rem]" type="text" placeholder="Tìm sản phẩm..." />
@@ -95,7 +137,7 @@ function Header() {
                   </div>
                </div>
             </div>
-            <div className="col-span-3">
+            <div className={cx("header-bottom-right", "col-span-3")}>
                <Button
                   className="bg-tertiary-color text-white text-[1.1rem] h-full w-full py-[0.5rem] px-[0.7rem] flex justify-center items-center"
                   leftIcon={<i className="bi bi-cart text-[22px] text-denary-color"></i>}

@@ -61,6 +61,7 @@ export default {
             "fifty-fourth-color": "#FF0000",
             "fifty-fifth-color": "#F1F1F1",
             "fifty-sixth-color": "#3B3B3B",
+            "fifty-seventh-color": "#FFC2D4",
          },
       },
    },

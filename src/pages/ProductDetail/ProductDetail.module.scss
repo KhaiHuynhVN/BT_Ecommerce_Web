@@ -1,3 +1,68 @@
 .comment-count {
    background: linear-gradient(to top, #48322a, #604d46);
 }
+
+@media (max-width: 1275px) {
+   .wrapper {
+      .chat-wrapper {
+         flex-direction: column;
+         align-items: unset;
+      }
+   }
+}
+
+@media (max-width: 1200px) {
+   .wrapper {
+      .product-detail-header__left {
+         grid-column: span 4 / span 4;
+      }
+
+      .product-detail-header__right {
+         grid-column: span 8 / span 8;
+      }
+
+      .product-detail-content__images,
+      .product-detail-content__description {
+         grid-column: span 6 / span 6;
+      }
+   }
+}
+
+@media (max-width: 767px) {
+   .wrapper {
+      .chat-wrapper {
+         flex-direction: row;
+         align-items: center;
+      }
+
+      .product-detail-header__left {
+         grid-column: span 12 / span 12;
+      }
+
+      .product-detail-header__right {
+         grid-column: span 12 / span 12;
+
+         .right-amount-wrapper {
+            justify-content: center;
+         }
+      }
+
+      .product-detail-content__images,
+      .product-detail-content__description {
+         grid-column: span 12 / span 12;
+      }
+
+      .product-detail-content__description {
+         height: auto;
+         overflow-y: unset;
+      }
+   }
+}
+
+@media (max-width: 575px) {
+   .wrapper {
+      .right-amount-wrapper__text {
+         display: none;
+      }
+   }
+}

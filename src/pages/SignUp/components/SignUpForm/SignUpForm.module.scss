@@ -1,0 +1,60 @@
+@media (max-width: 1200px) {
+   .wrapper {
+      .input,
+      .select {
+         width: 400px;
+      }
+   }
+}
+
+@media (max-width: 992px) {
+   .wrapper {
+      .input,
+      .select {
+         width: 300px;
+      }
+   }
+}
+
+@media (max-width: 850px) {
+   .wrapper {
+      .field-item {
+         display: block;
+         width: 100%;
+      }
+
+      .input,
+      .select {
+         width: 100%;
+      }
+
+      .select-field,
+      .field {
+         position: unset;
+         margin-bottom: 4px;
+      }
+
+      .field-label {
+         display: block;
+      }
+
+      .form-container-wrapper,
+      .form-container {
+         width: 100%;
+      }
+
+      .err-msg {
+         position: unset;
+         margin-top: 4px;
+         margin-left: 0;
+      }
+
+      .select-field {
+         transform: unset;
+      }
+
+      .select-label {
+         display: block;
+      }
+   }
+}

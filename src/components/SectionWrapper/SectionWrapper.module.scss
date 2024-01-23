@@ -13,3 +13,11 @@
    border: 1px solid $tertiary-color;
    border-bottom-width: 0;
 }
+
+@media (max-width: 767px) {
+   .wrapper {
+      .title-wrapper {
+         display: block;
+      }
+   }
+}

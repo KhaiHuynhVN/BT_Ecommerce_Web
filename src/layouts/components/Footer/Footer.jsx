@@ -13,8 +13,13 @@ function Footer() {
    return (
       <footer className={cx("wrapper", "mt-[1rem] border-b-[8px] border-solid border-twenty-eighth-color")}>
          <div className="pt-2">
-            <FooterNav />
-            <FooterProductNav />
+            <div className={`p-2`}>
+               <FooterNav />
+            </div>
+
+            <div className={`p-2 pb-4`}>
+               <FooterProductNav />
+            </div>
 
             <div className="border-t border-solid flex flex-col items-center border-tertiary-color p-4">
                <Link className="block w-[110px]" to={"/"}>

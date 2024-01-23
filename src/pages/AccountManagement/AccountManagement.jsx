@@ -10,6 +10,7 @@ import PostWrapper from "../../components/PostWrapper";
 import PostItem from "../../components/PostItem";
 import ChangePasswordForm from "./components/ChangePasswordForm";
 import UserDetailsForm from "./components/UserDetailsForm";
+import OrderNav from "../../components/OrderNav";
 import routesConfig from "../../routesConfig";
 
 import styles from "./AccountManagement.module.scss";
@@ -33,26 +34,7 @@ function AccountManagement() {
          <Breadcrumbs breadcrumbs={routesConfig.account.breadcrumbs} routesConfig={routesConfig} />
 
          <div className={`mt-[1rem]`}>
-            <div className={`flex gap-[1px]`}>
-               <Button noRounded className={`flex-1`} senary leftIcon={<i className="bi bi-filter-square text-denary-color"></i>}>
-                  Dự toán đơn hàng (4)
-               </Button>
-               <Button noRounded className={`flex-1`} senary leftIcon={<i className="bi bi-journal-album text-denary-color"></i>}>
-                  Yêu cầu giá dự án (0)
-               </Button>
-               <Button noRounded className={`flex-1`} senary leftIcon={<i className="bi bi-coin text-denary-color"></i>}>
-                  Bảng báo giá (0)
-               </Button>
-               <Button noRounded className={`flex-1`} senary leftIcon={<i className="bi bi-journal-plus text-denary-color"></i>}>
-                  Đơn hàng đã đặt (0)
-               </Button>
-               <Button noRounded className={`flex-1`} senary leftIcon={<i className="bi bi-journal-check text-denary-color"></i>}>
-                  Đơn hàng đã nhận (0)
-               </Button>
-               <Button noRounded className={`flex-1`} senary leftIcon={<i className="bi bi-journal-minus text-denary-color"></i>}>
-                  Đơn hàng đã hủy (0)
-               </Button>
-            </div>
+            <OrderNav />
             <div className={`mt-[1px]`}>
                <SectionWrapper title={`Thông tin`} leftIcon={<i className="bi bi-person-fill text-denary-color"></i>}>
                   <div className={`bg-fifty-second-color p-[16px_8px] flex`}>

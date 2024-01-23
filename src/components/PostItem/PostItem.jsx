@@ -12,7 +12,7 @@ function PostItem({ image }) {
    return (
       <div className={cx("wrapper")}>
          <Link className="block">
-            <Image className="max-h-[102px] w-full object-contain" src={image} />
+            <Image className="w-full h-full" src={image} />
          </Link>
          <Link className="mt-2 block" to={"/"}>
             Hướng dẫn tìm sản phẩm tại thegioidien.com (P1)

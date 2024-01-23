@@ -1,3 +1,81 @@
-.name-input-container:has(.error-msg) {
+.name-input-container:has(.err-msg) {
    flex: 1;
+}
+
+@media (max-width: 1060px) {
+   .wrapper {
+      .field-item {
+         display: block;
+
+         .err-msg {
+            position: unset;
+            margin-left: 0;
+            margin-top: 4px;
+         }
+      }
+
+      .field-wrapper-top {
+         flex-direction: column;
+         align-items: start;
+      }
+
+      .field-wrapper-top__field-item {
+         .err-msg {
+            margin-left: 8px;
+         }
+      }
+   }
+}
+
+@media (max-width: 992px) {
+   body .wrapper {
+      width: 660px;
+
+      .field-item {
+         display: flex;
+
+         .err-msg {
+            position: absolute;
+            margin-left: 8px;
+            margin-top: 0;
+         }
+      }
+   }
+}
+
+@media (max-width: 900px) {
+   body .wrapper {
+      .field-item {
+         display: block;
+
+         .err-msg {
+            position: unset;
+            margin-left: 0;
+            margin-top: 4px;
+         }
+      }
+   }
+}
+
+@media (max-width: 767px) {
+   body .wrapper {
+      width: 100%;
+
+      .field-wrapper-top__field-item {
+         display: block;
+         width: 100%;
+
+         .err-msg {
+            position: unset;
+            margin-left: 0;
+            margin-top: 4px;
+         }
+      }
+
+      .input-wrapper-main,
+      .input-wrapper,
+      .input {
+         width: 100%;
+      }
+   }
 }

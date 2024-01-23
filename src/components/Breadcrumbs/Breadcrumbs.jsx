@@ -8,12 +8,16 @@ const cx = classNames.bind(styles);
 
 function Breadcrumbs({ breadcrumbs = [], routesConfig = {} }) {
    return (
-      <div className={cx("wrapper", "flex text-[19.2px]")}>
+      <div className={cx("wrapper", "flex flex-wrap text-[19.2px]")}>
          {breadcrumbs.map((item, index, _this) => {
             const Component = index === _this.length - 1 ? "span" : Link;
 
             return (
-               <Component key={index} className="flex items-center p-2 pr-0" to={routesConfig[item].path}>
+               <Component
+                  key={index}
+                  className={cx("breadcrumbs-item", "flex items-center p-2 pr-0")}
+                  to={routesConfig[item].path}
+               >
                   {index === 0 ? (
                      <i className="bi bi-house flex-shrink-0 text-[30px] text-twenty-ninth-color size-[32px] relative bottom-[8px] mr-[4.8px]"></i>
                   ) : (

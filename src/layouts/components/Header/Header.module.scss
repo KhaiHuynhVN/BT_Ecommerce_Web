@@ -5,3 +5,134 @@
       background: linear-gradient(to bottom, #f8ead9, #c24d37, #b9331a, #b9331a, #b9331a, #b21e02, #b21e02);
    }
 }
+
+.user-detail-btn {
+   display: none;
+}
+
+.account-btn {
+   display: none;
+}
+
+@media (max-width: 1283px) {
+   .wrapper {
+      .header-center-info {
+         flex-direction: column-reverse;
+         .header-center-info__item {
+            justify-content: center;
+         }
+      }
+   }
+}
+
+@media (max-width: 1200px) {
+   .wrapper {
+      .header-center-info {
+         grid-column: span 5 / span 5;
+      }
+
+      .header-center-right {
+         grid-column: span 4 / span 4;
+      }
+
+      .header-bottom-search,
+      .header-bottom-left,
+      .header-bottom-right {
+         grid-column: span 4 / span 4;
+      }
+   }
+}
+
+@media (max-width: 992px) {
+   .wrapper {
+      .header-center-info {
+         grid-column: span 12 / span 12;
+         flex-direction: row;
+         order: 1;
+      }
+
+      .header-center-logo,
+      .header-center-right {
+         grid-column: span 6 / span 6;
+         order: 0;
+      }
+
+      .header-bottom-left {
+         grid-column: span 5 / span 5;
+      }
+
+      .header-bottom-search {
+         grid-column: span 4 / span 4;
+      }
+
+      .header-bottom-right {
+         grid-column: span 3 / span 3;
+      }
+   }
+}
+
+@media (max-width: 767px) {
+   .wrapper {
+      .header-center-logo {
+         grid-column: span 5 / span 5;
+      }
+
+      .header-center-right {
+         grid-column: span 7 / span 7;
+      }
+
+      .header-bottom-search {
+         grid-column: span 12 / span 12;
+         order: 0;
+      }
+
+      .header-bottom-left,
+      .header-bottom-right {
+         grid-column: span 6 / span 6;
+         order: 1;
+      }
+   }
+}
+
+@media (max-width: 644px) {
+   .wrapper {
+      .header-center-info {
+         flex-direction: column-reverse;
+      }
+   }
+}
+
+@media (max-width: 575px) {
+   .wrapper {
+      .user-detail-btn {
+         display: flex;
+         margin-top: 1px;
+      }
+
+      .account-btn {
+         display: flex;
+      }
+
+      .sign-up-btn {
+         display: none;
+      }
+
+      .header-center-logo {
+         grid-column: span 12 / span 12;
+      }
+
+      .header-center-right {
+         display: none;
+      }
+
+      .header-bottom-search,
+      .header-bottom-left,
+      .header-bottom-right {
+         grid-column: span 12 / span 12;
+      }
+
+      .header-bottom-right {
+         order: -1;
+      }
+   }
+}

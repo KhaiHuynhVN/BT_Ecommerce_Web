@@ -65,9 +65,9 @@ const commentFormSchema = yup
       ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
       ["Email"]: yup
          .string()
-         .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!")
+         .required("Vui lòng nhập email!")
          .default("")
-         .required("Vui lòng nhập email!"),
+         .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
       ["Nội dung"]: yup.string().required("Vui lòng nhập nội dung!"),
    })
    .required();

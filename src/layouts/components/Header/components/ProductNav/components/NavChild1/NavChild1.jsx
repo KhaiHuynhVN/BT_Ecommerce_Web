@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 
 import NavChild1Item from "./components/NavChild1Item";
@@ -9,8 +9,8 @@ const cx = classNames.bind(styles);
 
 function NavChild1({ data }) {
    return (
-      <nav>
-         <ul>
+      <nav className={cx("wrapper", `bg-white`)}>
+         <ul className={cx("test")}>
             {data.map((item, index) => (
                <li
                   key={index}

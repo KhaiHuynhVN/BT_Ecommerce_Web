@@ -6,9 +6,8 @@ import styles from "./PostWrapper.module.scss";
 
 const cx = classNames.bind(styles);
 
-function PostWrapper({ children, title, leftIcon, rightIcon, className, gridCl }) {
-   const classes = cx("wrapper", className);
-   const gridClasses = gridCl;
+function PostWrapper({ children, title, leftIcon, rightIcon, className }) {
+   const classes = cx("wrapper", `border-b-[3px] border-twenty-second-color border-solid`, className);
 
    return (
       <div className={classes}>
@@ -17,7 +16,7 @@ function PostWrapper({ children, title, leftIcon, rightIcon, className, gridCl }
             {title}
             {rightIcon && <span className="ml-2 flex justify-center items-center">{rightIcon}</span>}
          </Link>
-         <div className={gridClasses}>{children}</div>
+         <div>{children}</div>
       </div>
    );
 }
@@ -28,7 +27,6 @@ PostWrapper.propTypes = {
    className: PropTypes.string,
    leftIcon: PropTypes.node,
    rightIcon: PropTypes.node,
-   gridCl: PropTypes.string,
 };
 
 export default PostWrapper;

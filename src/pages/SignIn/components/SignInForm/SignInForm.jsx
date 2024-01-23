@@ -44,45 +44,50 @@ function SignInForm() {
 
    return (
       <form className={cx("wrapper", "flex flex-col items-center")} onSubmit={handleSubmit(onSubmitHandle)}>
-         <div className="flex flex-col items-start">
-            <div className="flex flex-col gap-4">
-               <div className="flex items-center relative">
+         <div className={cx("form-container-wrapper", "flex flex-col")}>
+            <div className={cx("form-container", "flex flex-col gap-4 items-start")}>
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Tài khoản") || ""}
                      placeholder="Email hoặc số điện thoại"
-                     field="Tài khoản"
                      register={{ ...register("Tài khoản") }}
-                     type="text"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     field="Tài khoản"
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Tài khoản")}
                      onChange={(e) => handleChangeFormData(e, "Tài khoản")}
                   />
                   {errors["Tài khoản"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Tài khoản"].message}
                      </p>
                   )}
                </div>
-               <div className="flex items-center relative">
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Mật khẩu") || ""}
-                     field="Mật khẩu"
-                     register={{ ...register("Mật khẩu") }}
                      type="password"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     register={{ ...register("Mật khẩu") }}
+                     field="Mật khẩu"
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("field-label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
                      onChange={(e) => handleChangeFormData(e, "Mật khẩu", true)}
                   />
                   {errors["Mật khẩu"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] w-max`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Mật khẩu"].message}
                      </p>
                   )}

@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function FooterNav() {
    return (
       <nav>
-         <ul className="p-2 flex justify-center items-center gap-2">
+         <ul className="flex flex-wrap justify-center items-center gap-2">
             <li>
                <Link className={cx("nav-item", "text-[16px] text-white p-[6.4px_11.2px] rounded-[3px] block")} to="/">
                   <i className="bi bi-house text-twenty-fourth-color mr-[4.8px]"></i>

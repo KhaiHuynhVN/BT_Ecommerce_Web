@@ -41,60 +41,81 @@ function CommentForm() {
 
    return (
       <form className={cx("wrapper", "w-[840px]")} onSubmit={handleSubmit(onSubmitHandle)}>
-         <div className={`flex gap-2`}>
-            <div className={cx("name-input-container", `flex items-center`)}>
-               <Input
-                  value={getValues("Họ tên") || ""}
-                  placeholder="Họ tên..."
-                  register={{ ...register("Họ tên") }}
-                  inputCl={`border border-solid border-black focus:outline focus:outline-black focus:outline-[1px] bg-white 
-                  focus:bg-forty-first-color p-[4px_8px] text-[16px] w-[320px]`}
-                  inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
-                  onChange={(e) => handleChangeFormData(e, "Họ tên")}
-                  onBlur={(e) => handleBlurInput(e, "Họ tên")}
-               />
-               {errors["Họ tên"] && (
-                  <span className={cx("error-msg", `text-forty-second-color text-[16px] ml-2`)}>{errors["Họ tên"].message}</span>
-               )}
+         <div className={cx("field-wrapper")}>
+            <div className={cx("field-wrapper-top", `flex gap-2`)}>
+               <div className={cx("name-input-container", "field-wrapper-top__field-item", `flex items-center`)}>
+                  <Input
+                     value={getValues("Họ tên") || ""}
+                     placeholder="Họ tên..."
+                     register={{ ...register("Họ tên") }}
+                     wrapperCl={cx("input-wrapper-main")}
+                     inputWrapperCl={cx("input-wrapper")}
+                     inputCl={cx(
+                        "input",
+                        `border border-solid border-black focus:outline focus:outline-black focus:outline-[1px] bg-white 
+                     focus:bg-forty-first-color p-[4px_8px] text-[16px] w-[320px]`,
+                     )}
+                     inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
+                     onChange={(e) => handleChangeFormData(e, "Họ tên")}
+                     onBlur={(e) => handleBlurInput(e, "Họ tên")}
+                  />
+                  {errors["Họ tên"] && (
+                     <span className={cx("err-msg", `text-forty-second-color block text-[16px] ml-2`)}>
+                        {errors["Họ tên"].message}
+                     </span>
+                  )}
+               </div>
+               <div className={cx("field-wrapper-top__field-item", `flex items-center relative`)}>
+                  <Input
+                     value={getValues("Email") || ""}
+                     placeholder="Email..."
+                     register={{ ...register("Email") }}
+                     wrapperCl={cx("input-wrapper-main")}
+                     inputWrapperCl={cx("input-wrapper")}
+                     inputCl={cx(
+                        "input",
+                        `border border-solid border-black focus:outline focus:outline-black focus:outline-[1px] bg-white 
+                     focus:bg-forty-first-color p-[4px_8px] text-[16px] w-[320px]`,
+                     )}
+                     inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
+                     onChange={(e) => handleChangeFormData(e, "Email")}
+                     onBlur={(e) => handleBlurInput(e, "Email")}
+                  />
+                  {errors["Email"] && (
+                     <span
+                        className={cx("err-msg", `text-forty-second-color block text-[16px] ml-2 absolute left-full text-nowrap`)}
+                     >
+                        {errors["Email"].message}
+                     </span>
+                  )}
+               </div>
             </div>
-            <div className={`flex items-center relative`}>
+            <div className={cx("field-item", `flex relative`)}>
                <Input
-                  value={getValues("Email") || ""}
-                  placeholder="Email..."
-                  register={{ ...register("Email") }}
+                  value={getValues("Nội dung") || ""}
+                  placeholder="Nội dung..."
+                  register={{ ...register("Nội dung") }}
+                  wrapperCl={`mt-2 flex-1`}
+                  inputWrapperCl={`w-full`}
                   inputCl={`border border-solid border-black focus:outline focus:outline-black focus:outline-[1px] bg-white 
-                   focus:bg-forty-first-color p-[4px_8px] text-[16px] w-[320px]`}
+                   focus:bg-forty-first-color p-[4px_8px] text-[16px] w-full min-h-[92px] max-h-[250px]`}
                   inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
-                  onChange={(e) => handleChangeFormData(e, "Email")}
-                  onBlur={(e) => handleBlurInput(e, "Email")}
+                  textarea
+                  textareaHeight={"92px"}
+                  onChange={(e) => handleChangeFormData(e, "Nội dung")}
+                  onBlur={(e) => handleBlurInput(e, "Nội dung")}
                />
-               {errors["Email"] && (
-                  <span className={`text-forty-second-color text-[16px] ml-2 absolute left-full text-nowrap`}>
-                     {errors["Email"].message}
+               {errors["Nội dung"] && (
+                  <span
+                     className={cx(
+                        "err-msg",
+                        `text-forty-second-color block text-[16px] ml-2 absolute left-full text-nowrap top-2`,
+                     )}
+                  >
+                     {errors["Nội dung"].message}
                   </span>
                )}
             </div>
-         </div>
-         <div className={`flex relative`}>
-            <Input
-               value={getValues("Nội dung") || ""}
-               placeholder="Nội dung..."
-               register={{ ...register("Nội dung") }}
-               wrapperCl={`mt-2 flex-1`}
-               inputWrapperCl={`w-full`}
-               inputCl={`border border-solid border-black focus:outline focus:outline-black focus:outline-[1px] bg-white 
-                focus:bg-forty-first-color p-[4px_8px] text-[16px] w-full min-h-[92px] max-h-[250px]`}
-               inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
-               textarea
-               textareaHeight={"92px"}
-               onChange={(e) => handleChangeFormData(e, "Nội dung")}
-               onBlur={(e) => handleBlurInput(e, "Nội dung")}
-            />
-            {errors["Nội dung"] && (
-               <span className={`text-forty-second-color text-[16px] ml-2 absolute left-full text-nowrap top-2`}>
-                  {errors["Nội dung"].message}
-               </span>
-            )}
          </div>
          <Button
             className={`mt-4 bg-seventeenth-color text-[17.6px] p-[8px_11.2px] text-white`}

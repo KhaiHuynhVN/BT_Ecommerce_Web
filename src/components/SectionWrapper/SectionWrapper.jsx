@@ -28,7 +28,7 @@ function SectionWrapper({
 
    return (
       <div className={classes}>
-         <div className="bg-tertiary-color text-[white] text-[19.2px] flex p-[1px] pb-0">
+         <div className={cx("title-wrapper", "bg-tertiary-color text-[white] text-[19.2px] flex p-[1px] pb-0")}>
             <TitleComp className={titleClasses} to={to}>
                {leftIcon && <span>{leftIcon}</span>}
                {title}
@@ -36,9 +36,11 @@ function SectionWrapper({
             </TitleComp>
 
             {button && (
-               <Button className={`ml-auto items-center`} secondary noRounded leftIcon={btnLeftIcon} to={btnTo}>
-                  {btnTitle}
-               </Button>
+               <div className={`bg-nonary-color flex shrink-0 justify-end ml-auto`}>
+                  <Button className={`items-center text-[16px]`} secondary noRounded leftIcon={btnLeftIcon} to={btnTo}>
+                     {btnTitle}
+                  </Button>
+               </div>
             )}
          </div>
          <div className="bg-tertiary-color p-[0_1px_1px_1px]">

@@ -1,0 +1,56 @@
+@media (max-width: 1200px) {
+   .wrapper {
+      .input {
+         width: 400px;
+      }
+   }
+}
+
+@media (max-width: 1070px) {
+   .wrapper {
+      .field-item {
+         display: block;
+      }
+
+      .err-msg {
+         position: unset;
+         margin-top: 4px;
+         margin-left: 0;
+      }
+   }
+}
+
+@media (max-width: 992px) {
+   .wrapper {
+      .input {
+         width: 300px;
+      }
+   }
+}
+
+@media (max-width: 850px) {
+   .wrapper {
+      .field-item {
+         display: block;
+         width: 100%;
+      }
+
+      .input {
+         width: 100%;
+      }
+
+      .field {
+         position: unset;
+         margin-bottom: 4px;
+      }
+
+      .field-label {
+         display: block;
+      }
+
+      .form-container-wrapper,
+      .form-container {
+         width: 100%;
+      }
+   }
+}

@@ -47,24 +47,26 @@ function ForgotPasswordForm() {
 
    return (
       <form className={cx("wrapper", "flex flex-col items-center mt-[1rem]")} onSubmit={handleSubmit(onSubmitHandle)}>
-         <div className="flex flex-col items-start">
-            <div className="flex flex-col gap-4">
-               <div className="flex items-center relative">
+         <div className={cx("form-container-wrapper", "flex flex-col items-start")}>
+            <div className={cx("form-container", "flex flex-col gap-4")}>
+               <div className={cx("field-item", "flex items-center relative")}>
                   <Input
                      value={getValues("Email") || ""}
                      field="Email"
                      register={{ ...register("Email") }}
-                     type="text"
-                     fieldCl="text-[16px] mr-2 absolute right-[100%] text-nowrap"
-                     labelCl={`flex justify-end relative`}
-                     inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                     outline-1 w-[500px] rounded-[3px]`}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
+                     labelCl={cx("label", `flex justify-end relative`)}
+                     inputCl={cx(
+                        "input",
+                        `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
+                     outline-1 w-[500px] rounded-[3px]`,
+                     )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                      onBlur={(e) => handleBlurInput(e, "Email")}
                      onChange={(e) => handleChangeFormData(e, "Email")}
                   />
                   {errors["Email"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`}>
+                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors["Email"].message}
                      </p>
                   )}

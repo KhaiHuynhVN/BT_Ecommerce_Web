@@ -3,3 +3,9 @@
       background: linear-gradient(to bottom, #f8ead9, #c24d37, #b9331a, #b9331a, #b9331a, #b21e02, #b21e02);
    }
 }
+
+@media (max-width: 990px) {
+   .wrapper {
+      display: none;
+   }
+}

@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 function NavMain() {
    return (
-      <nav>
+      <nav className={cx(`wrapper`)}>
          <ul className="h-full flex items-center gap-[2px] text-[#fff]">
             <li className={cx("nav-item", "bg-tertiary-color py-[0.5rem] px-[0.7rem] cursor-pointer")}>
                <i className="bi bi-file-text-fill text-secondary-color mr-2"></i>
