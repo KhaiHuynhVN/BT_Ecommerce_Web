@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PropTypes from "prop-types";
 
-import Input from "../Input";
-import Button from "../Button";
-import { schema } from "../../reactHookFormSchema";
-import routesConfig from "../../routesConfig";
+import Input from "../../../../components/Input";
+import Button from "../../../../components/Button";
+import { schema } from "../../../../reactHookFormSchema";
+import routesConfig from "../../../../routesConfig";
 
 import styles from "./SignInForm.module.scss";
 

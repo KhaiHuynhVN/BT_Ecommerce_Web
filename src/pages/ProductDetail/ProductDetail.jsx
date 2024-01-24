@@ -8,7 +8,7 @@ import SectionWrapper from "../../components/SectionWrapper";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Image from "../../components/Image";
-import CommentForm from "../../components/CommentForm";
+import CommentForm from "./components/CommentForm";
 import ProductDetailTable from "./components/ProductDetailTable";
 import PostWidget from "../../components/PostWidget";
 import ProductContainer from "../../components/ProductContainer";

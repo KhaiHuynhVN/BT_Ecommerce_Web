@@ -8,10 +8,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import PropTypes from "prop-types";
 
-import Input from "../Input";
-import Button from "../Button";
-import Select from "../Select";
-import { schema } from "../../reactHookFormSchema";
+import Input from "../../../../components/Input";
+import Button from "../../../../components/Button";
+import Select from "../../../../components/Select";
+import { schema } from "../../../../reactHookFormSchema";
 
 import styles from "./SignUpForm.module.scss";
 

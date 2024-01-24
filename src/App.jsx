@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import ScrollToTopBtn from "./components/ScrollToTopBtn";
 
 import routes from "./routes";

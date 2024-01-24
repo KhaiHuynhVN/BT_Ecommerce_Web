@@ -2,9 +2,9 @@ import classNames from "classnames/bind";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-import Input from "../Input";
-import Button from "../Button";
-import { schema } from "../../reactHookFormSchema";
+import Input from "../../../../components/Input";
+import Button from "../../../../components/Button";
+import { schema } from "../../../../reactHookFormSchema";
 
 import styles from "./CommentForm.module.scss";
 
