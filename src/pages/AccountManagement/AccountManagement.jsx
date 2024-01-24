@@ -6,11 +6,10 @@ import Button from "../../components/Button";
 import SectionWrapper from "../../components/SectionWrapper";
 import Select from "../../components/Select";
 import BrandCarousel from "../../components/BrandCarousel";
-import PostWrapper from "../../components/PostWrapper";
-import PostItem from "../../components/PostItem";
 import ChangePasswordForm from "./components/ChangePasswordForm";
 import UserDetailsForm from "./components/UserDetailsForm";
 import OrderNav from "../../components/OrderNav";
+import PostWidget from "../../components/PostWidget";
 import routesConfig from "../../routesConfig";
 
 import styles from "./AccountManagement.module.scss";
@@ -35,6 +34,7 @@ function AccountManagement() {
 
          <div className={`mt-[1rem]`}>
             <OrderNav />
+
             <div className={`mt-[1px]`}>
                <SectionWrapper title={`Thông tin`} leftIcon={<i className="bi bi-person-fill text-denary-color"></i>}>
                   <div className={`bg-fifty-second-color p-[16px_8px] flex`}>
@@ -47,7 +47,7 @@ function AccountManagement() {
                         <span>16/01/2024.</span>
                      </div>
                   </div>
-                  <div className={`p-4 bg-white flex gap-[1rem]`}>
+                  <div className={cx("ui-container", `p-4 bg-white flex gap-[1rem]`)}>
                      <div className={`flex flex-col flex-1 border border-solid border-thirty-eighth-color`}>
                         <div className={`p-2 text-[17.6px] bg-thirty-eighth-color text-center`}>
                            <i className="bi bi-person-lines-fill text-quinary-color mr-2"></i>
@@ -108,6 +108,7 @@ function AccountManagement() {
                                        value={`Thành phố Hồ Chí Minh`}
                                        labelCl={`flex`}
                                        wrapperCl={`w-full`}
+                                       selectWrapperCl={`w-full`}
                                        selectCl={`border border-solid border-black p-2 w-full`}
                                        placeholder="-- Chọn tỉnh thành"
                                        data={["Thành phố Hồ Chí Minh"]}
@@ -120,6 +121,7 @@ function AccountManagement() {
                                        value={`Quận Bình Tân`}
                                        labelCl={`flex`}
                                        wrapperCl={`w-full`}
+                                       selectWrapperCl={`w-full`}
                                        selectCl={`border border-solid border-black p-2 w-full`}
                                        placeholder="-- Chọn quận huyện"
                                        data={["Quận Bình Tân"]}
@@ -148,70 +150,8 @@ function AccountManagement() {
             <BrandCarousel />
          </div>
 
-         <div className="mt-[1rem] grid grid-cols-12 gap-[1rem]">
-            <div className="col-span-4">
-               <PostWrapper
-                  className="border-b-[3px] border-twenty-second-color border-solid"
-                  gridCl="bg-twenty-third-color grid grid-cols-12 p-4 gap-[1.5rem_1rem]"
-                  title="Hướng dẫn - Câu hỏi thường gặp"
-                  leftIcon={<i className="bi bi-patch-question-fill text-secondary-color"></i>}
-               >
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-               </PostWrapper>
-            </div>
-            <div className="col-span-4">
-               <PostWrapper
-                  className="border-b-[3px] border-twenty-second-color border-solid"
-                  gridCl="bg-twenty-third-color grid grid-cols-12 p-4 gap-[1.5rem_1rem]"
-                  title="Tài liệu kỹ thuật"
-                  leftIcon={<i className="bi bi-file-text-fill text-secondary-color"></i>}
-               >
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-               </PostWrapper>
-            </div>
-            <div className="col-span-4">
-               <PostWrapper
-                  className="border-b-[3px] border-twenty-second-color border-solid"
-                  gridCl="bg-twenty-third-color grid grid-cols-12 p-4 gap-[1.5rem_1rem]"
-                  title="Bảng giá sản phẩm"
-                  leftIcon={<i className="bi bi-currency-dollar text-secondary-color"></i>}
-               >
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-               </PostWrapper>
-            </div>
+         <div className={`mt-[1rem]`}>
+            <PostWidget />
          </div>
       </div>
    );

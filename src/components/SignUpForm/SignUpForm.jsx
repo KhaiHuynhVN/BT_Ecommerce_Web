@@ -216,7 +216,7 @@ function SignUpForm({ isReset }) {
                   <div>
                      <Select
                         value={getValues("Tỉnh/thành") || ""}
-                        labelCl={`flex`}
+                        selectWrapperCl={`w-full flex`}
                         selectCl={`border border-solid border-black p-2 w-full`}
                         placeholder="-- Chọn tỉnh thành"
                         register={{ ...register("Tỉnh/thành") }}
@@ -233,7 +233,7 @@ function SignUpForm({ isReset }) {
                   <div>
                      <Select
                         value={getValues("Quận/huyện") || ""}
-                        labelCl={`flex`}
+                        selectWrapperCl={`w-full flex`}
                         selectCl={`border border-solid border-black p-2 w-full`}
                         placeholder="-- Chọn quận huyện"
                         register={{

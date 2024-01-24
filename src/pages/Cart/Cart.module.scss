@@ -1,3 +1,11 @@
 .table-title {
    background: linear-gradient(to bottom, #cbcbcb, #dfdfdf, #cbcbcb);
 }
+
+@media (max-width: 767px) {
+   .wrapper {
+      .select {
+         width: 100%;
+      }
+   }
+}

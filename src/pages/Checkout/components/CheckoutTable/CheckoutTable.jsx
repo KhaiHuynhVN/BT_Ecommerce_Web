@@ -24,8 +24,8 @@ function CheckoutTable() {
             <div className={cx(`tr`, `flex py-2`)}>
                <div className={cx(`text-center w-[40px]`)}></div>
                <div className={cx(`text-center w-[60px]`)}></div>
-               <div className={cx(`text-end flex-1 min-w-[60px] text-thirty-second-color mr-4`)}>Tạm tính:</div>
-               <div className={cx(`th`, `text-end w-[190px] mr-[5px]`)}>2.654.300</div>
+               <div className={cx(`text-end text-[17.6px] flex-1 min-w-[60px] text-thirty-second-color mr-4`)}>Tạm tính:</div>
+               <div className={cx(`th`, `text-end text-[17.6px] w-[190px] mr-[5px]`)}>2.654.300</div>
             </div>
          </div>
       </div>

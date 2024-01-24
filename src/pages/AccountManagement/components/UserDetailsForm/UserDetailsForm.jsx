@@ -180,7 +180,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                </>
             )}
          </div>
-         <div className={`my-4 flex gap-4 justify-center`}>
+         <div className={`my-4 flex flex-wrap gap-4 justify-center`}>
             <Button primary leftIcon={<i className="bi bi-arrow-counterclockwise text-denary-color"></i>}>
                Cập nhật
             </Button>

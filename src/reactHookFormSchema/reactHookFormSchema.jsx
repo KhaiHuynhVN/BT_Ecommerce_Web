@@ -25,7 +25,7 @@ const signUpFormSchema = yup
       ["Quận/huyện"]: yup.string().default("").required("Vui lòng chọn quận huyện!"),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
       accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(true).required(),
-      accepPromotion: yup.boolean().default(false),
+      accepPromotion: yup.boolean().default(true),
    })
    .required();
 

@@ -15,7 +15,7 @@ function CheckoutTableItem() {
          </div>
          <div className={cx(`th`, `p-[5px] flex items-center text-center flex-1 min-w-[60px]`)}>Ổ cắm 5P 32A 500V IP66</div>
          <div className={cx(`th`, `p-[5px] w-[190px]`)}>
-            <div className={`flex justify-between flex-1`}>
+            <div className={`flex justify-between`}>
                <div className={`flex`}>
                   <span className={`text-twentieth-color mr-1`}>ĐVT:</span>
                   <span>Cái</span>
@@ -25,7 +25,7 @@ function CheckoutTableItem() {
                   <span>1</span>
                </div>
             </div>
-            <div className={`flex justify-between flex-1`}>
+            <div className={`flex justify-between`}>
                <div className={`flex`}>
                   <span className={`text-twentieth-color mr-1`}>Đơn giá:</span>
                </div>

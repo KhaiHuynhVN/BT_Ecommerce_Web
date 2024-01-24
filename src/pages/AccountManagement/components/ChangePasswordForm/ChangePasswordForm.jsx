@@ -98,7 +98,7 @@ function ChangePasswordForm({ onClickCancelBtn }) {
                   <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Xác nhận mật khẩu mới"].message}</p>
                )}
             </div>
-            <div className={`my-4 flex gap-4 justify-center`}>
+            <div className={`my-4 flex flex-wrap gap-4 justify-center`}>
                <Button primary leftIcon={<i className="bi bi-arrow-counterclockwise text-denary-color"></i>}>
                   Cập nhật
                </Button>

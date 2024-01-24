@@ -2,12 +2,11 @@ import classNames from "classnames/bind";
 
 import Breadcrumbs from "../../components/Breadcrumbs";
 import BrandCarousel from "../../components/BrandCarousel";
-import PostWrapper from "../../components/PostWrapper";
-import PostItem from "../../components/PostItem";
 import SectionWrapper from "../../components/SectionWrapper";
 import Select from "../../components/Select";
 import CartTable from "./components/CartTable/CartTable";
 import Button from "../../components/Button";
+import PostWidget from "../../components/PostWidget";
 import routesConfig from "../../routesConfig";
 
 import styles from "./Cart.module.scss";
@@ -32,14 +31,20 @@ function Cart() {
                      <span className={`block text-[19.2px]`}>Chọn sản phẩm nhanh</span>
                      <Select
                         wrapperCl={`my-4`}
-                        selectCl={`border border-solid border-transparent outline outline-1 outline-black focus:border-black 
-                        p-2 w-[690px]`}
+                        selectCl={cx(
+                           "select",
+                           `border border-solid border-transparent outline outline-1 outline-black focus:border-black 
+                        p-2 w-[690px]`,
+                        )}
                         placeholder={`-- Chọn danh mục sản phẩm`}
                      />
                      <Select
                         wrapperCl={`my-4`}
-                        selectCl={`border border-solid border-transparent outline outline-1 outline-black focus:border-black 
-                        p-2 w-[690px]`}
+                        selectCl={cx(
+                           "select",
+                           `border border-solid border-transparent outline outline-1 outline-black focus:border-black 
+                        p-2 w-[690px]`,
+                        )}
                         placeholder={`-- Chọn nhãn hiệu`}
                      />
                   </div>
@@ -49,7 +54,7 @@ function Cart() {
                      </span>
                      <CartTable />
                   </div>
-                  <div className={`p-4 flex justify-between`}>
+                  <div className={`p-4 flex flex-wrap gap-2 justify-between`}>
                      <Button
                         primary
                         leftIcon={<i className="bi bi-chevron-left text-denary-color"></i>}
@@ -73,70 +78,8 @@ function Cart() {
             <BrandCarousel />
          </div>
 
-         <div className="mt-[1rem] grid grid-cols-12 gap-[1rem]">
-            <div className="col-span-4">
-               <PostWrapper
-                  className="border-b-[3px] border-twenty-second-color border-solid"
-                  gridCl="bg-twenty-third-color grid grid-cols-12 p-4 gap-[1.5rem_1rem]"
-                  title="Hướng dẫn - Câu hỏi thường gặp"
-                  leftIcon={<i className="bi bi-patch-question-fill text-secondary-color"></i>}
-               >
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/images388638267032664804.jpg" />
-                  </div>
-               </PostWrapper>
-            </div>
-            <div className="col-span-4">
-               <PostWrapper
-                  className="border-b-[3px] border-twenty-second-color border-solid"
-                  gridCl="bg-twenty-third-color grid grid-cols-12 p-4 gap-[1.5rem_1rem]"
-                  title="Tài liệu kỹ thuật"
-                  leftIcon={<i className="bi bi-file-text-fill text-secondary-color"></i>}
-               >
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/TLUG534424638648374342.jpg" />
-                  </div>
-               </PostWrapper>
-            </div>
-            <div className="col-span-4">
-               <PostWrapper
-                  className="border-b-[3px] border-twenty-second-color border-solid"
-                  gridCl="bg-twenty-third-color grid grid-cols-12 p-4 gap-[1.5rem_1rem]"
-                  title="Bảng giá sản phẩm"
-                  leftIcon={<i className="bi bi-currency-dollar text-secondary-color"></i>}
-               >
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-                  <div className="col-span-6">
-                     <PostItem image="https://thegioidien.com/hmhNews/Mennekes181728460066052280268475215.jpg" />
-                  </div>
-               </PostWrapper>
-            </div>
+         <div className={`mt-[1rem]`}>
+            <PostWidget />
          </div>
       </div>
    );
