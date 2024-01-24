@@ -48,47 +48,47 @@ function SignInForm() {
             <div className={cx("form-container", "flex flex-col gap-4 items-start")}>
                <div className={cx("field-item", "flex items-center relative")}>
                   <Input
-                     value={getValues("Tài khoản") || ""}
+                     value={getValues("accountName") || ""}
                      placeholder="Email hoặc số điện thoại"
-                     register={{ ...register("Tài khoản") }}
+                     register={{ ...register("accountName") }}
                      field="Tài khoản"
-                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
                      labelCl={cx("field-label", `flex justify-end relative`)}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
                      inputCl={cx(
                         "input",
                         `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "Tài khoản")}
-                     onChange={(e) => handleChangeFormData(e, "Tài khoản")}
+                     onBlur={(e) => handleBlurInput(e, "accountName")}
+                     onChange={(e) => handleChangeFormData(e, "accountName")}
                   />
-                  {errors["Tài khoản"]?.message && (
+                  {errors.accountName?.message && (
                      <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
-                        {errors["Tài khoản"].message}
+                        {errors.accountName.message}
                      </p>
                   )}
                </div>
                <div className={cx("field-item", "flex items-center relative")}>
                   <Input
-                     value={getValues("Mật khẩu") || ""}
+                     value={getValues("password") || ""}
                      type="password"
-                     register={{ ...register("Mật khẩu") }}
+                     register={{ ...register("password") }}
                      field="Mật khẩu"
-                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
                      labelCl={cx("field-label", `flex justify-end relative`)}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
                      inputCl={cx(
                         "input",
                         `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
-                     onChange={(e) => handleChangeFormData(e, "Mật khẩu", true)}
+                     onBlur={(e) => handleBlurInput(e, "password")}
+                     onChange={(e) => handleChangeFormData(e, "password", true)}
                   />
-                  {errors["Mật khẩu"]?.message && (
+                  {errors.password?.message && (
                      <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
-                        {errors["Mật khẩu"].message}
+                        {errors.password.message}
                      </p>
                   )}
                </div>

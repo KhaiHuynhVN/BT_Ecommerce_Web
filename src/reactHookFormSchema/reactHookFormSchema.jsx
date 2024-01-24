@@ -3,26 +3,26 @@ import * as yup from "yup";
 const signUpFormSchema = yup
    .object()
    .shape({
-      ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      ["Điện thoại"]: yup
+      fullName: yup.string().default("").required("Vui lòng nhập họ tên!"),
+      phoneNumber: yup
          .string()
          .default("")
          .required("Vui lòng nhập số điện thoại!")
          .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
-      ["Email"]: yup
+      email: yup
          .string()
          .default("")
          .required("Vui lòng nhập email!")
          .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
-      ["Mật khẩu"]: yup.string().default("").required("Vui lòng nhập mật khẩu!").min(6, "6 ký tự trở lên"),
-      ["Xác nhận mật khẩu"]: yup
+      password: yup.string().default("").required("Vui lòng nhập mật khẩu!").min(6, "6 ký tự trở lên"),
+      confirmPassword: yup
          .string()
          .default("")
          .required("Vui lòng xác nhận mật khẩu!")
-         .oneOf([yup.ref("Mật khẩu")], "Mật khẩu không khớp!"),
-      ["Địa chỉ"]: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
-      ["Tỉnh/thành"]: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
-      ["Quận/huyện"]: yup.string().default("").required("Vui lòng chọn quận huyện!"),
+         .oneOf([yup.ref("password")], "Mật khẩu không khớp!"),
+      address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
+      province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
+      district: yup.string().default("").required("Vui lòng chọn quận huyện!"),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
       accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(true).required(),
       accepPromotion: yup.boolean().default(true),
@@ -32,20 +32,20 @@ const signUpFormSchema = yup
 const buyNowFormSchema = yup
    .object()
    .shape({
-      ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      ["Điện thoại"]: yup
+      fullName: yup.string().default("").required("Vui lòng nhập họ tên!"),
+      phoneNumber: yup
          .string()
          .default("")
          .required("Vui lòng nhập số điện thoại!")
          .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
-      ["Email"]: yup
+      email: yup
          .string()
          .default("")
          .required("Vui lòng nhập email!")
          .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
-      ["Địa chỉ"]: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
-      ["Tỉnh/thành"]: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
-      ["Quận/huyện"]: yup.string().default("").required("Vui lòng chọn quận huyện!"),
+      address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
+      province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
+      district: yup.string().default("").required("Vui lòng chọn quận huyện!"),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
       accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(true).required(),
    })
@@ -54,28 +54,28 @@ const buyNowFormSchema = yup
 const signInFormSchema = yup
    .object()
    .shape({
-      ["Tài khoản"]: yup.string().default("").required("Vui lòng nhập email hoặc số điện thoại!!"),
-      ["Mật khẩu"]: yup.string().default("").required("Vui lòng nhập mật khẩu!"),
+      accountName: yup.string().default("").required("Vui lòng nhập email hoặc số điện thoại!!"),
+      password: yup.string().default("").required("Vui lòng nhập mật khẩu!"),
    })
    .required();
 
 const commentFormSchema = yup
    .object()
    .shape({
-      ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      ["Email"]: yup
+      fullName: yup.string().default("").required("Vui lòng nhập họ tên!"),
+      email: yup
          .string()
          .required("Vui lòng nhập email!")
          .default("")
          .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
-      ["Nội dung"]: yup.string().required("Vui lòng nhập nội dung!"),
+      content: yup.string().required("Vui lòng nhập nội dung!"),
    })
    .required();
 
 const forgotPasswordSchema = yup
    .object()
    .shape({
-      ["Email"]: yup
+      email: yup
          .string()
          .default("")
          .required("Vui lòng nhập email!")
@@ -100,20 +100,20 @@ const changePasswordSchema = yup
 const userDetailsFormSchema = yup
    .object()
    .shape({
-      ["Họ tên"]: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      ["Điện thoại"]: yup
+      fullName: yup.string().default("").required("Vui lòng nhập họ tên!"),
+      phoneNumber: yup
          .string()
          .default("")
          .required("Vui lòng nhập số điện thoại!")
          .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
-      ["Email"]: yup
+      email: yup
          .string()
          .default("")
          .required("Vui lòng nhập email!")
          .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
-      ["Địa chỉ"]: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
-      ["Tỉnh/thành"]: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
-      ["Quận/huyện"]: yup.string().default("").required("Vui lòng chọn quận huyện!"),
+      address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
+      province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
+      district: yup.string().default("").required("Vui lòng chọn quận huyện!"),
    })
    .required();
 

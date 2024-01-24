@@ -58,13 +58,13 @@ function SignUpForm({ isReset }) {
             e.target.value
                ? setDistrictsData(provincesData?.data.find((item) => item.name === e.target.value).districts)
                : setDistrictsData([]);
-            setValue("Tỉnh/thành", e.target.value.trim());
-            clearErrors("Tỉnh/thành");
-            setValue("Quận/huyện", "");
+            setValue("province", e.target.value.trim());
+            clearErrors("province");
+            setValue("district", "");
             break;
          case "district":
-            setValue("Quận/huyện", e.target.value.trim());
-            clearErrors("Quận/huyện");
+            setValue("district", e.target.value.trim());
+            clearErrors("district");
             break;
          default:
             setValue(key, isPassword ? e.target.value : e.target.value.trimStart());
@@ -85,17 +85,17 @@ function SignUpForm({ isReset }) {
    };
 
    const onSubmitErrorHandle = () => {
-      !getValues("Mật khẩu") && clearErrors("Xác nhận mật khẩu");
-      if (getValues("Mật khẩu").length >= 6) {
-         if (!getValues("Xác nhận mật khẩu")) {
-            setError("Xác nhận mật khẩu", { message: "Vui lòng xác nhận mật khẩu!", type: "required" });
-         } else if (getValues("Mật khẩu") !== getValues("Xác nhận mật khẩu")) {
-            setError("Xác nhận mật khẩu", { message: "Mật khẩu không khớp!", type: "required" });
+      !getValues("password") && clearErrors("confirmPassword");
+      if (getValues("password").length >= 6) {
+         if (!getValues("confirmPassword")) {
+            setError("confirmPassword", { message: "Vui lòng xác nhận mật khẩu!", type: "required" });
+         } else if (getValues("password") !== getValues("confirmPassword")) {
+            setError("confirmPassword", { message: "Mật khẩu không khớp!", type: "required" });
          }
       } else {
-         clearErrors("Xác nhận mật khẩu");
+         clearErrors("confirmPassword");
       }
-      !getValues("Tỉnh/thành") && clearErrors("Quận/huyện");
+      !getValues("province") && clearErrors("district");
    };
 
    const handleBlurInput = (e, key) => {
@@ -113,101 +113,96 @@ function SignUpForm({ isReset }) {
          <div className="flex flex-col gap-4 w-full">
             <div>
                <Input
-                  value={getValues("Họ tên") || ""}
-                  register={{ ...register("Họ tên") }}
-                  type="text"
+                  value={getValues("fullName") || ""}
                   placeholder="Họ tên"
+                  register={{ ...register("fullName") }}
                   inputWrapperCl={`w-full`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Họ tên")}
-                  onChange={(e) => handleChangeFormData(e, "Họ tên")}
+                  onBlur={(e) => handleBlurInput(e, "fullName")}
+                  onChange={(e) => handleChangeFormData(e, "fullName")}
                />
-               {errors["Họ tên"]?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Họ tên"].message}</p>}
+               {errors.fullName?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.fullName.message}</p>}
             </div>
             <div>
                <Input
-                  value={getValues("Điện thoại") || ""}
-                  register={{ ...register("Điện thoại") }}
+                  value={getValues("phoneNumber") || ""}
                   type="number"
                   placeholder="Điện thoại"
+                  register={{ ...register("phoneNumber") }}
                   inputWrapperCl={`w-full`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Điện thoại")}
-                  onChange={(e) => handleChangeFormData(e, "Điện thoại")}
+                  onBlur={(e) => handleBlurInput(e, "phoneNumber")}
+                  onChange={(e) => handleChangeFormData(e, "phoneNumber")}
                />
-               {errors["Điện thoại"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Điện thoại"].message}</p>
+               {errors.phoneNumber?.message && (
+                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.phoneNumber.message}</p>
                )}
             </div>
             <div>
                <Input
-                  value={getValues("Email") || ""}
-                  register={{ ...register("Email") }}
-                  type="text"
+                  value={getValues("email") || ""}
+                  type="email"
                   placeholder="Email"
+                  register={{ ...register("email") }}
                   inputWrapperCl={`w-full`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Email")}
-                  onChange={(e) => handleChangeFormData(e, "Email")}
+                  onBlur={(e) => handleBlurInput(e, "email")}
+                  onChange={(e) => handleChangeFormData(e, "email")}
+                  onInvalid={(e) => e.preventDefault()}
                />
-               {errors["Email"]?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Email"].message}</p>}
+               {errors.email?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.email.message}</p>}
             </div>
             <div>
                <Input
-                  value={getValues("Mật khẩu") || ""}
-                  register={{ ...register("Mật khẩu") }}
+                  value={getValues("password") || ""}
                   type="password"
                   placeholder="Mật khẩu"
+                  register={{ ...register("password") }}
                   inputWrapperCl={`w-full`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
-                  onChange={(e) => handleChangeFormData(e, "Mật khẩu", null, true)}
+                  onBlur={(e) => handleBlurInput(e, "password")}
+                  onChange={(e) => handleChangeFormData(e, "password", null, true)}
                />
-               {errors["Mật khẩu"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Mật khẩu"].message}</p>
-               )}
+               {errors.password?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.password.message}</p>}
             </div>
             <div>
                <Input
-                  value={getValues("Xác nhận mật khẩu") || ""}
-                  register={{ ...register("Xác nhận mật khẩu") }}
+                  value={getValues("confirmPassword") || ""}
                   type="password"
                   placeholder="Xác nhận mật khẩu"
+                  register={{ ...register("confirmPassword") }}
                   inputWrapperCl={`w-full`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Xác nhận mật khẩu")}
-                  onChange={(e) => handleChangeFormData(e, "Xác nhận mật khẩu", null, true)}
+                  onBlur={(e) => handleBlurInput(e, "confirmPassword")}
+                  onChange={(e) => handleChangeFormData(e, "confirmPassword", null, true)}
                />
-               {errors["Xác nhận mật khẩu"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Xác nhận mật khẩu"].message}</p>
+               {errors.confirmPassword?.message && (
+                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.confirmPassword.message}</p>
                )}
             </div>
             <div>
                <Input
-                  value={getValues("Địa chỉ") || ""}
-                  register={{ ...register("Địa chỉ") }}
-                  type="text"
+                  value={getValues("address") || ""}
                   placeholder="Địa chỉ (số nhà, tên đường, phường/xã)"
+                  register={{ ...register("address") }}
                   inputWrapperCl={`w-full`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Địa chỉ")}
-                  onChange={(e) => handleChangeFormData(e, "Địa chỉ")}
+                  onBlur={(e) => handleBlurInput(e, "address")}
+                  onChange={(e) => handleChangeFormData(e, "address")}
                />
-               {errors["Địa chỉ"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Địa chỉ"].message}</p>
-               )}
+               {errors.address?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.address.message}</p>}
             </div>
             {error ? (
                <div className="text-thirtieth-color font-[700] mt-1">Không lấy được dữ liệu tỉnh thành</div>
@@ -215,38 +210,36 @@ function SignUpForm({ isReset }) {
                <>
                   <div>
                      <Select
-                        value={getValues("Tỉnh/thành") || ""}
-                        selectWrapperCl={`w-full flex`}
-                        selectCl={`border border-solid border-black p-2 w-full`}
+                        value={getValues("province") || ""}
                         placeholder="-- Chọn tỉnh thành"
-                        register={{ ...register("Tỉnh/thành") }}
+                        register={{ ...register("province") }}
                         data={provincesData?.data}
                         valueKey={"name"}
                         contentKey={"name"}
+                        selectWrapperCl={`w-full flex`}
+                        selectCl={`border border-solid border-black p-2 w-full`}
                         rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                        onChange={(e) => handleChangeFormData(e, "Tỉnh/thành", "province")}
+                        onChange={(e) => handleChangeFormData(e, "province", "province")}
                      />
-                     {errors["Tỉnh/thành"]?.message && (
-                        <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Tỉnh/thành"].message}</p>
+                     {errors.province?.message && (
+                        <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.province.message}</p>
                      )}
                   </div>
                   <div>
                      <Select
-                        value={getValues("Quận/huyện") || ""}
-                        selectWrapperCl={`w-full flex`}
-                        selectCl={`border border-solid border-black p-2 w-full`}
+                        value={getValues("district") || ""}
                         placeholder="-- Chọn quận huyện"
-                        register={{
-                           ...register("Quận/huyện"),
-                        }}
+                        register={{ ...register("district") }}
                         data={districtsData}
                         valueKey={"name"}
                         contentKey={"name"}
+                        selectWrapperCl={`w-full flex`}
+                        selectCl={`border border-solid border-black p-2 w-full`}
                         rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                        onChange={(e) => handleChangeFormData(e, "Quận/huyện", "district")}
+                        onChange={(e) => handleChangeFormData(e, "district", "district")}
                      />
-                     {errors["Quận/huyện"]?.message && (
-                        <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Quận/huyện"].message}</p>
+                     {errors.district?.message && (
+                        <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.district.message}</p>
                      )}
                   </div>
                </>
@@ -255,20 +248,18 @@ function SignUpForm({ isReset }) {
          <div className="mt-4">
             <div>
                <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_KEY} onChange={handleReCaptcha} />
-               {errors["recaptcha"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["recaptcha"].message}</p>
-               )}
+               {errors.recaptcha?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.recaptcha.message}</p>}
             </div>
             <div>
                <Input
                   checked={getValues("accepTerm") !== undefined ? getValues("accepTerm") : true}
-                  register={{ ...register("accepTerm") }}
+                  type="checkbox"
                   disabled
+                  register={{ ...register("accepTerm") }}
+                  content={`Tôi đồng ý với các điều khoản và quy định sử dụng tại thegioidien.com`}
                   wrapperCl={`mt-4`}
                   inputWrapperCl={`items-center`}
                   inputCl={`size-4`}
-                  type="checkbox"
-                  content={`Tôi đồng ý với các điều khoản và quy định sử dụng tại thegioidien.com`}
                   onChange={(e) => handleChangeFormData(e, "accepTerm", "checkbox")}
                />
                {errors["accepTerm"]?.message && (
@@ -277,12 +268,12 @@ function SignUpForm({ isReset }) {
             </div>
             <Input
                checked={getValues("accepPromotion") !== undefined ? getValues("accepPromotion") : true}
+               type="checkbox"
                register={{ ...register("accepPromotion") }}
+               content={`Nhận thông tin khuyến mãi qua email`}
                wrapperCl={`mt-4`}
                inputWrapperCl={`items-center`}
                inputCl={`size-4`}
-               type="checkbox"
-               content={`Nhận thông tin khuyến mãi qua email`}
                onChange={(e) => handleChangeFormData(e, "accepPromotion", "checkbox")}
             />
             <Button primary className={`mt-4 mx-auto`} leftIcon={<i className="bi bi-chevron-right text-secondary-color"></i>}>

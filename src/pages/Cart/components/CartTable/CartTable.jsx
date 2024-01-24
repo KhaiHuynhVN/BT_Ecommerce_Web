@@ -28,7 +28,7 @@ function CartTable() {
 
    return (
       <div className={cx("wrapper")}>
-         <div className={cx("thead")}>
+         <div className={cx("thead bg-fifty-eighth-color")}>
             <div className={cx("tr", `flex`)}>
                <div className={cx("th", `text-forty-sixth-color p-[5px] text-center w-[50px] shrink-0`)}>STT</div>
                <div className={cx("th", `text-forty-sixth-color p-[5px] text-center w-[60px] shrink-0`)}>Hình</div>

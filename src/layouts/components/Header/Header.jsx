@@ -21,7 +21,7 @@ import styles from "./Header.module.scss";
 const cx = classNames.bind(styles);
 
 function Header() {
-   const isSignIn = true;
+   const isSignIn = false;
    const dispatch = useDispatch();
 
    const showProductNavBtnRef = useRef(null);

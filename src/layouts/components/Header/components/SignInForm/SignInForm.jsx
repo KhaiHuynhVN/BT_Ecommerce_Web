@@ -27,8 +27,8 @@ function SignInForm() {
       resolver: yupResolver(schema.signInFormSchema),
    });
 
-   const handleChangeFormData = (e, key) => {
-      setValue(key, e.target.value.trimStart());
+   const handleChangeFormData = (e, key, isPassword) => {
+      setValue(key, isPassword ? e.target.value : e.target.value.trimStart());
       errors && clearErrors(key);
 
       setAccountIncorrect(false);
@@ -44,31 +44,30 @@ function SignInForm() {
       <form className={cx("wrapper", "p-[0.5rem] bg-nonary-color grid gap-2")} onSubmit={handleSubmit(onSubmitHandle)}>
          <div>
             <Input
-               value={getValues("Tài khoản") || ""}
-               register={{ ...register("Tài khoản") }}
+               value={getValues("accountName") || ""}
+               placeholder="Email hoặc điện thoại"
+               register={{ ...register("accountName") }}
+               field={"Tài khoản"}
                labelCl={"flex justify-between items-center"}
                fieldCl={"text-octonary-color w-[135px] text-[1rem] flex-shrink-0"}
-               field={"Tài khoản"}
                fieldLeftIcon={<i className="bi bi-file-earmark-person text-septenary-color"></i>}
-               type="text"
-               placeholder="Email hoặc điện thoại"
                inputCl={`bg-white text-[16px] p-[0.5rem] border-solid border-[1px] border-black w-full focus:outline 
                focus:outline-[1px] focus:outline-black`}
-               onChange={(e) => handleChangeFormData(e, "Tài khoản")}
+               onChange={(e) => handleChangeFormData(e, "accountName")}
             />
             {accountIncorrect && <p className="text-[16px] pt-1 ml-[135px] text-red-500">Tài khoản không tồn tại!</p>}
          </div>
          <Input
-            value={getValues("Mật khẩu") || ""}
-            register={{ ...register("Mật khẩu") }}
+            value={getValues("password") || ""}
+            type="password"
+            register={{ ...register("password") }}
             labelCl={"flex justify-between items-center"}
             fieldCl={"text-octonary-color w-[135px] text-[1rem] flex-shrink-0"}
             field={"Mật khẩu"}
             fieldLeftIcon={<i className="bi bi-key-fill text-septenary-color"></i>}
-            type="password"
             inputCl={`bg-white text-[16px] p-[0.5rem] border-solid border-[1px] border-black w-full focus:outline 
             focus:outline-[1px] focus:outline-black`}
-            onChange={(e) => handleChangeFormData(e, "Mật khẩu")}
+            onChange={(e) => handleChangeFormData(e, "password", true)}
          />
          <div className="flex items-center">
             <Button to={routesConfig.forgotPassword.path} className="w-[135px] hover:text-twelfth-color">

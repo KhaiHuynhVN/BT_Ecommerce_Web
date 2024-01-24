@@ -51,23 +51,25 @@ function ForgotPasswordForm() {
             <div className={cx("form-container", "flex flex-col gap-4")}>
                <div className={cx("field-item", "flex items-center relative")}>
                   <Input
-                     value={getValues("Email") || ""}
+                     value={getValues("email") || ""}
+                     type="email"
+                     register={{ ...register("email") }}
                      field="Email"
-                     register={{ ...register("Email") }}
-                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
                      labelCl={cx("label", `flex justify-end relative`)}
+                     fieldCl={cx("field", "text-[16px] mr-2 absolute right-[100%] text-nowrap")}
                      inputCl={cx(
                         "input",
                         `border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "Email")}
-                     onChange={(e) => handleChangeFormData(e, "Email")}
+                     onBlur={(e) => handleBlurInput(e, "email")}
+                     onChange={(e) => handleChangeFormData(e, "email")}
+                     onInvalid={(e) => e.preventDefault()}
                   />
-                  {errors["Email"]?.message && (
+                  {errors.email?.message && (
                      <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
-                        {errors["Email"].message}
+                        {errors.email.message}
                      </p>
                   )}
                </div>
@@ -75,8 +77,8 @@ function ForgotPasswordForm() {
             <div className="my-4">
                <div>
                   <ReCAPTCHA sitekey={import.meta.env.VITE_RECAPTCHA_KEY} onChange={handleReCaptcha} />
-                  {errors["recaptcha"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["recaptcha"].message}</p>
+                  {errors.recaptcha?.message && (
+                     <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.recaptcha.message}</p>
                   )}
                </div>
                <Button primary className={`mt-4`} leftIcon={<i className="bi bi-send-fill text-secondary-color"></i>}>

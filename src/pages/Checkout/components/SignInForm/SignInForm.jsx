@@ -53,40 +53,38 @@ function SignInForm({ isReset }) {
          <div className="flex flex-col gap-4 w-full">
             <div>
                <Input
-                  value={getValues("Tài khoản") || ""}
-                  register={{ ...register("Tài khoản") }}
+                  value={getValues("accountName") || ""}
                   placeholder="Tài khoản"
+                  register={{ ...register("accountName") }}
                   field="Tài khoản"
                   labelCl={`block`}
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Tài khoản")}
-                  onChange={(e) => handleChangeFormData(e, "Tài khoản")}
+                  onBlur={(e) => handleBlurInput(e, "accountName")}
+                  onChange={(e) => handleChangeFormData(e, "accountName")}
                />
-               {errors["Tài khoản"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Tài khoản"].message}</p>
+               {errors.accountName?.message && (
+                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.accountName.message}</p>
                )}
             </div>
             <div>
                <Input
-                  value={getValues("Mật khẩu") || ""}
-                  register={{ ...register("Mật khẩu") }}
+                  value={getValues("password") || ""}
                   type="password"
                   placeholder="Mật khẩu"
+                  register={{ ...register("password") }}
                   field="Mật khẩu"
                   labelCl={`block`}
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Mật khẩu")}
-                  onChange={(e) => handleChangeFormData(e, "Mật khẩu", true)}
+                  onBlur={(e) => handleBlurInput(e, "password")}
+                  onChange={(e) => handleChangeFormData(e, "password", true)}
                />
-               {errors["Mật khẩu"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Mật khẩu"].message}</p>
-               )}
+               {errors.password?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.password.message}</p>}
             </div>
             <Button
                className={`max-w-fit hover:decoration-1`}
