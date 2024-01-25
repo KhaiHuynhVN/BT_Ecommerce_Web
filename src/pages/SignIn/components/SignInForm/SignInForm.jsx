@@ -21,6 +21,7 @@ function SignInForm() {
       clearErrors,
       setValue,
       getValues,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.signInFormSchema),
    });
@@ -36,10 +37,8 @@ function SignInForm() {
       !arrErrors.length && reset();
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value;
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
    };
 
    return (
@@ -60,7 +59,7 @@ function SignInForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "accountName")}
+                     onBlur={() => handleBlurInput("accountName")}
                      onChange={(e) => handleChangeFormData(e, "accountName")}
                   />
                   {errors.accountName?.message && (
@@ -83,7 +82,7 @@ function SignInForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "password")}
+                     onBlur={() => handleBlurInput("password")}
                      onChange={(e) => handleChangeFormData(e, "password", true)}
                   />
                   {errors.password?.message && (

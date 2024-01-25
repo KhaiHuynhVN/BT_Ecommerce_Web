@@ -1,5 +1,8 @@
 import * as yup from "yup";
 
+const passwordRegex =
+   /^(?=.*\p{Ll})(?=.*\p{Lu})(?=.*\d)(?=.*[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?])[\p{L}\d!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]{6,}$/u;
+
 const signUpFormSchema = yup
    .object()
    .shape({
@@ -14,15 +17,34 @@ const signUpFormSchema = yup
          .default("")
          .required("Vui lòng nhập email!")
          .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
-      password: yup.string().default("").required("Vui lòng nhập mật khẩu!").min(6, "6 ký tự trở lên"),
+      password: yup
+         .string()
+         .default("")
+         .required("Vui lòng nhập mật khẩu!")
+         .min(6, "Ít nhất 6 ký tự!")
+         .matches(passwordRegex, "Ít nhất 1: số, chữ thường, hoa, ký tự đặc biệt!"),
       confirmPassword: yup
          .string()
          .default("")
-         .required("Vui lòng xác nhận mật khẩu!")
-         .oneOf([yup.ref("password")], "Mật khẩu không khớp!"),
+         .when("password", {
+            is: (password) => password && passwordRegex.test(password),
+            then: () =>
+               yup.string().when("confirmPassword", {
+                  is: (confirmPassword) => !confirmPassword,
+                  then: () => yup.string().required("Vui lòng xác nhận mật khẩu!"),
+                  otherwise: () => yup.string().oneOf([yup.ref("password")], "Mật khẩu không khớp!"),
+               }),
+            otherwise: () => yup.string().default(""),
+         }),
       address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
       province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
-      district: yup.string().default("").required("Vui lòng chọn quận huyện!"),
+      district: yup
+         .string()
+         .default("")
+         .test("is-province-selected", "Vui lòng chọn quận huyện!", function (value) {
+            const { province } = this.parent;
+            return province ? !!value : true;
+         }),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
       accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(true).required(),
       accepPromotion: yup.boolean().default(true),
@@ -45,7 +67,13 @@ const buyNowFormSchema = yup
          .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
       address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
       province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
-      district: yup.string().default("").required("Vui lòng chọn quận huyện!"),
+      district: yup
+         .string()
+         .default("")
+         .test("is-province-selected", "Vui lòng chọn quận huyện!", function (value) {
+            const { province } = this.parent;
+            return province ? !!value : true;
+         }),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
       accepTerm: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(true).required(),
    })
@@ -87,13 +115,26 @@ const forgotPasswordSchema = yup
 const changePasswordSchema = yup
    .object()
    .shape({
-      ["Mật khẩu cũ"]: yup.string().default("").required("Vui lòng nhập mật khẩu cũ!").min(6, "6 ký tự trở lên"),
-      ["Mật khẩu mới"]: yup.string().default("").required("Vui lòng nhập mật khẩu mới!").min(6, "6 ký tự trở lên"),
-      ["Xác nhận mật khẩu mới"]: yup
+      oldPassword: yup.string().default("").required("Vui lòng nhập mật khẩu cũ!").min(6, "6 ký tự trở lên"),
+      newPassword: yup
          .string()
-         .oneOf([yup.ref("Mật khẩu mới")], "Mật khẩu không khớp!")
          .default("")
-         .required("Vui lòng xác nhận mật khẩu mới!"),
+         .required("Vui lòng nhập mật khẩu!")
+         .min(6, "Ít nhất 6 ký tự!")
+         .matches(passwordRegex, "Ít nhất 1: số, chữ thường, hoa, ký tự đặc biệt!"),
+      confirmNewPassword: yup
+         .string()
+         .default("")
+         .when("newPassword", {
+            is: (newPassword) => newPassword && passwordRegex.test(newPassword),
+            then: () =>
+               yup.string().when("confirmNewPassword", {
+                  is: (confirmNewPassword) => !confirmNewPassword,
+                  then: () => yup.string().required("Vui lòng xác nhận mật khẩu!"),
+                  otherwise: () => yup.string().oneOf([yup.ref("newPassword")], "Mật khẩu không khớp!"),
+               }),
+            otherwise: () => yup.string().default(""),
+         }),
    })
    .required();
 
@@ -113,7 +154,13 @@ const userDetailsFormSchema = yup
          .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
       address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
       province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
-      district: yup.string().default("").required("Vui lòng chọn quận huyện!"),
+      district: yup
+         .string()
+         .default("")
+         .test("is-province-selected", "Vui lòng chọn quận huyện!", function (value) {
+            const { province } = this.parent;
+            return province ? !!value : true;
+         }),
    })
    .required();
 

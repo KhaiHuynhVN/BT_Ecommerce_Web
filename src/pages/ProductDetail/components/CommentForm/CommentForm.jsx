@@ -19,6 +19,7 @@ function CommentForm() {
       clearErrors,
       setValue,
       getValues,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.commentFormSchema),
    });
@@ -33,10 +34,8 @@ function CommentForm() {
       reset();
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value;
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
    };
 
    return (
@@ -57,7 +56,7 @@ function CommentForm() {
                      )}
                      inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
                      onChange={(e) => handleChangeFormData(e, "fullName")}
-                     onBlur={(e) => handleBlurInput(e, "fullName")}
+                     onBlur={() => handleBlurInput("fullName")}
                   />
                   {errors.fullName && (
                      <span className={cx("err-msg", `text-forty-second-color block text-[16px] ml-2`)}>
@@ -80,7 +79,7 @@ function CommentForm() {
                      )}
                      inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
                      onChange={(e) => handleChangeFormData(e, "email")}
-                     onBlur={(e) => handleBlurInput(e, "email")}
+                     onBlur={() => handleBlurInput("email")}
                      onInvalid={(e) => e.preventDefault()}
                   />
                   {errors.email && (
@@ -105,7 +104,7 @@ function CommentForm() {
                   focus:bg-forty-first-color p-[4px_8px] text-[16px] w-full min-h-[92px] max-h-[250px]`}
                   inputRightIcon={<span className={`text-forty-second-color`}>*</span>}
                   onChange={(e) => handleChangeFormData(e, "content")}
-                  onBlur={(e) => handleBlurInput(e, "content")}
+                  onBlur={() => handleBlurInput("content")}
                />
                {errors.content && (
                   <span

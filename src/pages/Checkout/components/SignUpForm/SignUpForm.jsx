@@ -1,23 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import classNames from "classnames/bind";
-import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { useEffect, useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { schema } from "../../../../reactHookFormSchema";
+import routesConfig from "../../../../routesConfig";
+import * as services from "../../../../services";
 
 import styles from "./SignUpForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function SignUpForm({ isReset }) {
+   const navigate = useNavigate();
    const [districtsData, setDistrictsData] = useState([]);
    const [reCaptcha, setReCaptcha] = useState(false);
 
@@ -25,18 +28,28 @@ function SignUpForm({ isReset }) {
 
    const { data: provincesData, error } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => axios.get(import.meta.env.VITE_PROVINCE_API),
+      queryFn: () => services.getProvinceService(),
+   });
+
+   const { mutate } = useMutation({
+      mutationFn: (data) => services.signUpService(data),
+      onSuccess: () => {
+         navigate(routesConfig.signIn.path);
+      },
+      onError: (error) => {
+         throw new Error(error);
+      },
    });
 
    const {
       register,
       handleSubmit,
       formState: { errors },
-      reset,
       clearErrors,
-      setError,
       setValue,
       getValues,
+      reset,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.signUpFormSchema),
    });
@@ -55,15 +68,19 @@ function SignUpForm({ isReset }) {
             clearErrors(key);
             break;
          case "province":
-            e.target.value
-               ? setDistrictsData(provincesData?.data.find((item) => item.name === e.target.value).districts)
-               : setDistrictsData([]);
-            setValue("province", e.target.value.trim());
-            clearErrors("province");
+            if (e.target.value) {
+               const district = provincesData?.data.find((item) => item.name === e.target.value).districts;
+               district ? setDistrictsData(district) : setDistrictsData([]);
+            } else {
+               setDistrictsData([]);
+            }
+
+            clearErrors("district");
+            setValue("province", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             setValue("district", "");
             break;
          case "district":
-            setValue("district", e.target.value.trim());
+            setValue("district", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             clearErrors("district");
             break;
          default:
@@ -71,7 +88,6 @@ function SignUpForm({ isReset }) {
             clearErrors(key);
             break;
       }
-      !getValues("accepTerm") && type !== "checkbox" && setValue("accepTerm", true);
    };
 
    const handleReCaptcha = (value) => {
@@ -79,29 +95,30 @@ function SignUpForm({ isReset }) {
    };
 
    const onSubmitHandle = (data) => {
-      console.log(data);
+      const { email, password, phoneNumber: phone, fullName: name, address, district, province } = data;
+
+      const newData = {
+         email,
+         password,
+         phone: `+84${phone.replace(/^0+/, "")}`,
+         name,
+         address: `${address}, ${district}, ${province}`,
+      };
+
       const arrErrors = Object.keys(errors);
-      !arrErrors.length && reset();
+      if (!arrErrors.length) {
+         console.log(newData);
+         mutate(newData);
+      }
    };
 
    const onSubmitErrorHandle = () => {
-      !getValues("password") && clearErrors("confirmPassword");
-      if (getValues("password").length >= 6) {
-         if (!getValues("confirmPassword")) {
-            setError("confirmPassword", { message: "Vui lòng xác nhận mật khẩu!", type: "required" });
-         } else if (getValues("password") !== getValues("confirmPassword")) {
-            setError("confirmPassword", { message: "Mật khẩu không khớp!", type: "required" });
-         }
-      } else {
-         clearErrors("confirmPassword");
-      }
       !getValues("province") && clearErrors("district");
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value;
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
+      key === "password" && Object.keys(errors).length && trigger("confirmPassword");
    };
 
    return (
@@ -120,7 +137,7 @@ function SignUpForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "fullName")}
+                  onBlur={() => handleBlurInput("fullName")}
                   onChange={(e) => handleChangeFormData(e, "fullName")}
                />
                {errors.fullName?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.fullName.message}</p>}
@@ -135,7 +152,7 @@ function SignUpForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "phoneNumber")}
+                  onBlur={() => handleBlurInput("phoneNumber")}
                   onChange={(e) => handleChangeFormData(e, "phoneNumber")}
                />
                {errors.phoneNumber?.message && (
@@ -152,7 +169,7 @@ function SignUpForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "email")}
+                  onBlur={() => handleBlurInput("email")}
                   onChange={(e) => handleChangeFormData(e, "email")}
                   onInvalid={(e) => e.preventDefault()}
                />
@@ -168,7 +185,7 @@ function SignUpForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "password")}
+                  onBlur={() => handleBlurInput("password")}
                   onChange={(e) => handleChangeFormData(e, "password", null, true)}
                />
                {errors.password?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.password.message}</p>}
@@ -183,7 +200,7 @@ function SignUpForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "confirmPassword")}
+                  onBlur={() => handleBlurInput("confirmPassword")}
                   onChange={(e) => handleChangeFormData(e, "confirmPassword", null, true)}
                />
                {errors.confirmPassword?.message && (
@@ -199,7 +216,7 @@ function SignUpForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "address")}
+                  onBlur={() => handleBlurInput("address")}
                   onChange={(e) => handleChangeFormData(e, "address")}
                />
                {errors.address?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.address.message}</p>}

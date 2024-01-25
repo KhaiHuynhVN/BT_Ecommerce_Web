@@ -23,6 +23,7 @@ function SignInForm({ isReset }) {
       clearErrors,
       setValue,
       getValues,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.signInFormSchema),
    });
@@ -42,10 +43,8 @@ function SignInForm({ isReset }) {
       !arrErrors.length && reset();
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value;
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
    };
 
    return (
@@ -62,7 +61,7 @@ function SignInForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "accountName")}
+                  onBlur={() => handleBlurInput("accountName")}
                   onChange={(e) => handleChangeFormData(e, "accountName")}
                />
                {errors.accountName?.message && (
@@ -81,7 +80,7 @@ function SignInForm({ isReset }) {
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "password")}
+                  onBlur={() => handleBlurInput("password")}
                   onChange={(e) => handleChangeFormData(e, "password", true)}
                />
                {errors.password?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.password.message}</p>}

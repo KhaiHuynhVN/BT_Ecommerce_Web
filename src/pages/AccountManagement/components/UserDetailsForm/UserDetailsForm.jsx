@@ -1,15 +1,15 @@
-import classNames from "classnames/bind";
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useQuery } from "@tanstack/react-query";
+import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { schema } from "../../../../reactHookFormSchema";
+import * as services from "../../../../services";
 
 import styles from "./UserDetailsForm.module.scss";
 
@@ -20,7 +20,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
 
    const { data: provincesData, error } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => axios.get(import.meta.env.VITE_PROVINCE_API),
+      queryFn: () => services.getProvinceService(),
    });
 
    const {
@@ -31,6 +31,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
       clearErrors,
       setValue,
       getValues,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.userDetailsFormSchema),
    });
@@ -38,15 +39,19 @@ function UserDetailsForm({ onClickCancelBtn }) {
    const handleChangeFormData = (e, key, type) => {
       switch (type) {
          case "province":
-            e.target.value
-               ? setDistrictsData(provincesData?.data.find((item) => item.name === e.target.value).districts)
-               : setDistrictsData([]);
-            setValue("province", e.target.value.trim());
-            clearErrors("province");
+            if (e.target.value) {
+               const district = provincesData?.data.find((item) => item.name === e.target.value).districts;
+               district ? setDistrictsData(district) : setDistrictsData([]);
+            } else {
+               setDistrictsData([]);
+            }
+
+            clearErrors("district");
+            setValue("province", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             setValue("district", "");
             break;
          case "district":
-            setValue("district", e.target.value.trim());
+            setValue("district", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             clearErrors("district");
             break;
          default:
@@ -66,10 +71,8 @@ function UserDetailsForm({ onClickCancelBtn }) {
       !getValues("province") && clearErrors("district");
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value.trim();
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
    };
 
    return (
@@ -84,7 +87,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
-                  onBlur={(e) => handleBlurInput(e, "fullName")}
+                  onBlur={() => handleBlurInput("fullName")}
                   onChange={(e) => handleChangeFormData(e, "fullName")}
                />
                {errors.fullName?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.fullName.message}</p>}
@@ -99,7 +102,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
-                  onBlur={(e) => handleBlurInput(e, "phoneNumber")}
+                  onBlur={() => handleBlurInput("phoneNumber")}
                   onChange={(e) => handleChangeFormData(e, "phoneNumber")}
                />
                {errors.phoneNumber?.message && (
@@ -116,7 +119,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
-                  onBlur={(e) => handleBlurInput(e, "email")}
+                  onBlur={() => handleBlurInput("email")}
                   onChange={(e) => handleChangeFormData(e, "email")}
                   onInvalid={(e) => e.preventDefault()}
                />
@@ -131,7 +134,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px] bg-white`}
-                  onBlur={(e) => handleBlurInput(e, "address")}
+                  onBlur={() => handleBlurInput("address")}
                   onChange={(e) => handleChangeFormData(e, "address")}
                />
                {errors.address?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.address.message}</p>}

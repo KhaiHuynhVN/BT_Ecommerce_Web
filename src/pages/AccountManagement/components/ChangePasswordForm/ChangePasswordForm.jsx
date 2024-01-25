@@ -20,6 +20,7 @@ function ChangePasswordForm({ onClickCancelBtn }) {
       clearErrors,
       setValue,
       getValues,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.changePasswordSchema),
    });
@@ -35,10 +36,9 @@ function ChangePasswordForm({ onClickCancelBtn }) {
       !arrErrors.length && reset();
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value;
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
+      key === "newPassword" && Object.keys(errors).length && trigger("confirmNewPassword");
    };
 
    return (
@@ -46,56 +46,56 @@ function ChangePasswordForm({ onClickCancelBtn }) {
          <div className="flex flex-col gap-4 w-full">
             <div>
                <Input
-                  value={getValues("Mật khẩu cũ") || ""}
+                  value={getValues("oldPassword") || ""}
                   type="password"
-                  register={{ ...register("Mật khẩu cũ") }}
+                  register={{ ...register("oldPassword") }}
                   field="Mật khẩu cũ"
                   labelCl={`block`}
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`bg-white border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Mật khẩu cũ")}
-                  onChange={(e) => handleChangeFormData(e, "Mật khẩu cũ")}
+                  onBlur={() => handleBlurInput("oldPassword")}
+                  onChange={(e) => handleChangeFormData(e, "oldPassword")}
                />
-               {errors["Mật khẩu cũ"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Mật khẩu cũ"].message}</p>
+               {errors.oldPassword?.message && (
+                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.oldPassword.message}</p>
                )}
             </div>
             <div>
                <Input
-                  value={getValues("Mật khẩu mới") || ""}
+                  value={getValues("newPassword") || ""}
                   type="password"
-                  register={{ ...register("Mật khẩu mới") }}
+                  register={{ ...register("newPassword") }}
                   field="Mật khẩu mới"
                   labelCl={`block`}
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`bg-white border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Mật khẩu mới")}
-                  onChange={(e) => handleChangeFormData(e, "Mật khẩu mới", true)}
+                  onBlur={() => handleBlurInput("newPassword")}
+                  onChange={(e) => handleChangeFormData(e, "newPassword", true)}
                />
-               {errors["Mật khẩu mới"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Mật khẩu mới"].message}</p>
+               {errors.newPassword?.message && (
+                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.newPassword.message}</p>
                )}
             </div>
             <div>
                <Input
-                  value={getValues("Xác nhận mật khẩu mới") || ""}
+                  value={getValues("confirmNewPassword") || ""}
                   type="password"
-                  register={{ ...register("Xác nhận mật khẩu mới") }}
+                  register={{ ...register("confirmNewPassword") }}
                   field="Xác nhận mật khẩu mới"
                   labelCl={`block`}
                   inputWrapperCl={`w-full mt-1`}
                   inputCl={`bg-white border p-2 text-[16px] border-black border-solid focus:outline outline-black 
                   outline-1 w-full rounded-[3px]`}
                   inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onBlur={(e) => handleBlurInput(e, "Xác nhận mật khẩu mới")}
-                  onChange={(e) => handleChangeFormData(e, "Xác nhận mật khẩu mới", true)}
+                  onBlur={() => handleBlurInput("confirmNewPassword")}
+                  onChange={(e) => handleChangeFormData(e, "confirmNewPassword", true)}
                />
-               {errors["Xác nhận mật khẩu mới"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["Xác nhận mật khẩu mới"].message}</p>
+               {errors.confirmNewPassword?.message && (
+                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.confirmNewPassword.message}</p>
                )}
             </div>
             <div className={`my-4 flex flex-wrap gap-4 justify-center`}>

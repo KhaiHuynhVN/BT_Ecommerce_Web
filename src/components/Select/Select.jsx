@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 
 function Select({
    value,
-   disabled,
+   disabled = false,
    register = {},
    wrapperCl,
    selectWrapperCl,
@@ -38,7 +38,14 @@ function Select({
             <div className={fieldClasses}>{field && <span>{field}</span>}</div>
             <div className={selectWrapperClasses}>
                {leftIcon && <span>{leftIcon}</span>}
-               <select {...register} {...props} value={value} className={selectClasses} onChange={(e) => onChange(e)} disabled>
+               <select
+                  {...register}
+                  {...props}
+                  value={value}
+                  className={selectClasses}
+                  onChange={(e) => onChange(e)}
+                  disabled={disabled}
+               >
                   <option value="">{placeholder}</option>
                   {data.map((item, index) => (
                      <option key={index} value={valueKey ? item[valueKey] : item}>

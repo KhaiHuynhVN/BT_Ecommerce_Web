@@ -20,6 +20,7 @@ function ForgotPasswordForm() {
       clearErrors,
       setValue,
       getValues,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.forgotPasswordSchema),
    });
@@ -39,10 +40,8 @@ function ForgotPasswordForm() {
       !arrErrors.length && reset();
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value;
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
    };
 
    return (
@@ -63,7 +62,7 @@ function ForgotPasswordForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "email")}
+                     onBlur={() => handleBlurInput("email")}
                      onChange={(e) => handleChangeFormData(e, "email")}
                      onInvalid={(e) => e.preventDefault()}
                   />

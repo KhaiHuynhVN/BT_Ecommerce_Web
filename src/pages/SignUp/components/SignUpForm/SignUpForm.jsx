@@ -1,37 +1,49 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useNavigate } from "react-router-dom";
 
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import Select from "../../../../components/Select";
 import { schema } from "../../../../reactHookFormSchema";
+import * as services from "../../../../services";
+import routesConfig from "../../../../routesConfig";
 
 import styles from "./SignUpForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function SignUpForm() {
+   const navigate = useNavigate();
    const [districtsData, setDistrictsData] = useState([]);
 
    const { data: provincesData, error } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => axios.get(import.meta.env.VITE_PROVINCE_API),
+      queryFn: () => services.getProvinceService(),
+   });
+
+   const { mutate } = useMutation({
+      mutationFn: (data) => services.signUpService(data),
+      onSuccess: () => {
+         navigate(routesConfig.signIn.path);
+      },
+      onError: (error) => {
+         throw new Error(error);
+      },
    });
 
    const {
       register,
       handleSubmit,
       formState: { errors },
-      reset,
       clearErrors,
-      setError,
       setValue,
       getValues,
+      trigger,
    } = useForm({
       resolver: yupResolver(schema.signUpFormSchema),
    });
@@ -43,15 +55,19 @@ function SignUpForm() {
             clearErrors(key);
             break;
          case "province":
-            e.target.value
-               ? setDistrictsData(provincesData?.data.find((item) => item.name === e.target.value).districts)
-               : setDistrictsData([]);
-            setValue("province", e.target.value.trim());
-            clearErrors("province");
+            if (e.target.value) {
+               const district = provincesData?.data.find((item) => item.name === e.target.value).districts;
+               district ? setDistrictsData(district) : setDistrictsData([]);
+            } else {
+               setDistrictsData([]);
+            }
+
+            clearErrors("district");
+            setValue("province", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             setValue("district", "");
             break;
          case "district":
-            setValue("district", e.target.value.trim());
+            setValue("district", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             clearErrors("district");
             break;
          default:
@@ -66,36 +82,30 @@ function SignUpForm() {
    };
 
    const onSubmitHandle = (data) => {
-      console.log(data);
-      const arrErrors = Object.keys(errors);
-      !arrErrors.length && reset();
-   };
+      const { email, password, phoneNumber: phone, fullName: name, address, district, province } = data;
 
-   const onSubmitErrorHandle = () => {
-      !getValues("password") && clearErrors("confirmPassword");
-      if (getValues("password").length >= 6) {
-         if (!getValues("confirmPassword")) {
-            setError("confirmPassword", { message: "Vui lòng xác nhận mật khẩu!", type: "required" });
-         } else if (getValues("password") !== getValues("confirmPassword")) {
-            setError("confirmPassword", { message: "Mật khẩu không khớp!", type: "required" });
-         }
-      } else {
-         clearErrors("confirmPassword");
+      const newData = {
+         email,
+         password,
+         phone: `+84${phone.replace(/^0+/, "")}`,
+         name,
+         address: `${address}, ${district}, ${province}`,
+      };
+
+      const arrErrors = Object.keys(errors);
+      if (!arrErrors.length) {
+         console.log(newData);
+         mutate(newData);
       }
-      !getValues("province") && clearErrors("district");
    };
 
-   const handleBlurInput = (e, key) => {
-      const value = e.target.value;
-      const arrErrors = Object.keys(errors);
-      arrErrors.length && setValue(key, value, { shouldValidate: true });
+   const handleBlurInput = (key) => {
+      Object.keys(errors).length && trigger(key);
+      key === "password" && Object.keys(errors).length && trigger("confirmPassword");
    };
 
    return (
-      <form
-         className={cx("wrapper", "flex flex-col items-center mt-[1rem]")}
-         onSubmit={handleSubmit(onSubmitHandle, onSubmitErrorHandle)}
-      >
+      <form className={cx("wrapper", "flex flex-col items-center mt-[1rem]")} onSubmit={handleSubmit(onSubmitHandle)}>
          <div className={cx("form-container-wrapper", "flex flex-col")}>
             <div className={cx("form-container", "flex flex-col gap-4 items-start")}>
                <div className={cx("field-item", "flex items-center relative")}>
@@ -111,7 +121,7 @@ function SignUpForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "fullName")}
+                     onBlur={() => handleBlurInput("fullName")}
                      onChange={(e) => handleChangeFormData(e, "fullName")}
                   />
                   {errors.fullName?.message && (
@@ -134,7 +144,7 @@ function SignUpForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "phoneNumber")}
+                     onBlur={() => handleBlurInput("phoneNumber")}
                      onChange={(e) => handleChangeFormData(e, "phoneNumber")}
                   />
                   {errors.phoneNumber?.message && (
@@ -157,7 +167,7 @@ function SignUpForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "email")}
+                     onBlur={() => handleBlurInput("email")}
                      onChange={(e) => handleChangeFormData(e, "email")}
                      onInvalid={(e) => e.preventDefault()}
                   />
@@ -181,7 +191,7 @@ function SignUpForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "password")}
+                     onBlur={() => handleBlurInput("password")}
                      onChange={(e) => handleChangeFormData(e, "password", null, true)}
                   />
                   {errors.password?.message && (
@@ -204,7 +214,7 @@ function SignUpForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "confirmPassword")}
+                     onBlur={() => handleBlurInput("confirmPassword")}
                      onChange={(e) => handleChangeFormData(e, "confirmPassword", null, true)}
                   />
                   {errors.confirmPassword?.message && (
@@ -227,7 +237,7 @@ function SignUpForm() {
                      outline-1 w-[500px] rounded-[3px]`,
                      )}
                      inputRightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                     onBlur={(e) => handleBlurInput(e, "address")}
+                     onBlur={() => handleBlurInput("address")}
                      onChange={(e) => handleChangeFormData(e, "address")}
                   />
                   {errors.address?.message && (
