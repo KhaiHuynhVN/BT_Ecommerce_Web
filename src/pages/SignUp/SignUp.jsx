@@ -1,11 +1,11 @@
 import classNames from "classnames/bind";
 
+import BrandCarousel from "../../components/BrandCarousel/BrandCarousel";
 import Breadcrumbs from "../../components/Breadcrumbs";
+import PostWidget from "../../components/PostWidget";
 import SectionWrapper from "../../components/SectionWrapper";
 import routesConfig from "../../routesConfig/routesConfig";
 import SignUpForm from "./components/SignUpForm";
-import BrandCarousel from "../../components/BrandCarousel/BrandCarousel";
-import PostWidget from "../../components/PostWidget";
 
 import styles from "./SignUp.module.scss";
 

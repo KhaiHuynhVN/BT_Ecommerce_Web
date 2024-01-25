@@ -1,7 +1,8 @@
 import * as yup from "yup";
 
-const passwordRegex =
-   /^(?=.*\p{Ll})(?=.*\p{Lu})(?=.*\d)(?=.*[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?])[\p{L}\d!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]{6,}$/u;
+import { regex } from "../utils";
+
+const { phoneNumberRegex, emailRegex, passwordRegex } = regex;
 
 const signUpFormSchema = yup
    .object()
@@ -11,12 +12,8 @@ const signUpFormSchema = yup
          .string()
          .default("")
          .required("Vui lòng nhập số điện thoại!")
-         .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
-      email: yup
-         .string()
-         .default("")
-         .required("Vui lòng nhập email!")
-         .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
+         .matches(phoneNumberRegex, "Số điện thoại không hợp lệ!"),
+      email: yup.string().default("").required("Vui lòng nhập email!").matches(emailRegex, "Trường này phải là email!"),
       password: yup
          .string()
          .default("")
@@ -59,12 +56,8 @@ const buyNowFormSchema = yup
          .string()
          .default("")
          .required("Vui lòng nhập số điện thoại!")
-         .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
-      email: yup
-         .string()
-         .default("")
-         .required("Vui lòng nhập email!")
-         .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
+         .matches(phoneNumberRegex, "Số điện thoại không hợp lệ!"),
+      email: yup.string().default("").required("Vui lòng nhập email!").matches(emailRegex, "Trường này phải là email!"),
       address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
       province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
       district: yup
@@ -82,7 +75,14 @@ const buyNowFormSchema = yup
 const signInFormSchema = yup
    .object()
    .shape({
-      accountName: yup.string().default("").required("Vui lòng nhập email hoặc số điện thoại!!"),
+      accountName: yup
+         .string()
+         .default("")
+         .test("is-email-or-phone", "Vui lòng nhập email hoặc số điện thoại!", function (value) {
+            if (phoneNumberRegex.test(value)) return true;
+            if (/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value)) return true;
+            return false;
+         }),
       password: yup.string().default("").required("Vui lòng nhập mật khẩu!"),
    })
    .required();
@@ -91,11 +91,7 @@ const commentFormSchema = yup
    .object()
    .shape({
       fullName: yup.string().default("").required("Vui lòng nhập họ tên!"),
-      email: yup
-         .string()
-         .required("Vui lòng nhập email!")
-         .default("")
-         .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
+      email: yup.string().required("Vui lòng nhập email!").default("").matches(emailRegex, "Trường này phải là email!"),
       content: yup.string().required("Vui lòng nhập nội dung!"),
    })
    .required();
@@ -103,11 +99,7 @@ const commentFormSchema = yup
 const forgotPasswordSchema = yup
    .object()
    .shape({
-      email: yup
-         .string()
-         .default("")
-         .required("Vui lòng nhập email!")
-         .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
+      email: yup.string().default("").required("Vui lòng nhập email!").matches(emailRegex, "Trường này phải là email!"),
       recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
    })
    .required();
@@ -146,12 +138,8 @@ const userDetailsFormSchema = yup
          .string()
          .default("")
          .required("Vui lòng nhập số điện thoại!")
-         .matches(/^(0)[0-9]{6,14}$/, "Số điện thoại không hợp lệ!"),
-      email: yup
-         .string()
-         .default("")
-         .required("Vui lòng nhập email!")
-         .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, "Trường này phải là email!"),
+         .matches(phoneNumberRegex, "Số điện thoại không hợp lệ!"),
+      email: yup.string().default("").required("Vui lòng nhập email!").matches(emailRegex, "Trường này phải là email!"),
       address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
       province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
       district: yup
