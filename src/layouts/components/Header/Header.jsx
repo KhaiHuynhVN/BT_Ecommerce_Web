@@ -11,13 +11,13 @@ import Input from "../../../components/Input";
 import routesConfig from "../../../routesConfig";
 import * as services from "../../../services";
 import authSlice, { authSliceSelector } from "../../../store/authSlice";
+import { checkToken } from "../../../utils";
 import FacebookIframe from "./components/FacebookIframe";
 import NavMain from "./components/NavMain";
 import ProductNav from "./components/ProductNav";
 import productNavSlice, { productNavSelector } from "./components/ProductNav/productNavSlice";
 import SignInForm from "./components/SignInForm";
 import UserMenu from "./components/UserMenu";
-import { checkToken } from "../../../utils";
 
 import styles from "./Header.module.scss";
 
@@ -48,8 +48,12 @@ function Header() {
    };
 
    const handleSignOut = async () => {
-      await services.signOutService();
-      dispatch(authSlice.actions.clearUserData());
+      try {
+         await services.signOutService();
+         dispatch(authSlice.actions.clearUserData());
+      } catch (error) {
+         console.log(error);
+      }
    };
 
    return (
@@ -102,7 +106,7 @@ function Header() {
                      "user-detail-btn",
                      "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer",
                   )}
-                  to={routesConfig.signUp.path}
+                  to={routesConfig.account.path}
                   leftIcon={<i className="bi bi-file-earmark-person text-secondary-color"></i>}
                >
                   Huỳnh Tiến Khải

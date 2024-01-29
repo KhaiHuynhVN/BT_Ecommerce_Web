@@ -28,22 +28,25 @@ function SignInForm({ isReset }) {
    const { mutate } = useMutation({
       mutationFn: (data) => services.signInService(data),
       onSuccess: async (data) => {
-         if (!data) {
-            setIsSignInFailed(true);
-            return;
-         }
          const { accessToken, refreshToken } = data.data;
+
          dispatch(authSlice.actions.setToken(accessToken));
          dispatch(authSlice.actions.setRefreshToken(refreshToken));
 
-         const userData = await services.getUserInfoService();
-         dispatch(authSlice.actions.setUserData(userData.data));
-         if (location.pathname !== routesConfig.home.path) {
-            navigate(routesConfig.home.path);
+         try {
+            const userData = await services.getUserInfoService();
+
+            dispatch(authSlice.actions.setUserData(userData.data));
+            if (location.pathname !== routesConfig.home.path) {
+               navigate(routesConfig.home.path);
+            }
+         } catch (error) {
+            console.log(error);
          }
       },
       onError: (error) => {
-         throw new Error(error);
+         setIsSignInFailed(true);
+         console.log("error: ", error);
       },
    });
 

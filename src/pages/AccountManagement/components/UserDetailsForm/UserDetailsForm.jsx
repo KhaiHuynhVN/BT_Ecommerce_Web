@@ -15,12 +15,17 @@ import styles from "./UserDetailsForm.module.scss";
 
 const cx = classNames.bind(styles);
 
-function UserDetailsForm({ onClickCancelBtn }) {
+function UserDetailsForm({ data, onClickCancelBtn }) {
    const [districtsData, setDistrictsData] = useState([]);
+
+   const arrAddress = data.address.split(", ").reverse();
+   const [province, district, ...rest] = arrAddress;
 
    const { data: provincesData, error } = useQuery({
       queryKey: ["provinces"],
       queryFn: () => services.getProvinceService(),
+      onSuccess: () => {},
+      onError: (err) => console.log(err),
    });
 
    const {
@@ -80,7 +85,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
          <div className="flex flex-col gap-4 w-full">
             <div>
                <Input
-                  value={getValues("fullName") || ""}
+                  value={getValues("fullName") || data.fullName}
                   register={{ ...register("fullName") }}
                   field={`Họ tên`}
                   labelCl={`block`}
@@ -94,7 +99,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
             </div>
             <div>
                <Input
-                  value={getValues("phoneNumber") || ""}
+                  value={getValues("phoneNumber") || data.phone.replace("+84", "0")}
                   type="number"
                   register={{ ...register("phoneNumber") }}
                   field={`Điện thoại`}
@@ -109,7 +114,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
             </div>
             <div>
                <Input
-                  value={getValues("email") || ""}
+                  value={getValues("email") || data.email}
                   type="email"
                   register={{ ...register("email") }}
                   field={`Email`}
@@ -125,7 +130,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
             </div>
             <div>
                <Input
-                  value={getValues("address") || ""}
+                  value={getValues("address") || rest.join(", ")}
                   register={{ ...register("address") }}
                   field={`Địa chỉ`}
                   labelCl={`block`}
@@ -143,7 +148,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                <>
                   <div>
                      <Select
-                        value={getValues("province") || ""}
+                        value={getValues("province") || province}
                         placeholder={`-- Chọn tỉnh thành`}
                         register={{ ...register("province") }}
                         data={provincesData?.data}
@@ -158,7 +163,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
                   </div>
                   <div>
                      <Select
-                        value={getValues("district") || ""}
+                        value={getValues("district") || district}
                         placeholder={`-- Chọn quận huyện`}
                         register={{ ...register("district") }}
                         data={districtsData}
@@ -194,6 +199,7 @@ function UserDetailsForm({ onClickCancelBtn }) {
 }
 
 UserDetailsForm.propTypes = {
+   data: PropTypes.object,
    onClickCancelBtn: PropTypes.func,
 };
 

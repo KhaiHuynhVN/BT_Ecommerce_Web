@@ -1,19 +1,15 @@
 import { httpRequest } from "../utils";
 import { X_USER_REFRESH_TOKEN } from "../utils/commonConstants/constants";
 
-const resetAccessToken = async () => {
+const refreshTokenService = async () => {
    const config = {
       headers: {
          [X_USER_REFRESH_TOKEN]: localStorage.getItem("refreshToken"),
       },
    };
 
-   try {
-      const res = await httpRequest.post("/refresh-token", null, config);
-      return res;
-   } catch (err) {
-      console.error("err catched: ", err);
-   }
+   const res = await httpRequest.post("/refresh-token", null, config);
+   return res;
 };
 
-export default resetAccessToken;
+export default refreshTokenService;

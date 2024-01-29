@@ -33,7 +33,7 @@ function SignUpForm() {
          navigate(routesConfig.signIn.path);
       },
       onError: (error) => {
-         throw new Error(error);
+         console.log("error: ", error);
       },
    });
 

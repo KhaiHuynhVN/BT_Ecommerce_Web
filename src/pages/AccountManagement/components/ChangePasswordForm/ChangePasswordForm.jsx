@@ -1,22 +1,45 @@
-import classNames from "classnames/bind";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import classNames from "classnames/bind";
 import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
-import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import Input from "../../../../components/Input";
 import { schema } from "../../../../reactHookFormSchema";
+import * as service from "../../../../services";
+import routesConfig from "../../../../routesConfig";
+import authSlice from "../../../../store/authSlice";
 
 import styles from "./ChangePasswordForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function ChangePasswordForm({ onClickCancelBtn }) {
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
+   const [isWrongPassword, setIsWrongPassword] = useState(false);
+
+   const { mutate } = useMutation({
+      mutationFn: (data) => service.changePasswordService(data),
+      onSuccess: (data) => {
+         console.log(data);
+         dispatch(authSlice.actions.clearUserData());
+         navigate(routesConfig.signIn.path);
+      },
+      onError: (err) => {
+         console.log("ChangePasswordForm err: ", err);
+         setIsWrongPassword(true);
+      },
+   });
+
    const {
       register,
       handleSubmit,
       formState: { errors },
-      reset,
       clearErrors,
       setValue,
       getValues,
@@ -28,12 +51,21 @@ function ChangePasswordForm({ onClickCancelBtn }) {
    const handleChangeFormData = (e, key) => {
       setValue(key, e.target.value);
       clearErrors(key);
+      key === "oldPassword" && setIsWrongPassword(false);
    };
 
    const onSubmitHandle = (data) => {
-      console.log(data);
-      const arrErrors = Object.keys(errors);
-      !arrErrors.length && reset();
+      const { oldPassword, newPassword } = data;
+
+      const newData = {
+         oldPassword,
+         newPassword,
+      };
+
+      if (!Object.keys(errors).length) {
+         console.log(newData);
+         mutate(newData);
+      }
    };
 
    const handleBlurInput = (key) => {
@@ -59,6 +91,7 @@ function ChangePasswordForm({ onClickCancelBtn }) {
                   onChange={(e) => handleChangeFormData(e, "oldPassword")}
                />
                {errors.oldPassword?.message && <p className={`text-tertiary-color mt-1`}>{errors.oldPassword.message}</p>}
+               {isWrongPassword && <p className={`text-tertiary-color mt-1`}>Mật khẩu không đúng!</p>}
             </div>
             <div>
                <Input

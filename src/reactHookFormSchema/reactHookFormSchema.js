@@ -152,6 +152,33 @@ const userDetailsFormSchema = yup
    })
    .required();
 
+const resetPasswordSchema = yup
+   .object()
+   .shape({
+      newPassword: yup
+         .string()
+         .default("")
+         .required("Vui lòng nhập mật khẩu!")
+         .min(6, "Ít nhất 6 ký tự!")
+         .matches(passwordRegex, "Ít nhất 1: số, chữ thường, hoa, ký tự đặc biệt!"),
+      confirmNewPassword: yup
+         .string()
+         .default("")
+         .when("newPassword", {
+            is: (newPassword) => newPassword && passwordRegex.test(newPassword),
+            then: () =>
+               yup.string().when("confirmNewPassword", {
+                  is: (confirmNewPassword) => !confirmNewPassword,
+                  then: () => yup.string().required("Vui lòng xác nhận mật khẩu!"),
+                  otherwise: () => yup.string().oneOf([yup.ref("newPassword")], "Mật khẩu không khớp!"),
+               }),
+            otherwise: () => yup.string().default(""),
+         }),
+      token: yup.string().default("").required("Vui lòng nhập mã xác nhận!"),
+      recaptcha: yup.boolean().oneOf([true], "Vui lòng đồng ý để tiếp tục!").default(false).required(),
+   })
+   .required();
+
 export {
    signUpFormSchema,
    signInFormSchema,
@@ -160,4 +187,5 @@ export {
    forgotPasswordSchema,
    changePasswordSchema,
    userDetailsFormSchema,
+   resetPasswordSchema,
 };

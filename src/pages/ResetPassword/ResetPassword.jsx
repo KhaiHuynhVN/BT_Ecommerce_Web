@@ -2,19 +2,19 @@ import classNames from "classnames/bind";
 
 import Breadcrumbs from "../../components/Breadcrumbs";
 import SectionWrapper from "../../components/SectionWrapper";
-import ForgotPasswordForm from "./components/ForgotPasswordForm";
+import ResetPasswordForm from "./components/ResetPasswordForm";
 import BrandCarousel from "../../components/BrandCarousel";
 import PostWidget from "../../components/PostWidget";
 import routesConfig from "../../routesConfig";
 
-import styles from "./ForgotPassword.module.scss";
+import styles from "./ResetPassword.module.scss";
 
 const cx = classNames.bind(styles);
 
-function ForgotPassword() {
+function ResetPassword() {
    return (
       <div className={cx(`wrapper`, `mt-[1rem]`)}>
-         <Breadcrumbs breadcrumbs={routesConfig.forgotPassword.breadcrumbs} routesConfig={routesConfig} />
+         <Breadcrumbs breadcrumbs={routesConfig.checkout.breadcrumbs} routesConfig={routesConfig} />
 
          <div className={`mt-[1rem]`}>
             <SectionWrapper title="Cấp lại mật khẩu" leftIcon={<i className="bi bi-key-fill text-secondary-color"></i>}>
@@ -23,7 +23,7 @@ function ForgotPassword() {
                      <span className="text-thirtieth-color mr-2">*</span>
                      <span>là thông tin bắt buộc</span>
                   </div>
-                  <ForgotPasswordForm />
+                  <ResetPasswordForm />
                </div>
             </SectionWrapper>
          </div>
@@ -39,4 +39,4 @@ function ForgotPassword() {
    );
 }
 
-export default ForgotPassword;
+export default ResetPassword;

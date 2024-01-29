@@ -51,11 +51,12 @@ httpRequest.interceptors.response.use(
          }
       } else if (refreshToken && accessToken && checkToken(refreshToken) && !checkToken(accessToken)) {
          try {
-            const res = await services.resetAccessToken();
+            const res = await services.refreshTokenService();
             if (res) {
                localStorage.setItem("accessToken", res.data.accessToken);
                localStorage.setItem("refreshToken", res.data.refreshToken);
                console.log("đã refresh token");
+               return httpRequest(error.config);
             }
          } catch (error) {
             console.error("!!!!!httpRequest: ", error);

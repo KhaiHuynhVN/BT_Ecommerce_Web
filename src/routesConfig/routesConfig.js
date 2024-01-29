@@ -38,6 +38,11 @@ const routesConfig = {
       title: "Thành viên",
       breadcrumbs: ["home", "account"],
    },
+   resetPassword: {
+      path: "/capmatkhaumoi",
+      title: "Cấp mật khẩu mới",
+      breadcrumbs: ["home", "forgotPassword", "resetPassword"],
+   },
 };
 
 export default routesConfig;
