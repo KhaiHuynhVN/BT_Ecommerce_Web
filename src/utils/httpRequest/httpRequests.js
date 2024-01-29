@@ -1,5 +1,11 @@
 import axios from "axios";
 
+import checkToken from "../checkToken";
+import * as services from "../../services";
+import routesConfig from "../../routesConfig";
+import store from "../../store";
+import { X_USER_ACCESS_TOKEN } from "../commonConstants";
+
 const httpRequest = axios.create({
    baseURL: import.meta.env.VITE_BASE_URL,
 });
@@ -10,7 +16,7 @@ httpRequest.interceptors.request.use(
       // Retrieve your access token from storage (local storage, cookies, etc.)
       const token = localStorage.getItem("accessToken");
       if (token) {
-         config.headers.Authorization = `Bearer ${token}`;
+         config.headers[X_USER_ACCESS_TOKEN] = token;
       }
       return config;
    },
@@ -25,46 +31,65 @@ httpRequest.interceptors.response.use(
       return response;
    },
    async function (error) {
-      // const originalRequest = error.config;
-      // if (error.response.status === 401 && !originalRequest._retry) {
-      //    originalRequest._retry = true;
-      //    const refreshToken = localStorage.getItem("refreshToken");
-      //    const res = await axios.post("/refresh-token", { refreshToken });
-      //    if (res.status === 200) {
-      //       localStorage.setItem("accessToken", res.data.accessToken);
-      //       localStorage.setItem("refreshToken", res.data.refreshToken);
-      //       return httpRequest(originalRequest);
-      //    } else if (res.status === 403) {
-      //       window.location.href = `${import.meta.env.VITE_BASE_URL}/login}`;
-      //    }
-      // }
+      function updateReduxState() {
+         const action = {
+            type: "auth/clearUserData",
+         };
+         store.dispatch(action);
+      }
+
+      const refreshToken = localStorage.getItem("refreshToken");
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (refreshToken && !checkToken(refreshToken)) {
+         try {
+            updateReduxState();
+            console.log("đã đăng xuất");
+            window.open(routesConfig.signIn.path, "_self");
+         } catch (err) {
+            console.error("!!!!!httpRequest: ", err);
+         }
+      } else if (refreshToken && accessToken && checkToken(refreshToken) && !checkToken(accessToken)) {
+         try {
+            const res = await services.resetAccessToken();
+            if (res) {
+               localStorage.setItem("accessToken", res.data.accessToken);
+               localStorage.setItem("refreshToken", res.data.refreshToken);
+               console.log("đã refresh token");
+            }
+         } catch (error) {
+            console.error("!!!!!httpRequest: ", error);
+         }
+      } else if (!refreshToken || !accessToken) {
+         updateReduxState();
+      }
       return Promise.reject(error);
    },
 );
 
-const get = async (path, option = {}) => {
-   const response = await httpRequest.get(path, option);
+const get = async (path, option = {}, config = {}) => {
+   const response = await httpRequest.get(path, option, config);
    return response;
 };
 
-const post = async (path, option = {}) => {
-   const response = await httpRequest.post(path, option);
+const post = async (path, option = {}, config = {}) => {
+   const response = await httpRequest.post(path, option, config);
    return response;
 };
 
-const patch = async (path, option = {}) => {
-   const response = await httpRequest.patch(path, option);
+const patch = async (path, option = {}, config = {}) => {
+   const response = await httpRequest.patch(path, option, config);
    return response;
 };
 
-const put = async (path, option = {}) => {
-   const response = await httpRequest.put(path, option);
+const put = async (path, option = {}, config = {}) => {
+   const response = await httpRequest.put(path, option, config);
    return response;
 };
 
-const deleteAPI = async (path, option = {}) => {
-   const response = await httpRequest.delete(path, option);
+const deleteMethod = async (path, option = {}, config = {}) => {
+   const response = await httpRequest.delete(path, option, config);
    return response;
 };
 
-export { get, post, patch, put, deleteAPI };
+export { get, post, patch, put, deleteMethod };

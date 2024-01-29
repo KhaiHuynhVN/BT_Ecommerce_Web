@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 import Button from "../../../../components/Button";
 import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { schema } from "../../../../reactHookFormSchema";
-import * as services from "../../../../services";
 
 import styles from "./BuyNowForm.module.scss";
 
@@ -25,7 +25,7 @@ function BuyNowForm({ isReset }) {
 
    const { data: provincesData, error } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => services.getProvinceService(),
+      queryFn: () => axios.get(import.meta.env.VITE_PROVINCE_API),
    });
 
    const {
@@ -80,6 +80,7 @@ function BuyNowForm({ isReset }) {
 
    const handleReCaptcha = (value) => {
       setValue("recaptcha", value ? true : false, { shouldValidate: value ? true : false });
+      setReCaptcha(value ? true : false);
    };
 
    const onSubmitHandle = (data) => {
@@ -111,7 +112,7 @@ function BuyNowForm({ isReset }) {
                   onBlur={() => handleBlurInput("fullName")}
                   onChange={(e) => handleChangeFormData(e, "fullName")}
                />
-               {errors.fullName?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.fullName.message}</p>}
+               {errors.fullName?.message && <p className={`text-tertiary-color mt-1`}>{errors.fullName.message}</p>}
             </div>
             <div>
                <Input
@@ -126,9 +127,7 @@ function BuyNowForm({ isReset }) {
                   onBlur={() => handleBlurInput("phoneNumber")}
                   onChange={(e) => handleChangeFormData(e, "phoneNumber")}
                />
-               {errors.phoneNumber?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.phoneNumber.message}</p>
-               )}
+               {errors.phoneNumber?.message && <p className={`text-tertiary-color mt-1`}>{errors.phoneNumber.message}</p>}
             </div>
             <div>
                <Input
@@ -144,7 +143,7 @@ function BuyNowForm({ isReset }) {
                   onChange={(e) => handleChangeFormData(e, "email")}
                   onInvalid={(e) => e.preventDefault()}
                />
-               {errors.email?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.email.message}</p>}
+               {errors.email?.message && <p className={`text-tertiary-color mt-1`}>{errors.email.message}</p>}
             </div>
             <div>
                <Input
@@ -158,10 +157,10 @@ function BuyNowForm({ isReset }) {
                   onBlur={() => handleBlurInput("address")}
                   onChange={(e) => handleChangeFormData(e, "address")}
                />
-               {errors.address?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.address.message}</p>}
+               {errors.address?.message && <p className={`text-tertiary-color mt-1`}>{errors.address.message}</p>}
             </div>
             {error ? (
-               <div className="text-thirtieth-color font-[700] mt-1">Không lấy được dữ liệu tỉnh thành</div>
+               <div className="text-tertiary-color mt-1">Không lấy được dữ liệu tỉnh thành</div>
             ) : (
                <>
                   <div>
@@ -177,9 +176,7 @@ function BuyNowForm({ isReset }) {
                         rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                         onChange={(e) => handleChangeFormData(e, "province", "province")}
                      />
-                     {errors.province?.message && (
-                        <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.province.message}</p>
-                     )}
+                     {errors.province?.message && <p className={`text-tertiary-color mt-1`}>{errors.province.message}</p>}
                   </div>
                   <div>
                      <Select
@@ -194,9 +191,7 @@ function BuyNowForm({ isReset }) {
                         rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
                         onChange={(e) => handleChangeFormData(e, "district", "district")}
                      />
-                     {errors.district?.message && (
-                        <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.district.message}</p>
-                     )}
+                     {errors.district?.message && <p className={`text-tertiary-color mt-1`}>{errors.district.message}</p>}
                   </div>
                </>
             )}
@@ -204,7 +199,7 @@ function BuyNowForm({ isReset }) {
          <div className="mt-4">
             <div>
                <ReCAPTCHA ref={recaptchaRef} sitekey={import.meta.env.VITE_RECAPTCHA_KEY} onChange={handleReCaptcha} />
-               {errors.recaptcha?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.recaptcha.message}</p>}
+               {errors.recaptcha?.message && <p className={`text-tertiary-color mt-1`}>{errors.recaptcha.message}</p>}
             </div>
             <div>
                <Input
@@ -218,9 +213,7 @@ function BuyNowForm({ isReset }) {
                   inputCl={`size-4`}
                   onChange={(e) => handleChangeFormData(e, "accepTerm", "checkbox")}
                />
-               {errors["accepTerm"]?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["accepTerm"].message}</p>
-               )}
+               {errors["accepTerm"]?.message && <p className={`text-tertiary-color mt-1`}>{errors["accepTerm"].message}</p>}
             </div>
             <Button primary className={`mt-4 mx-auto`} leftIcon={<i className="bi bi-chevron-right text-secondary-color"></i>}>
                Tiếp tục

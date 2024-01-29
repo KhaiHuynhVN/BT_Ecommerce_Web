@@ -1,20 +1,52 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classNames from "classnames/bind";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PropTypes from "prop-types";
+import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { schema } from "../../../../reactHookFormSchema";
 import routesConfig from "../../../../routesConfig";
+import * as services from "../../../../services";
+import authSlice from "../../../../store/authSlice";
+import { regex } from "../../../../utils";
 
 import styles from "./SignInForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function SignInForm({ isReset }) {
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const [isSignInFailed, setIsSignInFailed] = useState(false);
+
+   const { mutate } = useMutation({
+      mutationFn: (data) => services.signInService(data),
+      onSuccess: async (data) => {
+         if (!data) {
+            setIsSignInFailed(true);
+            return;
+         }
+         const { accessToken, refreshToken } = data.data;
+         dispatch(authSlice.actions.setToken(accessToken));
+         dispatch(authSlice.actions.setRefreshToken(refreshToken));
+
+         const userData = await services.getUserInfoService();
+         dispatch(authSlice.actions.setUserData(userData.data));
+         if (location.pathname !== routesConfig.home.path) {
+            navigate(routesConfig.home.path);
+         }
+      },
+      onError: (error) => {
+         throw new Error(error);
+      },
+   });
+
    const {
       register,
       handleSubmit,
@@ -38,9 +70,18 @@ function SignInForm({ isReset }) {
    };
 
    const onSubmitHandle = (data) => {
-      console.log(data);
-      const arrErrors = Object.keys(errors);
-      !arrErrors.length && reset();
+      const { accountName, password } = data;
+      const key = regex.emailRegex.test(accountName) ? "email" : "phone";
+
+      const newData = {
+         [key]: accountName,
+         password,
+         mfaCode: "",
+      };
+
+      if (!Object.keys(errors).length) {
+         mutate(newData);
+      }
    };
 
    const handleBlurInput = (key) => {
@@ -64,9 +105,7 @@ function SignInForm({ isReset }) {
                   onBlur={() => handleBlurInput("accountName")}
                   onChange={(e) => handleChangeFormData(e, "accountName")}
                />
-               {errors.accountName?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.accountName.message}</p>
-               )}
+               {errors.accountName?.message && <p className={`text-tertiary-color mt-1`}>{errors.accountName.message}</p>}
             </div>
             <div>
                <Input
@@ -83,8 +122,9 @@ function SignInForm({ isReset }) {
                   onBlur={() => handleBlurInput("password")}
                   onChange={(e) => handleChangeFormData(e, "password", true)}
                />
-               {errors.password?.message && <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.password.message}</p>}
+               {errors.password?.message && <p className={`text-tertiary-color mt-1`}>{errors.password.message}</p>}
             </div>
+            {isSignInFailed && <span className={`block text-forty-second-color`}>Tài khoản không tồn tại!</span>}
             <Button
                className={`max-w-fit hover:decoration-1`}
                text

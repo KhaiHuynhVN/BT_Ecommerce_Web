@@ -58,9 +58,7 @@ function ChangePasswordForm({ onClickCancelBtn }) {
                   onBlur={() => handleBlurInput("oldPassword")}
                   onChange={(e) => handleChangeFormData(e, "oldPassword")}
                />
-               {errors.oldPassword?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.oldPassword.message}</p>
-               )}
+               {errors.oldPassword?.message && <p className={`text-tertiary-color mt-1`}>{errors.oldPassword.message}</p>}
             </div>
             <div>
                <Input
@@ -76,9 +74,7 @@ function ChangePasswordForm({ onClickCancelBtn }) {
                   onBlur={() => handleBlurInput("newPassword")}
                   onChange={(e) => handleChangeFormData(e, "newPassword", true)}
                />
-               {errors.newPassword?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.newPassword.message}</p>
-               )}
+               {errors.newPassword?.message && <p className={`text-tertiary-color mt-1`}>{errors.newPassword.message}</p>}
             </div>
             <div>
                <Input
@@ -95,7 +91,7 @@ function ChangePasswordForm({ onClickCancelBtn }) {
                   onChange={(e) => handleChangeFormData(e, "confirmNewPassword", true)}
                />
                {errors.confirmNewPassword?.message && (
-                  <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.confirmNewPassword.message}</p>
+                  <p className={`text-tertiary-color mt-1`}>{errors.confirmNewPassword.message}</p>
                )}
             </div>
             <div className={`my-4 flex flex-wrap gap-4 justify-center`}>

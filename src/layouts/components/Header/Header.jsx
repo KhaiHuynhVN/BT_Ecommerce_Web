@@ -1,35 +1,55 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import classNames from "classnames/bind";
-import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRef } from "react";
+import { Link } from "react-router-dom";
 
+import { images } from "../../../assets";
 import Button from "../../../components/Button";
 import Image from "../../../components/Image";
 import Input from "../../../components/Input";
-import ProductNav from "./components/ProductNav";
-import NavMain from "./components/NavMain";
+import routesConfig from "../../../routesConfig";
+import * as services from "../../../services";
+import authSlice, { authSliceSelector } from "../../../store/authSlice";
 import FacebookIframe from "./components/FacebookIframe";
+import NavMain from "./components/NavMain";
+import ProductNav from "./components/ProductNav";
+import productNavSlice, { productNavSelector } from "./components/ProductNav/productNavSlice";
 import SignInForm from "./components/SignInForm";
 import UserMenu from "./components/UserMenu";
-
-import { images } from "../../../assets";
-import routesConfig from "../../../routesConfig";
-import productNavSlice, { productNavSelector } from "./components/ProductNav/productNavSlice";
+import { checkToken } from "../../../utils";
 
 import styles from "./Header.module.scss";
 
 const cx = classNames.bind(styles);
 
 function Header() {
-   const isSignIn = false;
    const dispatch = useDispatch();
 
    const showProductNavBtnRef = useRef(null);
 
    const isShowProductNav = useSelector(productNavSelector.isShowProductNav);
+   const userData = useSelector(authSliceSelector.userData);
+
+   useEffect(() => {
+      if (!localStorage.getItem("userData")) {
+         dispatch(authSlice.actions.setUserData({}));
+      }
+   });
+
+   useEffect(() => {
+      localStorage.getItem("refreshToken") &&
+         !checkToken(localStorage.getItem("refreshToken")) &&
+         dispatch(authSlice.actions.clearUserData());
+   }, [checkToken(localStorage.getItem("refreshToken"))]);
 
    const handleShowProductNav = () => {
       dispatch(productNavSlice.actions.setShowProductNav(!isShowProductNav));
+   };
+
+   const handleSignOut = async () => {
+      await services.signOutService();
+      dispatch(authSlice.actions.clearUserData());
    };
 
    return (
@@ -40,11 +60,11 @@ function Header() {
                   <FacebookIframe />
                   <NavMain />
                </div>
-               {isSignIn ? (
+               {Object.keys(userData).length > 0 ? (
                   <Button
                      className={cx("nav-item", "text-white py-[0.5rem] px-[0.7rem] bg-tertiary-color cursor-pointer")}
-                     to={routesConfig.signUp.path}
                      leftIcon={<i className="bi bi-box-arrow-in-right text-secondary-color"></i>}
+                     onClick={handleSignOut}
                   >
                      Thoát
                   </Button>
@@ -75,7 +95,7 @@ function Header() {
                   </>
                )}
             </div>
-            {isSignIn && (
+            {Object.keys(userData).length > 0 && (
                <Button
                   className={cx(
                      "nav-item",
@@ -110,7 +130,9 @@ function Header() {
                   </div>
                </div>
             </div>
-            <div className={cx("header-center-right", "col-span-3")}>{isSignIn ? <UserMenu /> : <SignInForm />}</div>
+            <div className={cx("header-center-right", "col-span-3")}>
+               {Object.keys(userData).length > 0 ? <UserMenu data={userData} /> : <SignInForm />}
+            </div>
          </div>
 
          <div className={cx("header-bottom", "grid grid-cols-12 gap-[1rem] relative")}>

@@ -7,6 +7,7 @@ import Image from "../../components/Image";
 import Button from "../../components/Button";
 import PostWidget from "../../components/PostWidget";
 import ProductContainer from "../../components/ProductContainer";
+// import * as services from "../../services";
 
 import styles from "./Home.module.scss";
 
@@ -15,6 +16,20 @@ const cx = classNames.bind(styles);
 function Home() {
    return (
       <div className={cx("wrapper", "mt-[1rem]")}>
+         {/* <Button
+            primary
+            onClick={() =>
+               services.signUpService({
+                  email: "demonpixelgun3d@gmail.com",
+                  password: "123456Aa@",
+                  phone: `+84933069587`,
+                  name: "DemonVN",
+                  address: `ok`,
+               })
+            }
+         >
+            Fetch
+         </Button> */}
          <SectionWrapper title="Công Tắc Ổ Cắm và Phụ Kiện" to={"/"}>
             <div className={cx("brand-images", "grid p-2 grid-cols-12 gap-[0.5rem]")}>
                <Link className="col-span-1 border-solid border-[1px] border-transparent hover:border-tertiary-color" to={"/"}>

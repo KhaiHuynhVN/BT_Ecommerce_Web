@@ -1,23 +1,54 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "react-query";
 import classNames from "classnames/bind";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import Input from "../../../../components/Input";
 import { schema } from "../../../../reactHookFormSchema";
 import routesConfig from "../../../../routesConfig";
+import * as services from "../../../../services";
+import { regex } from "../../../../utils";
+import authSlice from "../../../../store/authSlice";
 
 import styles from "./SignInForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function SignInForm() {
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const [isSignInFailed, setIsSignInFailed] = useState(false);
+
+   const { mutate } = useMutation({
+      mutationFn: (data) => services.signInService(data),
+      onSuccess: async (data) => {
+         if (!data) {
+            setIsSignInFailed(true);
+            return;
+         }
+         const { accessToken, refreshToken } = data.data;
+         dispatch(authSlice.actions.setToken(accessToken));
+         dispatch(authSlice.actions.setRefreshToken(refreshToken));
+
+         const userData = await services.getUserInfoService();
+         dispatch(authSlice.actions.setUserData(userData.data));
+         if (location.pathname !== routesConfig.home.path) {
+            navigate(routesConfig.home.path);
+         }
+      },
+      onError: (error) => {
+         throw new Error(error);
+      },
+   });
+
    const {
       register,
       handleSubmit,
       formState: { errors },
-      reset,
       clearErrors,
       setValue,
       getValues,
@@ -29,12 +60,22 @@ function SignInForm() {
    const handleChangeFormData = (e, key, isPassword) => {
       setValue(key, isPassword ? e.target.value : e.target.value.trimStart());
       clearErrors(key);
+      setIsSignInFailed(false);
    };
 
    const onSubmitHandle = (data) => {
-      console.log(data);
-      const arrErrors = Object.keys(errors);
-      !arrErrors.length && reset();
+      const { accountName, password } = data;
+      const key = regex.emailRegex.test(accountName) ? "email" : "phone";
+
+      const newData = {
+         [key]: accountName,
+         password,
+         mfaCode: "",
+      };
+
+      if (!Object.keys(errors).length) {
+         mutate(newData);
+      }
    };
 
    const handleBlurInput = (key) => {
@@ -63,7 +104,7 @@ function SignInForm() {
                      onChange={(e) => handleChangeFormData(e, "accountName")}
                   />
                   {errors.accountName?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.accountName.message}
                      </p>
                   )}
@@ -86,11 +127,12 @@ function SignInForm() {
                      onChange={(e) => handleChangeFormData(e, "password", true)}
                   />
                   {errors.password?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.password.message}
                      </p>
                   )}
                </div>
+               {isSignInFailed && <span className={`block text-forty-second-color`}>Tài khoản không tồn tại!</span>}
                <Button
                   className={`max-w-fit hover:decoration-1`}
                   text

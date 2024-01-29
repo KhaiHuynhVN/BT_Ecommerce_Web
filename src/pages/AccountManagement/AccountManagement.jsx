@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Button from "../../components/Button";
@@ -11,14 +13,24 @@ import UserDetailsForm from "./components/UserDetailsForm";
 import OrderNav from "../../components/OrderNav";
 import PostWidget from "../../components/PostWidget";
 import routesConfig from "../../routesConfig";
+import { checkToken } from "../../utils";
 
 import styles from "./AccountManagement.module.scss";
 
 const cx = classNames.bind(styles);
 
 function AccountManagement() {
+   const navigate = useNavigate();
    const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
    const [showUserDetailForm, setShowUserDetailForm] = useState(false);
+
+   useEffect(() => {
+      if (!localStorage.getItem("userData") || !localStorage.getItem("accessToken") || !localStorage.getItem("refreshToken")) {
+         navigate(routesConfig.signIn.path);
+      } else if (localStorage.getItem("refreshToken") && !checkToken(localStorage.getItem("refreshToken"))) {
+         navigate(routesConfig.signIn.path);
+      }
+   }, []);
 
    const handleToggleChangePasswordForm = (value) => {
       setShowChangePasswordForm(value);

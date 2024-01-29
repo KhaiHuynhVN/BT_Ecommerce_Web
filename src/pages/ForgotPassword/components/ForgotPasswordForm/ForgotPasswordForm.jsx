@@ -67,7 +67,7 @@ function ForgotPasswordForm() {
                      onInvalid={(e) => e.preventDefault()}
                   />
                   {errors.email?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.email.message}
                      </p>
                   )}
@@ -76,9 +76,7 @@ function ForgotPasswordForm() {
             <div className="my-4">
                <div>
                   <ReCAPTCHA sitekey={import.meta.env.VITE_RECAPTCHA_KEY} onChange={handleReCaptcha} />
-                  {errors.recaptcha?.message && (
-                     <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.recaptcha.message}</p>
-                  )}
+                  {errors.recaptcha?.message && <p className={`text-tertiary-color mt-1`}>{errors.recaptcha.message}</p>}
                </div>
                <Button primary className={`mt-4`} leftIcon={<i className="bi bi-send-fill text-secondary-color"></i>}>
                   Yêu cầu cấp lại mật khẩu

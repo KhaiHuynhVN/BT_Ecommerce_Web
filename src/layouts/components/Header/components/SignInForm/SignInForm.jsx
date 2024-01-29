@@ -1,24 +1,54 @@
-import { useState } from "react";
-import classNames from "classnames/bind";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import classNames from "classnames/bind";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import Input from "../../../../../components/Input";
 import Button from "../../../../../components/Button";
+import Input from "../../../../../components/Input";
 import { schema } from "../../../../../reactHookFormSchema";
 import routesConfig from "../../../../../routesConfig";
+import * as services from "../../../../../services";
+import authSlice from "../../../../../store/authSlice";
+import { regex } from "../../../../../utils";
 
 import styles from "./SignInForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function SignInForm() {
-   const [accountIncorrect, setAccountIncorrect] = useState(false);
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const location = useLocation();
+   const [isSignInFailed, setIsSignInFailed] = useState(false);
+
+   const { mutate } = useMutation({
+      mutationFn: (data) => services.signInService(data),
+      onSuccess: async (data) => {
+         if (!data) {
+            setIsSignInFailed(true);
+            return;
+         }
+         const { accessToken, refreshToken } = data.data;
+         dispatch(authSlice.actions.setToken(accessToken));
+         dispatch(authSlice.actions.setRefreshToken(refreshToken));
+
+         const userData = await services.getUserInfoService();
+         dispatch(authSlice.actions.setUserData(userData.data));
+         if (location.pathname !== routesConfig.home.path) {
+            navigate(routesConfig.home.path);
+         }
+      },
+      onError: (error) => {
+         throw new Error(error);
+      },
+   });
 
    const {
       register,
       handleSubmit,
-      reset,
       setValue,
       clearErrors,
       getValues,
@@ -31,13 +61,22 @@ function SignInForm() {
       setValue(key, isPassword ? e.target.value : e.target.value.trimStart());
       errors && clearErrors(key);
 
-      setAccountIncorrect(false);
+      setIsSignInFailed(false);
    };
 
    const onSubmitHandle = (data) => {
-      console.log(data);
-      setAccountIncorrect(true);
-      reset();
+      const { accountName, password } = data;
+      const key = regex.emailRegex.test(accountName) ? "email" : "phone";
+
+      const newData = {
+         [key]: accountName,
+         password,
+         mfaCode: "",
+      };
+
+      if (!Object.keys(errors).length) {
+         mutate(newData);
+      }
    };
 
    return (
@@ -48,25 +87,27 @@ function SignInForm() {
                placeholder="Email hoặc điện thoại"
                register={{ ...register("accountName") }}
                field={"Tài khoản"}
-               labelCl={"flex justify-between items-center"}
+               labelCl={"flex items-center"}
                fieldCl={"text-octonary-color w-[135px] text-[1rem] flex-shrink-0"}
-               fieldLeftIcon={<i className="bi bi-file-earmark-person text-septenary-color"></i>}
+               inputWrapperCl={"flex-1"}
                inputCl={`bg-white text-[16px] p-[0.5rem] border-solid border-[1px] border-black w-full focus:outline 
                focus:outline-[1px] focus:outline-black`}
+               fieldLeftIcon={<i className="bi bi-file-earmark-person text-septenary-color"></i>}
                onChange={(e) => handleChangeFormData(e, "accountName")}
             />
-            {accountIncorrect && <p className="text-[16px] pt-1 ml-[135px] text-red-500">Tài khoản không tồn tại!</p>}
+            {isSignInFailed && <p className="text-[16px] pt-1 ml-[135px] text-red-500">Tài khoản không tồn tại!</p>}
          </div>
          <Input
             value={getValues("password") || ""}
             type="password"
             register={{ ...register("password") }}
-            labelCl={"flex justify-between items-center"}
+            labelCl={"flex items-center"}
             fieldCl={"text-octonary-color w-[135px] text-[1rem] flex-shrink-0"}
             field={"Mật khẩu"}
-            fieldLeftIcon={<i className="bi bi-key-fill text-septenary-color"></i>}
+            inputWrapperCl={"flex-1"}
             inputCl={`bg-white text-[16px] p-[0.5rem] border-solid border-[1px] border-black w-full focus:outline 
             focus:outline-[1px] focus:outline-black`}
+            fieldLeftIcon={<i className="bi bi-key-fill text-septenary-color"></i>}
             onChange={(e) => handleChangeFormData(e, "password", true)}
          />
          <div className="flex items-center">

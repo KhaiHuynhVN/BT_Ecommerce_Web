@@ -1,17 +1,18 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames/bind";
 import { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useForm } from "react-hook-form";
+import { useMutation, useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { schema } from "../../../../reactHookFormSchema";
-import * as services from "../../../../services";
 import routesConfig from "../../../../routesConfig";
+import * as services from "../../../../services";
 
 import styles from "./SignUpForm.module.scss";
 
@@ -23,7 +24,7 @@ function SignUpForm() {
 
    const { data: provincesData, error } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => services.getProvinceService(),
+      queryFn: () => axios.get(import.meta.env.VITE_PROVINCE_API),
    });
 
    const { mutate } = useMutation({
@@ -92,8 +93,7 @@ function SignUpForm() {
          address: `${address}, ${district}, ${province}`,
       };
 
-      const arrErrors = Object.keys(errors);
-      if (!arrErrors.length) {
+      if (!Object.keys(errors).length) {
          console.log(newData);
          mutate(newData);
       }
@@ -125,7 +125,7 @@ function SignUpForm() {
                      onChange={(e) => handleChangeFormData(e, "fullName")}
                   />
                   {errors.fullName?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.fullName.message}
                      </p>
                   )}
@@ -148,7 +148,7 @@ function SignUpForm() {
                      onChange={(e) => handleChangeFormData(e, "phoneNumber")}
                   />
                   {errors.phoneNumber?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.phoneNumber.message}
                      </p>
                   )}
@@ -172,7 +172,7 @@ function SignUpForm() {
                      onInvalid={(e) => e.preventDefault()}
                   />
                   {errors.email?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.email.message}
                      </p>
                   )}
@@ -195,7 +195,7 @@ function SignUpForm() {
                      onChange={(e) => handleChangeFormData(e, "password", null, true)}
                   />
                   {errors.password?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.password.message}
                      </p>
                   )}
@@ -218,7 +218,7 @@ function SignUpForm() {
                      onChange={(e) => handleChangeFormData(e, "confirmPassword", null, true)}
                   />
                   {errors.confirmPassword?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.confirmPassword.message}
                      </p>
                   )}
@@ -241,13 +241,13 @@ function SignUpForm() {
                      onChange={(e) => handleChangeFormData(e, "address")}
                   />
                   {errors.address?.message && (
-                     <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                     <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                         {errors.address.message}
                      </p>
                   )}
                </div>
                {error ? (
-                  <div className="text-thirtieth-color font-[700]">Không lấy được dữ liệu tỉnh thành</div>
+                  <div className="text-tertiary-color">Không lấy được dữ liệu tỉnh thành</div>
                ) : (
                   <>
                      <div className={cx("field-item", "flex items-center relative")}>
@@ -270,7 +270,7 @@ function SignUpForm() {
                            onChange={(e) => handleChangeFormData(e, "province", "province")}
                         />
                         {errors.province?.message && (
-                           <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                           <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                               {errors.province.message}
                            </p>
                         )}
@@ -295,7 +295,7 @@ function SignUpForm() {
                            onChange={(e) => handleChangeFormData(e, "district", "district")}
                         />
                         {errors.district?.message && (
-                           <p className={cx("err-msg", `text-thirtieth-color font-[700] ml-1 absolute left-[100%] text-nowrap`)}>
+                           <p className={cx("err-msg", `text-tertiary-color ml-1 absolute left-[100%] text-nowrap`)}>
                               {errors.district.message}
                            </p>
                         )}
@@ -306,9 +306,7 @@ function SignUpForm() {
             <div className={"my-4"}>
                <div>
                   <ReCAPTCHA sitekey={import.meta.env.VITE_RECAPTCHA_KEY} onChange={handleReCaptcha} />
-                  {errors.recaptcha?.message && (
-                     <p className={`text-thirtieth-color font-[700] mt-1`}>{errors.recaptcha.message}</p>
-                  )}
+                  {errors.recaptcha?.message && <p className={`text-tertiary-color mt-1`}>{errors.recaptcha.message}</p>}
                </div>
                <div>
                   <Input
@@ -321,9 +319,7 @@ function SignUpForm() {
                      inputCl={`size-4`}
                      onChange={(e) => handleChangeFormData(e, "accepTerm", "checkbox")}
                   />
-                  {errors["accepTerm"]?.message && (
-                     <p className={`text-thirtieth-color font-[700] mt-1`}>{errors["accepTerm"].message}</p>
-                  )}
+                  {errors["accepTerm"]?.message && <p className={`text-tertiary-color mt-1`}>{errors["accepTerm"].message}</p>}
                </div>
                <Input
                   checked={getValues("accepPromotion") !== undefined ? getValues("accepPromotion") : true}

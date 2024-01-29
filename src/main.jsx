@@ -1,7 +1,7 @@
 // import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 import App from "./App.jsx";
 import GlobalStyles from "./components/GlobalStyles";
