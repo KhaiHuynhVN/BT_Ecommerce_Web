@@ -32,7 +32,7 @@ function ProductDetail() {
             amount <= 1 ? setAmount(1) : setAmount(+amount - 1);
             break;
          default:
-            +value < 1 ? setAmount(1) : setAmount(+value);
+            +value < 1 ? setAmount(1) : setAmount(String(value));
             break;
       }
    };

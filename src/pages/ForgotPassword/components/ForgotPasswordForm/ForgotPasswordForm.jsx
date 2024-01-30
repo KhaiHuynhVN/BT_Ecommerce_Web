@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { schema } from "../../../../reactHookFormSchema";
-import * as services from "../../../../services";
+import { userServices } from "../../../../services";
 import routesConfig from "../../../../routesConfig";
 
 import styles from "./ForgotPasswordForm.module.scss";
@@ -21,7 +21,7 @@ function ForgotPasswordForm() {
    const [isUserNotFound, setIsUserNotFound] = useState(false);
 
    const { mutate } = useMutation({
-      mutationFn: (data) => services.resetPasswordService(data),
+      mutationFn: (data) => userServices.resetPasswordService(data),
       onSuccess: (data) => {
          console.log(data);
          navigate(routesConfig.resetPassword.path);

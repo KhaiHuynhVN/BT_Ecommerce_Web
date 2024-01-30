@@ -1,4 +1,4 @@
-import { httpRequest } from "../utils";
+import { httpRequest } from "../../utils";
 
 const confirmResetPassword = async (data) => {
    const res = await httpRequest.post("/reset-password/confirm", data);

@@ -47,7 +47,7 @@ function Select({
                   disabled={disabled}
                >
                   <option value="">{placeholder}</option>
-                  {data.map((item, index) => (
+                  {data?.map((item, index) => (
                      <option key={index} value={valueKey ? item[valueKey] : item}>
                         {contentKey ? item[contentKey] : item}
                      </option>

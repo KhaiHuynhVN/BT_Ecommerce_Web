@@ -1,9 +1,3 @@
-export { default as signUpService } from "./signUpService";
-export { default as getProvinceService } from "./getProvinceService";
-export { default as signInService } from "./signInService";
-export { default as getUserInfoService } from "./getUserInfoService";
-export { default as signOutService } from "./signOutService";
-export { default as refreshTokenService } from "./refreshTokenService";
-export { default as changePasswordService } from "./changePasswordService";
-export { default as resetPasswordService } from "./resetPasswordService";
-export { default as confirmResetPassword } from "./confirmResetPassword";
+export * as provinceServices from "./provinceServices";
+export * as tokenServices from "./tokenServices";
+export * as userServices from "./userServices";

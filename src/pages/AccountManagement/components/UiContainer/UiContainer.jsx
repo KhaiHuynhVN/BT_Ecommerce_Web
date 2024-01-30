@@ -1,19 +1,38 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import classNames from "classnames/bind";
-import { useState } from "react";
-import Proptypes from "prop-types";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../../../../components/Button";
+import Select from "../../../../components/Select";
+import routesConfig from "../../../../routesConfig";
+import { authSliceSelector } from "../../../../store/authSlice";
+import { checkToken } from "../../../../utils";
 import ChangePasswordForm from "../ChangePasswordForm";
 import UserDetailsForm from "../UserDetailsForm";
-import Select from "../../../../components/Select";
 
 import styles from "./UiContainer.module.scss";
 
 const cx = classNames.bind(styles);
 
-function UiContainer({ data }) {
+function UiContainer() {
+   const navigate = useNavigate();
    const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
    const [showUserDetailForm, setShowUserDetailForm] = useState(false);
+
+   const userData = useSelector(authSliceSelector.userData);
+
+   const arrAddress = userData?.address?.split(", ").reverse();
+   const [province, district] = Array.isArray(arrAddress) ? arrAddress : [];
+
+   useEffect(() => {
+      if (!localStorage.getItem("userData") || !localStorage.getItem("accessToken") || !localStorage.getItem("refreshToken")) {
+         navigate(routesConfig.signIn.path);
+      } else if (localStorage.getItem("refreshToken") && !checkToken(localStorage.getItem("refreshToken"))) {
+         navigate(routesConfig.signIn.path);
+      }
+   }, [userData]);
 
    const handleToggleChangePasswordForm = (value) => {
       setShowChangePasswordForm(value);
@@ -43,8 +62,8 @@ function UiContainer({ data }) {
                </div>
                <div className={`bg-twenty-third-color p-4 flex-1`}>
                   <div className={`flex mt-2`}>
-                     <span className={`text-fifty-sixth-color w-[110px]`}>Email:</span>
-                     <span>demonpixelgun3d@gmail.com</span>
+                     <span className={`text-fifty-sixth-color w-[110px] shrink-0`}>Email:</span>
+                     <span>{userData?.email}</span>
                   </div>
                   {showChangePasswordForm ? (
                      <div className={`mt-2`}>
@@ -53,7 +72,7 @@ function UiContainer({ data }) {
                   ) : (
                      <>
                         <div className={`flex mt-2`}>
-                           <span className={`text-fifty-sixth-color w-[110px]`}>Mật khẩu:</span>
+                           <span className={`text-fifty-sixth-color w-[110px] shrink-0`}>Mật khẩu:</span>
                            <span>********</span>
                         </div>
                         <Button
@@ -75,44 +94,44 @@ function UiContainer({ data }) {
                </div>
                <div className={`bg-twenty-third-color p-4 flex-1`}>
                   {showUserDetailForm ? (
-                     <UserDetailsForm data={data} onClickCancelBtn={handleToggleUserDetailForm} />
+                     <UserDetailsForm data={userData} onClickCancelBtn={handleToggleUserDetailForm} />
                   ) : (
                      <>
                         <div className={`flex mt-2 items-center`}>
-                           <span className={`text-fifty-sixth-color w-[110px]`}>Họ tên:</span>
-                           <span>Huỳnh Tiến Khải</span>
+                           <span className={`text-fifty-sixth-color w-[110px] shrink-0`}>Họ tên:</span>
+                           <span>{userData?.fullName}</span>
                         </div>
                         <div className={`flex mt-2 items-center`}>
-                           <span className={`text-fifty-sixth-color w-[110px]`}>Điện thoại:</span>
-                           <span>0933069587</span>
+                           <span className={`text-fifty-sixth-color w-[110px] shrink-0`}>Điện thoại:</span>
+                           <span>{userData?.phone?.replace("+84", "0")}</span>
                         </div>
                         <div className={`flex mt-2 items-center`}>
-                           <span className={`text-fifty-sixth-color w-[110px]`}>Địa chỉ:</span>
-                           <span>HCM</span>
+                           <span className={`text-fifty-sixth-color w-[110px] shrink-0`}>Địa chỉ:</span>
+                           <span>{userData?.address}</span>
                         </div>
                         <div className={`flex mt-2 items-center`}>
                            <span className={`text-fifty-sixth-color w-[110px] shrink-0`}>Tỉnh thành:</span>
                            <Select
-                              value={`Thành phố Hồ Chí Minh`}
+                              value={province}
                               labelCl={`flex`}
                               wrapperCl={`w-full`}
                               selectWrapperCl={`w-full`}
                               selectCl={`border border-solid border-black p-2 w-full`}
                               placeholder="-- Chọn tỉnh thành"
-                              data={["Thành phố Hồ Chí Minh"]}
+                              data={[province]}
                               disabled
                            />
                         </div>
                         <div className={`flex mt-2 items-center`}>
                            <span className={`text-fifty-sixth-color w-[110px] shrink-0`}>Quận huyện:</span>
                            <Select
-                              value={`Quận Bình Tân`}
+                              value={district}
                               labelCl={`flex`}
                               wrapperCl={`w-full`}
                               selectWrapperCl={`w-full`}
                               selectCl={`border border-solid border-black p-2 w-full`}
                               placeholder="-- Chọn quận huyện"
-                              data={["Quận Bình Tân"]}
+                              data={[district]}
                               disabled
                            />
                         </div>
@@ -133,9 +152,5 @@ function UiContainer({ data }) {
       </div>
    );
 }
-
-UiContainer.propTypes = {
-   data: Proptypes.object,
-};
 
 export default UiContainer;

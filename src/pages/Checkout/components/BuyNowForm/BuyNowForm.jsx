@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQuery } from "react-query";
@@ -6,26 +7,29 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
 import Button from "../../../../components/Button";
 import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { schema } from "../../../../reactHookFormSchema";
+import { provinceServices } from "../../../../services";
 
 import styles from "./BuyNowForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function BuyNowForm({ isReset }) {
-   const [districtsData, setDistrictsData] = useState([]);
+   const [districtDatas, setDistrictDatas] = useState([]);
+   const [isDisabled, setIsDisabled] = useState(false);
    const [reCaptcha, setReCaptcha] = useState(false);
 
    const recaptchaRef = useRef();
 
-   const { data: provincesData, error } = useQuery({
+   const { data: provinceDatas, error } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => axios.get(import.meta.env.VITE_PROVINCE_API),
+      queryFn: () => provinceServices.getProvinceService(),
+      onSuccess: () => {},
+      onError: (err) => console.log(err),
    });
 
    const {
@@ -48,23 +52,28 @@ function BuyNowForm({ isReset }) {
       setReCaptcha(false);
    }, [isReset]);
 
-   const handleChangeFormData = (e, key, type) => {
+   const handleChangeFormData = async (e, key, type) => {
       switch (type) {
          case "checkbox":
             setValue(key, e.target.checked);
             clearErrors(key);
             break;
          case "province":
-            if (e.target.value) {
-               const district = provincesData?.data.find((item) => item.name === e.target.value).districts;
-               district ? setDistrictsData(district) : setDistrictsData([]);
+            const value = e.target.value;
+
+            if (value) {
+               const districtId = provinceDatas?.data.results.find((item) => item.province_name === value).province_id;
+               setIsDisabled(true);
+               const districtDatas = await provinceServices.getDistrictService(districtId);
+               setDistrictDatas(districtDatas?.data.results);
             } else {
-               setDistrictsData([]);
+               setDistrictDatas([]);
             }
 
             clearErrors("district");
-            setValue("province", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
+            setValue("province", value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             setValue("district", "");
+            setIsDisabled(false);
             break;
          case "district":
             setValue("district", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
@@ -168,9 +177,9 @@ function BuyNowForm({ isReset }) {
                         value={getValues("province") || ""}
                         placeholder="-- Chọn tỉnh thành"
                         register={{ ...register("province") }}
-                        data={provincesData?.data}
-                        valueKey={"name"}
-                        contentKey={"name"}
+                        data={provinceDatas?.data.results}
+                        valueKey={"province_name"}
+                        contentKey={"province_name"}
                         selectWrapperCl={`w-full flex`}
                         selectCl={`border border-solid border-black p-2 w-full`}
                         rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
@@ -180,12 +189,13 @@ function BuyNowForm({ isReset }) {
                   </div>
                   <div>
                      <Select
+                        disabled={isDisabled}
                         value={getValues("district") || ""}
                         placeholder="-- Chọn quận huyện"
                         register={{ ...register("district") }}
-                        data={districtsData}
-                        valueKey={"name"}
-                        contentKey={"name"}
+                        data={districtDatas}
+                        valueKey={"district_name"}
+                        contentKey={"district_name"}
                         selectWrapperCl={`w-full flex`}
                         selectCl={`border border-solid border-black p-2 w-full`}
                         rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}

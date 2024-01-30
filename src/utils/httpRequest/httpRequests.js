@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import checkToken from "../checkToken";
-import * as services from "../../services";
+import { tokenServices } from "../../services";
 import routesConfig from "../../routesConfig";
 import store from "../../store";
 import { X_USER_ACCESS_TOKEN } from "../commonConstants";
@@ -51,7 +51,7 @@ httpRequest.interceptors.response.use(
          }
       } else if (refreshToken && accessToken && checkToken(refreshToken) && !checkToken(accessToken)) {
          try {
-            const res = await services.refreshTokenService();
+            const res = await tokenServices.refreshTokenService();
             if (res) {
                localStorage.setItem("accessToken", res.data.accessToken);
                localStorage.setItem("refreshToken", res.data.refreshToken);

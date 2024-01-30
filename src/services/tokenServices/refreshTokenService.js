@@ -1,5 +1,5 @@
-import { httpRequest } from "../utils";
-import { X_USER_REFRESH_TOKEN } from "../utils/commonConstants/constants";
+import { httpRequest } from "../../utils";
+import { X_USER_REFRESH_TOKEN } from "../../utils/commonConstants";
 
 const refreshTokenService = async () => {
    const config = {

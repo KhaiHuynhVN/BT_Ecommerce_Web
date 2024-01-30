@@ -9,7 +9,7 @@ import Button from "../../../components/Button";
 import Image from "../../../components/Image";
 import Input from "../../../components/Input";
 import routesConfig from "../../../routesConfig";
-import * as services from "../../../services";
+import { userServices } from "../../../services";
 import authSlice, { authSliceSelector } from "../../../store/authSlice";
 import { checkToken } from "../../../utils";
 import FacebookIframe from "./components/FacebookIframe";
@@ -49,7 +49,7 @@ function Header() {
 
    const handleSignOut = async () => {
       try {
-         await services.signOutService();
+         await userServices.signOutService();
          dispatch(authSlice.actions.clearUserData());
       } catch (error) {
          console.log(error);

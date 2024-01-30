@@ -1,4 +1,4 @@
-import { httpRequest } from "../utils";
+import { httpRequest } from "../../utils";
 
 const signOutService = async () => {
    const res = await httpRequest.deleteMethod("/users/logout");

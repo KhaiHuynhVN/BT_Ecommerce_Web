@@ -1,59 +1,107 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-case-declarations */
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useQuery } from "react-query";
 import classNames from "classnames/bind";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation, useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import _ from "lodash";
 
 import Button from "../../../../components/Button";
 import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { schema } from "../../../../reactHookFormSchema";
-import * as services from "../../../../services";
+import { userServices, provinceServices } from "../../../../services";
+import authSlice from "../../../../store/authSlice";
 
 import styles from "./UserDetailsForm.module.scss";
 
 const cx = classNames.bind(styles);
 
 function UserDetailsForm({ data, onClickCancelBtn }) {
-   const [districtsData, setDistrictsData] = useState([]);
+   const dispatch = useDispatch();
+   const [districtDatas, setDistrictDatas] = useState([]);
+   const [isDisabled, setIsDisabled] = useState(false);
 
-   const arrAddress = data.address.split(", ").reverse();
-   const [province, district, ...rest] = arrAddress;
+   const arrAddress = data?.address?.split(", ").reverse();
+   const [province, district, ...resAddress] = Array.isArray(arrAddress) ? arrAddress : [];
 
-   const { data: provincesData, error } = useQuery({
+   const { mutate } = useMutation({
+      mutationFn: (data) => userServices.updateUserInfoService(data),
+      onSuccess: async () => {
+         const userData = await userServices.getUserInfoService(localStorage.getItem("accessToken"));
+         dispatch(authSlice.actions.setUserData(userData?.data));
+         onClickCancelBtn(false);
+      },
+      onError: (err) => {
+         console.log(err);
+      },
+   });
+
+   const { data: provinceDatas, error } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => services.getProvinceService(),
-      onSuccess: () => {},
+      queryFn: () => provinceServices.getProvinceService(),
+      onSuccess: async (provinceData) => {
+         const provinceId = provinceData?.data.results.find((item) => item.province_name === province).province_id;
+         setIsDisabled(true);
+         const districtDatas = await provinceServices.getDistrictService(provinceId);
+         setDistrictDatas(districtDatas?.data.results);
+         setIsDisabled(false);
+      },
       onError: (err) => console.log(err),
+      staleTime: 1000 * 60 * 60 * 24,
    });
 
    const {
       register,
       handleSubmit,
       formState: { errors },
-      reset,
       clearErrors,
       setValue,
       getValues,
       trigger,
    } = useForm({
       resolver: yupResolver(schema.userDetailsFormSchema),
+      defaultValues: {
+         fullName: data?.fullName,
+         phoneNumber: data?.phone?.replace("+84", "0"),
+         email: data?.email,
+         address: resAddress?.reverse().join(", "),
+         province: province,
+         district: district,
+      },
    });
 
-   const handleChangeFormData = (e, key, type) => {
+   useEffect(() => {
+      if (!provinceDatas) return;
+      const fetchData = async () => {
+         const provinceId = provinceDatas?.data.results.find((item) => item.province_name === province).province_id;
+         const districtDatas = await provinceServices.getDistrictService(provinceId);
+         setDistrictDatas(districtDatas?.data.results);
+      };
+      fetchData();
+   }, []);
+
+   const handleChangeFormData = async (e, key, type) => {
       switch (type) {
          case "province":
-            if (e.target.value) {
-               const district = provincesData?.data.find((item) => item.name === e.target.value).districts;
-               district ? setDistrictsData(district) : setDistrictsData([]);
+            const value = e.target.value;
+
+            if (value) {
+               const provinceId = provinceDatas?.data.results.find((item) => item.province_name === value).province_id;
+               setIsDisabled(true);
+               const districtDatas = await provinceServices.getDistrictService(provinceId);
+               setDistrictDatas(districtDatas?.data.results);
             } else {
-               setDistrictsData([]);
+               setDistrictDatas([]);
             }
 
             clearErrors("district");
-            setValue("province", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
+            setValue("province", value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
             setValue("district", "");
+            setIsDisabled(false);
             break;
          case "district":
             setValue("district", e.target.value.trim(), { shouldValidate: Object.keys(errors).length ? true : false });
@@ -66,14 +114,29 @@ function UserDetailsForm({ data, onClickCancelBtn }) {
       }
    };
 
-   const onSubmitHandle = (data) => {
-      console.log(data);
-      const arrErrors = Object.keys(errors);
-      !arrErrors.length && reset();
-   };
+   const onSubmitHandle = (formData) => {
+      const { phoneNumber, fullName: name, address, email, province, district } = formData;
 
-   const onSubmitErrorHandle = () => {
-      !getValues("province") && clearErrors("district");
+      const newData = {
+         name,
+         phone: `+84${phoneNumber.replace(/^0+/, "")}`,
+         address: `${address}, ${district}, ${province}`,
+      };
+
+      if (!Object.keys(errors).length) {
+         const originData = {
+            email,
+            fullName: name,
+            phone: `+84${phoneNumber.replace(/^0+/, "")}`,
+            address: `${address}, ${district}, ${province}`,
+         };
+         const isEqual = _.isEqual(originData, data);
+         if (isEqual) {
+            onClickCancelBtn(false);
+         } else {
+            mutate(newData);
+         }
+      }
    };
 
    const handleBlurInput = (key) => {
@@ -81,11 +144,11 @@ function UserDetailsForm({ data, onClickCancelBtn }) {
    };
 
    return (
-      <form className={cx("wrapper", "flex flex-col")} onSubmit={handleSubmit(onSubmitHandle, onSubmitErrorHandle)}>
+      <form className={cx("wrapper", "flex flex-col")} onSubmit={handleSubmit(onSubmitHandle)}>
          <div className="flex flex-col gap-4 w-full">
             <div>
                <Input
-                  value={getValues("fullName") || data.fullName}
+                  value={getValues("fullName")}
                   register={{ ...register("fullName") }}
                   field={`Họ tên`}
                   labelCl={`block`}
@@ -99,7 +162,7 @@ function UserDetailsForm({ data, onClickCancelBtn }) {
             </div>
             <div>
                <Input
-                  value={getValues("phoneNumber") || data.phone.replace("+84", "0")}
+                  value={getValues("phoneNumber")}
                   type="number"
                   register={{ ...register("phoneNumber") }}
                   field={`Điện thoại`}
@@ -114,23 +177,7 @@ function UserDetailsForm({ data, onClickCancelBtn }) {
             </div>
             <div>
                <Input
-                  value={getValues("email") || data.email}
-                  type="email"
-                  register={{ ...register("email") }}
-                  field={`Email`}
-                  labelCl={`block`}
-                  inputWrapperCl={`w-full mt-1`}
-                  inputCl={`border p-2 text-[16px] border-black border-solid focus:outline outline-black 
-                  outline-1 w-full rounded-[3px] bg-white`}
-                  onBlur={() => handleBlurInput("email")}
-                  onChange={(e) => handleChangeFormData(e, "email")}
-                  onInvalid={(e) => e.preventDefault()}
-               />
-               {errors.email?.message && <p className={`text-tertiary-color mt-1`}>{errors.email.message}</p>}
-            </div>
-            <div>
-               <Input
-                  value={getValues("address") || rest.join(", ")}
+                  value={getValues("address")}
                   register={{ ...register("address") }}
                   field={`Địa chỉ`}
                   labelCl={`block`}
@@ -148,12 +195,12 @@ function UserDetailsForm({ data, onClickCancelBtn }) {
                <>
                   <div>
                      <Select
-                        value={getValues("province") || province}
+                        value={getValues("province")}
                         placeholder={`-- Chọn tỉnh thành`}
                         register={{ ...register("province") }}
-                        data={provincesData?.data}
-                        valueKey={"name"}
-                        contentKey={"name"}
+                        data={provinceDatas?.data.results}
+                        valueKey={"province_name"}
+                        contentKey={"province_name"}
                         field={`Tỉnh/thành`}
                         labelCl={`block`}
                         selectCl={`border border-solid border-black p-2 w-full`}
@@ -163,12 +210,13 @@ function UserDetailsForm({ data, onClickCancelBtn }) {
                   </div>
                   <div>
                      <Select
-                        value={getValues("district") || district}
+                        disabled={isDisabled}
+                        value={getValues("district")}
                         placeholder={`-- Chọn quận huyện`}
                         register={{ ...register("district") }}
-                        data={districtsData}
-                        valueKey={"name"}
-                        contentKey={"name"}
+                        data={districtDatas}
+                        valueKey={"district_name"}
+                        contentKey={"district_name"}
                         field={`Quận/huyện`}
                         labelCl={`block`}
                         selectCl={`border border-solid border-black p-2 w-full`}

@@ -12,7 +12,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { schema } from "../../../../reactHookFormSchema";
 import routesConfig from "../../../../routesConfig";
-import * as services from "../../../../services";
+import { userServices } from "../../../../services";
 import authSlice from "../../../../store/authSlice";
 import { regex } from "../../../../utils";
 
@@ -26,7 +26,7 @@ function SignInForm({ isReset }) {
    const [isSignInFailed, setIsSignInFailed] = useState(false);
 
    const { mutate } = useMutation({
-      mutationFn: (data) => services.signInService(data),
+      mutationFn: (data) => userServices.signInService(data),
       onSuccess: async (data) => {
          const { accessToken, refreshToken } = data.data;
 
@@ -34,7 +34,7 @@ function SignInForm({ isReset }) {
          dispatch(authSlice.actions.setRefreshToken(refreshToken));
 
          try {
-            const userData = await services.getUserInfoService();
+            const userData = await userServices.getUserInfoService();
 
             dispatch(authSlice.actions.setUserData(userData.data));
             if (location.pathname !== routesConfig.home.path) {

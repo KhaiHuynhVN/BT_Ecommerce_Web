@@ -7,7 +7,7 @@ import Image from "../../components/Image";
 import Button from "../../components/Button";
 import PostWidget from "../../components/PostWidget";
 import ProductContainer from "../../components/ProductContainer";
-// import * as services from "../../services";
+// import { userServices } from "../../services";
 
 import styles from "./Home.module.scss";
 
@@ -19,7 +19,7 @@ function Home() {
          {/* <Button
             primary
             onClick={() =>
-               services.signUpService({
+               userServices.signUpService({
                   email: "demonpixelgun3d@gmail.com",
                   password: "123456Aa@",
                   phone: `+84933069587`,

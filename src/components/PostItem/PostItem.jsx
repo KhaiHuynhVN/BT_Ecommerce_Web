@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 function PostItem({ image }) {
    return (
       <div className={cx("wrapper")}>
-         <Link className="block">
+         <Link className="block" to={"/"}>
             <Image className="w-full h-full" src={image} />
          </Link>
          <Link className="mt-2 block" to={"/"}>

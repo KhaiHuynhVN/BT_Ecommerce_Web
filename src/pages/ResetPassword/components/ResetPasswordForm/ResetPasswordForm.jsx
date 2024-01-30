@@ -9,7 +9,7 @@ import { useState } from "react";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { schema } from "../../../../reactHookFormSchema";
-import * as services from "../../../../services";
+import { userServices } from "../../../../services";
 import routesConfig from "../../../../routesConfig";
 
 import styles from "./ResetPasswordForm.module.scss";
@@ -21,7 +21,7 @@ function ResetPasswordForm() {
    const [isTokenInvalid, setIsTokenInvalid] = useState(false);
 
    const { mutate } = useMutation({
-      mutationFn: (data) => services.confirmResetPassword(data),
+      mutationFn: (data) => userServices.confirmResetPassword(data),
       onSuccess: (data) => {
          console.log(data);
          navigate(routesConfig.signIn.path);

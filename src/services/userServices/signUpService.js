@@ -1,4 +1,4 @@
-import { httpRequest } from "../utils";
+import { httpRequest } from "../../utils";
 
 const signUpService = async (data) => {
    const res = await httpRequest.post("/register", data);

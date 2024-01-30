@@ -139,7 +139,6 @@ const userDetailsFormSchema = yup
          .default("")
          .required("Vui lòng nhập số điện thoại!")
          .matches(phoneNumberRegex, "Số điện thoại không hợp lệ!"),
-      email: yup.string().default("").required("Vui lòng nhập email!").matches(emailRegex, "Trường này phải là email!"),
       address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
       province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
       district: yup
