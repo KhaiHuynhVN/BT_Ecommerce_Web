@@ -10,7 +10,7 @@ import { useState } from "react";
 import Button from "../../../../components/Button";
 import Input from "../../../../components/Input";
 import { schema } from "../../../../reactHookFormSchema";
-import * as service from "../../../../services";
+import { userServices } from "../../../../services";
 import routesConfig from "../../../../routesConfig";
 import authSlice from "../../../../store/authSlice";
 
@@ -24,7 +24,7 @@ function ChangePasswordForm({ onClickCancelBtn }) {
    const [isWrongPassword, setIsWrongPassword] = useState(false);
 
    const { mutate } = useMutation({
-      mutationFn: (data) => service.changePasswordService(data),
+      mutationFn: (data) => userServices.changePasswordService(data),
       onSuccess: (data) => {
          console.log(data);
          dispatch(authSlice.actions.clearUserData());
