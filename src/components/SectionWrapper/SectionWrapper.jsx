@@ -20,6 +20,7 @@ function SectionWrapper({
    btnTitle,
    btnLeftIcon,
    btnTo,
+   isSignIned,
 }) {
    const TitleComp = to ? Link : "div";
    const classes = cx("wrapper", className);
@@ -28,7 +29,7 @@ function SectionWrapper({
 
    return (
       <div className={classes}>
-         <div className={cx("title-wrapper", "bg-tertiary-color text-[white] text-[19.2px] flex p-[1px] pb-0")}>
+         <div className={cx("title-wrapper", "bg-tertiary-color text-[white] text-[19.2px] flex p-[1px]")}>
             <TitleComp className={titleClasses} to={to}>
                {leftIcon && <span>{leftIcon}</span>}
                {title}
@@ -36,10 +37,40 @@ function SectionWrapper({
             </TitleComp>
 
             {button && (
-               <div className={`bg-nonary-color flex shrink-0 justify-end ml-auto`}>
-                  <Button className={`items-center text-[16px]`} secondary noRounded leftIcon={btnLeftIcon} to={btnTo}>
-                     {btnTitle}
-                  </Button>
+               <div className={`bg-nonary-color ml-auto`}>
+                  <div className={cx("btn-container", "flex gap-[1px]")}>
+                     {isSignIned && (
+                        <>
+                           <Button
+                              className={cx("btn-item", `items-center text-[16px]`)}
+                              secondary
+                              noRounded
+                              leftIcon={<i className="bi bi-printer text-octonary-color"></i>}
+                              to={btnTo}
+                           >
+                              In
+                           </Button>
+                           <Button
+                              className={cx("btn-item", `items-center text-[16px]`)}
+                              secondary
+                              noRounded
+                              leftIcon={<i className="bi bi-file-earmark-excel text-octonary-color"></i>}
+                              to={btnTo}
+                           >
+                              Xuất Excel
+                           </Button>
+                        </>
+                     )}
+                     <Button
+                        className={cx("btn-item", `items-center text-[16px]`)}
+                        secondary
+                        noRounded
+                        leftIcon={btnLeftIcon}
+                        to={btnTo}
+                     >
+                        {btnTitle}
+                     </Button>
+                  </div>
                </div>
             )}
          </div>
@@ -62,6 +93,7 @@ SectionWrapper.propTypes = {
    btnTitle: Proptypes.string,
    btnLeftIcon: Proptypes.node,
    btnTo: Proptypes.string,
+   isSignIned: Proptypes.bool,
 };
 
 export default SectionWrapper;

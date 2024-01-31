@@ -12,10 +12,38 @@
    background: linear-gradient(to bottom, #f2d9d4, #fff);
 }
 
+.btn-container {
+   background: linear-gradient(to bottom, #b21e02, #b21e02, #b93016, #b21e02, #b21e02);
+}
+
 @media (max-width: 767px) {
    .wrapper {
       .title-wrapper {
          display: block;
+      }
+
+      .btn-container {
+         max-width: fit-content;
+         margin-left: auto;
+         padding-left: 1px;
+         padding-bottom: 1px;
+
+         .btn-item {
+            padding: 8px 16px;
+         }
+      }
+
+      .title-wrapper {
+         padding-bottom: 0;
+      }
+   }
+}
+
+@media (max-width: 340px) {
+   .wrapper {
+      .btn-container {
+         max-width: unset;
+         flex-direction: column;
       }
    }
 }

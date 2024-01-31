@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 function ProductCard({ to }) {
    return (
-      <div className={cx("product-card", "flex flex-col items-center relative text-[16px]")}>
+      <div className={cx("product-card", "flex flex-col items-center relative text-[16px] h-full")}>
          <div
             className={cx(
                "product-card-stick",
