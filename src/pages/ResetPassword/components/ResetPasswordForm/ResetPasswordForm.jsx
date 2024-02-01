@@ -51,7 +51,7 @@ function ResetPasswordForm() {
    };
 
    const handleReCaptcha = (value) => {
-      setValue("recaptcha", value ? true : false, { shouldValidate: value ? true : false });
+      setValue("recaptcha", !!value, { shouldValidate: !!value });
    };
 
    const onSubmitHandle = (data) => {

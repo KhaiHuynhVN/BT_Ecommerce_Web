@@ -99,7 +99,7 @@ function SignUpForm({ isReset }) {
    };
 
    const handleReCaptcha = (value) => {
-      setValue("recaptcha", value ? true : false, { shouldValidate: value ? true : false });
+      setValue("recaptcha", !!value, { shouldValidate: !!value });
       setReCaptcha(value ? true : false);
    };
 

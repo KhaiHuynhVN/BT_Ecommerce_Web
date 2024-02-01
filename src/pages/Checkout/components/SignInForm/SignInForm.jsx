@@ -77,7 +77,7 @@ function SignInForm({ isReset }) {
       const key = regex.emailRegex.test(accountName) ? "email" : "phone";
 
       const newData = {
-         [key]: accountName,
+         [key]: key === "phone" && !accountName.startsWith("+84") ? `+84${accountName.replace(/^0+/, "")}` : accountName,
          password,
          mfaCode: "",
       };
