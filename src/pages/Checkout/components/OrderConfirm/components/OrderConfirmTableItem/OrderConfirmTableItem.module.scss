@@ -1,0 +1,12 @@
+@import "../../../../../../components//GlobalStyles/GlobalStyles.scss";
+
+$border-width: 1px;
+
+.tr {
+   border-bottom: $border-width solid $thirty-eighth-color;
+}
+
+.th,
+.td {
+   border-right: $border-width solid $thirty-eighth-color;
+}

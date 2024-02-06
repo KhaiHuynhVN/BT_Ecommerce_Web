@@ -4,12 +4,30 @@
    & + .wrapper {
       margin-top: 1rem;
    }
+
+   & > .title-wrapper:has(.title-secondary) ~ .children-wrapper {
+      padding: 0;
+   }
+}
+
+.title-wrapper {
+   &:has(.title-secondary) {
+      padding-top: 0;
+      padding-left: 0;
+      padding-right: 0;
+   }
 }
 
 .title-primary {
-   color: black;
    width: 100%;
+   color: black;
    background: linear-gradient(to bottom, #f2d9d4, #fff);
+}
+
+.title-secondary {
+   width: 100%;
+   color: black;
+   background: linear-gradient(to bottom, #cbcbcb, #ffffff);
 }
 
 .btn-container {

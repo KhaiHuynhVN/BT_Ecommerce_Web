@@ -8,11 +8,11 @@ import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 
-import Button from "../../../../components/Button";
-import Input from "../../../../components/Input";
-import Select from "../../../../components/Select";
-import { schema } from "../../../../reactHookFormSchema";
-import { provinceServices } from "../../../../services";
+import Button from "../../../../../../components/Button";
+import Input from "../../../../../../components/Input";
+import Select from "../../../../../../components/Select";
+import { schema } from "../../../../../../reactHookFormSchema";
+import { provinceServices } from "../../../../../../services";
 
 import styles from "./BuyNowForm.module.scss";
 

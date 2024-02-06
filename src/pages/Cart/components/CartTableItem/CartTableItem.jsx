@@ -43,34 +43,16 @@ function CartTableItem({ data, id, onClick = () => {}, itemId, indx }) {
 
    return (
       <div className={classes}>
-         <div className={cx("td", `text-forty-sixth-color p-[10px_5px] flex items-center justify-center w-[50px] shrink-0`)}>
-            {indx}
-         </div>
-         <div className={cx("td", `text-forty-sixth-color p-[10px_5px] flex items-center justify-center w-[60px] shrink-0`)}>
+         <div className={cx("td", `p-[10px_5px] flex items-center justify-center w-[50px] shrink-0`)}>{indx}</div>
+         <div className={cx("td", `p-[10px_5px] flex items-center justify-center w-[60px] shrink-0`)}>
             <Image src="https://thegioidien.com/hmhB/b%E1%BB%99%204%20c%C3%B4ng%20t%E1%BA%AFc725253557.jpg" />
          </div>
-         <div className={cx("td", "hide-992", `text-forty-sixth-color p-[10px_5px] flex items-center flex-[calc(1/2)]`)}>
-            WMT507MYH-VN
-         </div>
-         <div className={cx("td", `text-forty-sixth-color p-[10px_5px] flex items-center flex-1 min-w-[90px]`)}>
+         <div className={cx("td", "hide-992", `p-[10px_5px] flex items-center flex-[calc(1/2)]`)}>WMT507MYH-VN</div>
+         <div className={cx("td", `p-[10px_5px] flex items-center flex-1 min-w-[90px]`)}>
             Bộ 4 công tắc B, 1 chiều, 16A 250VAC
          </div>
-         <div
-            className={cx(
-               "td",
-               "hide-1400",
-               `text-forty-sixth-color p-[10px_5px] flex items-center justify-center flex-[calc(1/2)]`,
-            )}
-         >
-            Panasonic
-         </div>
-         <div
-            className={cx(
-               "td",
-               "hide-767",
-               `text-forty-sixth-color p-[10px_5px] flex items-center justify-center w-[80px] shrink-0`,
-            )}
-         >
+         <div className={cx("td", "hide-1400", `p-[10px_5px] flex items-center justify-center flex-[calc(1/2)]`)}>Panasonic</div>
+         <div className={cx("td", "hide-767", `p-[10px_5px] flex items-center justify-center w-[80px] shrink-0`)}>
             {isEdit && id === itemId ? (
                <Input
                   value={quantityValue}
@@ -83,16 +65,10 @@ function CartTableItem({ data, id, onClick = () => {}, itemId, indx }) {
                quantity
             )}
          </div>
-         <div className={cx("td", "hide-767", `text-forty-sixth-color p-[10px_5px] flex items-center justify-center w-[80px]`)}>
-            Cái
-         </div>
-         <div className={cx("td", "hide-767", `text-forty-sixth-color p-[10px_5px] flex items-center justify-center w-[120px]`)}>
-            290.500
-         </div>
-         <div className={cx("td", "hide-767", `text-forty-sixth-color p-[10px_5px] flex items-center justify-center w-[120px]`)}>
-            290.500
-         </div>
-         <div className={cx("td", `text-forty-sixth-color p-[10px_5px] w-[200px]`)}>
+         <div className={cx("td", "hide-767", `p-[10px_5px] flex items-center justify-center w-[80px]`)}>Cái</div>
+         <div className={cx("td", "hide-767", `p-[10px_5px] flex items-center justify-center w-[120px]`)}>290.500</div>
+         <div className={cx("td", "hide-767", `p-[10px_5px] flex items-center justify-center w-[120px]`)}>290.500</div>
+         <div className={cx("td", `p-[10px_5px] w-[200px]`)}>
             <div className={cx("order-summary")}>
                <div className={`flex items-center justify-between`}>
                   <div className={`flex flex-1 shrink-0`}>

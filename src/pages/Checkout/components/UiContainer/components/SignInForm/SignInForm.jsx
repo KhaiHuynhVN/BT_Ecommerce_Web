@@ -8,13 +8,13 @@ import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Input from "../../../../components/Input";
-import Button from "../../../../components/Button";
-import { schema } from "../../../../reactHookFormSchema";
-import routesConfig from "../../../../routesConfig";
-import { userServices } from "../../../../services";
-import authSlice from "../../../../store/authSlice";
-import { regex } from "../../../../utils";
+import Input from "../../../../../../components/Input";
+import Button from "../../../../../../components/Button";
+import { schema } from "../../../../../../reactHookFormSchema";
+import routesConfig from "../../../../../../routesConfig";
+import { userServices } from "../../../../../../services";
+import authSlice from "../../../../../../store/authSlice";
+import { regex } from "../../../../../../utils";
 
 import styles from "./SignInForm.module.scss";
 

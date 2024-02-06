@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 
-import CheckoutTableItem from "../CheckoutTableItem";
+import CheckoutTableItem from "./components/CheckoutTableItem";
 
 import styles from "./CheckoutTable.module.scss";
 

@@ -178,6 +178,37 @@ const resetPasswordSchema = yup
    })
    .required();
 
+const deliveryTermsFormShema = yup
+   .object()
+   .shape({
+      fullName: yup.string().default("").required("Vui lòng nhập họ tên!"),
+      phoneNumber: yup
+         .string()
+         .default("")
+         .required("Vui lòng nhập số điện thoại!")
+         .matches(phoneNumberRegex, "Số điện thoại không hợp lệ!"),
+      address: yup.string().default("").required("Vui lòng nhập địa chỉ!"),
+      province: yup.string().default("").required("Vui lòng chọn tỉnh thành!"),
+      district: yup
+         .string()
+         .default("")
+         .test("is-province-selected", "Vui lòng chọn quận huyện!", function (value) {
+            const { province } = this.parent;
+            return province ? !!value : true;
+         }),
+      note: yup.string().default(""),
+   })
+   .required();
+
+const paymentMethodFormSchema = yup
+   .object()
+   .shape({
+      payment: yup.string().default("transfer").required(),
+      bank: yup.string().default("").required("Vui lòng chọn ngân hàng!"),
+      invoice: yup.string().default(false),
+   })
+   .required();
+
 export {
    signUpFormSchema,
    signInFormSchema,
@@ -187,4 +218,6 @@ export {
    changePasswordSchema,
    userDetailsFormSchema,
    resetPasswordSchema,
+   deliveryTermsFormShema,
+   paymentMethodFormSchema,
 };

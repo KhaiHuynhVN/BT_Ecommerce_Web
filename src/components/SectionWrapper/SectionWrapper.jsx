@@ -16,6 +16,7 @@ function SectionWrapper({
    rightIcon,
    to,
    titlePrimary,
+   titleSecondary,
    button,
    btnTitle,
    btnLeftIcon,
@@ -25,7 +26,11 @@ function SectionWrapper({
    const TitleComp = to ? Link : "div";
    const classes = cx("wrapper", className);
 
-   const titleClasses = cx("p-2 flex gap-2", { "hover:text-denary-color": to, "title-primary": titlePrimary });
+   const titleClasses = cx("p-2 flex gap-2", {
+      "hover:text-denary-color": to,
+      "title-primary": titlePrimary,
+      "title-secondary": titleSecondary,
+   });
 
    return (
       <div className={classes}>
@@ -38,7 +43,7 @@ function SectionWrapper({
 
             {button && (
                <div className={`bg-nonary-color ml-auto`}>
-                  <div className={cx("btn-container", "flex gap-[1px]")}>
+                  <div className={cx("btn-container", "flex gap-[1px] h-full")}>
                      {isSignIned && (
                         <>
                            <Button
@@ -74,7 +79,7 @@ function SectionWrapper({
                </div>
             )}
          </div>
-         <div className="bg-tertiary-color p-[0_1px_1px_1px]">
+         <div className={cx("children-wrapper", "bg-tertiary-color p-[0_1px_1px_1px]")}>
             <div>{children}</div>
          </div>
       </div>
@@ -89,6 +94,7 @@ SectionWrapper.propTypes = {
    rightIcon: Proptypes.node,
    to: Proptypes.string,
    titlePrimary: Proptypes.bool,
+   titleSecondary: Proptypes.bool,
    button: Proptypes.bool,
    btnTitle: Proptypes.string,
    btnLeftIcon: Proptypes.node,

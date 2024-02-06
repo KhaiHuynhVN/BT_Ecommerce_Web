@@ -10,12 +10,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import Button from "../../../../components/Button";
-import Input from "../../../../components/Input";
-import Select from "../../../../components/Select";
-import { schema } from "../../../../reactHookFormSchema";
-import routesConfig from "../../../../routesConfig";
-import { provinceServices, userServices } from "../../../../services";
+import Button from "../../../../../../components/Button";
+import Input from "../../../../../../components/Input";
+import Select from "../../../../../../components/Select";
+import { schema } from "../../../../../../reactHookFormSchema";
+import routesConfig from "../../../../../../routesConfig";
+import { provinceServices, userServices } from "../../../../../../services";
 
 import styles from "./SignUpForm.module.scss";
 

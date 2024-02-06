@@ -1,28 +1,22 @@
+import { useSelector } from "react-redux";
 import classNames from "classnames/bind";
-import { useState } from "react";
 
-import Breadcrumbs from "../../components/Breadcrumbs";
-import SectionWrapper from "../../components/SectionWrapper";
-import RadioSectionWrapper from "../../components/RadioSectionWrapper";
-import SignUpForm from "./components/SignUpForm";
-import BuyNowForm from "./components/BuyNowForm";
-import SignInForm from "./components/SignInForm";
 import BrandCarousel from "../../components/BrandCarousel";
-import CheckoutTable from "./components/CheckoutTable";
+import Breadcrumbs from "../../components/Breadcrumbs";
 import PostWidget from "../../components/PostWidget";
-import Button from "../../components/Button";
+import SectionWrapper from "../../components/SectionWrapper";
+import UiContainer from "./components/UiContainer";
+import OrderConfirm from "./components/OrderConfirm";
 import routesConfig from "../../routesConfig";
+import { authSliceSelector } from "../../store/authSlice";
 
 import styles from "./Checkout.module.scss";
 
 const cx = classNames.bind(styles);
 
 function Checkout() {
-   const [radio, setRadio] = useState("sign-in-form");
-
-   const handleChangeRadio = (type) => {
-      setRadio(type);
-   };
+   const userData = useSelector(authSliceSelector.userData);
+   const isHasUserData = Object.keys(userData).length > 0;
 
    return (
       <div className={cx("wrapper", `mt-[1rem]`)}>
@@ -30,69 +24,19 @@ function Checkout() {
 
          <div className={`mt-[1rem]`}>
             <SectionWrapper
-               leftIcon={<i className="bi bi-person-lines-fill text-denary-color"></i>}
-               title="Vui lòng điền thông tin để tiếp tục mua hàng"
+               leftIcon={
+                  isHasUserData ? (
+                     <i className="bi bi-journal-check text-denary-color"></i>
+                  ) : (
+                     <i className="bi bi-person-lines-fill text-denary-color"></i>
+                  )
+               }
+               title={isHasUserData ? `Xác nhận đơn hàng` : `Vui lòng điền thông tin để tiếp tục mua hàng`}
+               button={isHasUserData}
+               btnTitle={isHasUserData && `Trở về`}
+               btnLeftIcon={isHasUserData && <i className="bi bi-caret-left text-octonary-color"></i>}
             >
-               <div className={cx("ui-container", `bg-white p-4 flex gap-[1rem]`)}>
-                  <div className={`flex-1`}>
-                     <div className={`flex flex-col gap-[1rem]`}>
-                        <RadioSectionWrapper
-                           title="Đã là thành viên - Đăng nhập"
-                           name="form"
-                           isDefaultChecked
-                           checked={radio === "sign-in-form"}
-                           onChange={() => handleChangeRadio("sign-in-form")}
-                        >
-                           <div className={`bg-white p-4`}>
-                              <SignInForm isReset={radio === "sign-in-form"} />
-                           </div>
-                        </RadioSectionWrapper>
-                        <RadioSectionWrapper
-                           title="Mua hàng ngay - Không cần đăng ký"
-                           name="form"
-                           checked={radio === "buy-now-form"}
-                           onChange={() => handleChangeRadio("buy-now-form")}
-                        >
-                           <div className={`bg-white p-4`}>
-                              <BuyNowForm isReset={radio === "buy-now-form"} />
-                           </div>
-                        </RadioSectionWrapper>
-                        <RadioSectionWrapper
-                           title="Chưa là thành viên - Đăng ký"
-                           name="form"
-                           checked={radio === "sign-up-form"}
-                           onChange={() => handleChangeRadio("sign-up-form")}
-                        >
-                           <div className={`bg-white p-4`}>
-                              <SignUpForm isReset={radio === "sign-up-form"} />
-                           </div>
-                        </RadioSectionWrapper>
-                     </div>
-                  </div>
-                  <div className={`flex-1`}>
-                     <div>
-                        <span
-                           className={`text-[17.6px] text-forty-fifth-color p-[11.2px] bg-fifty-second-color block
-                           text-center`}
-                        >
-                           ĐƠN HÀNG
-                        </span>
-                        <CheckoutTable />
-                        <div className={`p-4 flex flex-wrap gap-2 justify-between`}>
-                           <Button
-                              primary
-                              leftIcon={<i className="bi bi-chevron-left text-denary-color"></i>}
-                              to={routesConfig.home.path}
-                           >
-                              Chọn thêm sản phẩm
-                           </Button>
-                           <Button primary leftIcon={<i className="bi bi-trash text-denary-color"></i>} to={"/"}>
-                              Xoá đơn hàng
-                           </Button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+               {isHasUserData ? <OrderConfirm /> : <UiContainer />}
             </SectionWrapper>
          </div>
 

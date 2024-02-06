@@ -1,6 +1,10 @@
-@import "../../../../components/GlobalStyles/GlobalStyles.scss";
+@import "../../../../../../components/GlobalStyles/GlobalStyles.scss";
 
 $border-width: 1px;
+
+.wrapper {
+   border-left: $border-width solid $fifty-second-color;
+}
 
 .tr {
    border-bottom: $border-width solid $fifty-second-color;
