@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 
 import Input from "../../../../../../components/Input";
 import Select from "../../../../../../components/Select";
 import { schema } from "../../../../../../reactHookFormSchema";
+import FinancialInvoiceForm from "./components/FinancialInvoiceForm";
 
 import styles from "./PaymentMethodForm.module.scss";
 
@@ -44,15 +46,33 @@ const PaymentMethodForm = () => {
          payment: "transfer",
          invoice: false,
          bank: "",
+         companyName: "",
+         taxCode: "",
+         companyAddress: "",
       },
    });
+
+   useEffect(() => {
+      if (!getValues("invoice")) {
+         setValue("companyName", "");
+         setValue("taxCode", "");
+         setValue("companyAddress", "");
+      }
+   }, [getValues("invoice")]);
+
+   useEffect(() => {
+      if (getValues("payment") === "cash") {
+         setValue("bank", "");
+         setBankData({});
+      }
+   }, [getValues("payment")]);
 
    const onSubmitHandle = (data) => {
       console.log(data);
    };
 
    const handleChangeRadio = (value) => {
-      setValue("payment", value);
+      setValue("payment", value, { shouldValidate: true });
    };
 
    const handleChangeCheckbox = () => {
@@ -67,17 +87,18 @@ const PaymentMethodForm = () => {
       setBankData(data || {});
    };
 
-   console.log(bankData);
+   const handleChangeInput = (value, key) => {
+      setValue(key, value, { shouldValidate: Object.keys(errors).length ? true : false });
+   };
 
    return (
-      <form className={cx(`wrapper`, `flex`)} onSubmit={handleSubmit(onSubmitHandle)}>
+      <form className={cx(`wrapper`, `flex gap-[1rem]`)} onSubmit={handleSubmit(onSubmitHandle)}>
          <div className={`flex-1`}>
             <div>
                <Input
-                  name="payment"
-                  checked={getValues("payment") === "cash"}
+                  value="cash"
                   type="radio"
-                  register={{ ...register("payment") }}
+                  register={register("payment")}
                   wrapperCl={`cursor-pointer inline-block`}
                   labelCl={`cursor-pointer inline-flex`}
                   field={`Thanh toán tiền mặt ngay khi nhận hàng`}
@@ -88,9 +109,9 @@ const PaymentMethodForm = () => {
             </div>
             <div className={`mt-2`}>
                <Input
-                  name="payment"
-                  checked={getValues("payment") === "transfer"}
+                  value="transfer"
                   type="radio"
+                  register={register("payment")}
                   wrapperCl={`cursor-pointer inline-block`}
                   labelCl={`cursor-pointer inline-flex`}
                   field={`Chuyển khoản trước qua ngân hàng`}
@@ -104,22 +125,24 @@ const PaymentMethodForm = () => {
                </div>
             </div>
 
-            <div className={`mt-2`}>
-               <Select
-                  value={watch("bank")}
-                  placeholder={`-- Chọn Ngân Hàng --`}
-                  data={selectData}
-                  contentKey="content"
-                  valueKey="value"
-                  selectWrapperCl={`w-full flex`}
-                  selectCl={`border border-solid border-black p-[10.5px] w-full`}
-                  rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
-                  onChange={handleChangeSelect}
-               />
-               {errors.bank && <span className={`text-forty-second-color mt-1 block`}>{errors.bank?.message}</span>}
-            </div>
+            {getValues("payment") === "transfer" && (
+               <div className={`mt-2`}>
+                  <Select
+                     value={watch("bank")}
+                     placeholder={`-- Chọn Ngân Hàng --`}
+                     data={selectData}
+                     contentKey="content"
+                     valueKey="value"
+                     selectWrapperCl={`w-full flex`}
+                     selectCl={`border border-solid border-black p-[10.5px] w-full`}
+                     rightIcon={<span className="text-thirtieth-color flex items-center">*</span>}
+                     onChange={handleChangeSelect}
+                  />
+                  {errors.bank && <span className={`text-forty-second-color mt-1 block`}>{errors.bank?.message}</span>}
+               </div>
+            )}
 
-            {Object.keys(bankData).length > 0 && (
+            {Object.keys(bankData).length > 0 && getValues("payment") === "transfer" && (
                <div className={`mt-2`}>
                   <div className={`flex`}>
                      <span className={`text-fifty-sixth-color mr-1 w-[120px]`}>Tên ngân hàng:</span>
@@ -149,9 +172,18 @@ const PaymentMethodForm = () => {
                inputCl={`cursor-pointer`}
                onChange={handleChangeCheckbox}
             />
-         </div>
 
-         <button>Click me</button>
+            {getValues("invoice") && (
+               <FinancialInvoiceForm
+                  values={{
+                     companyName: watch("companyName"),
+                     taxCode: watch("taxCode"),
+                     companyAddress: watch("companyAddress"),
+                  }}
+                  onChange={handleChangeInput}
+               />
+            )}
+         </div>
       </form>
    );
 };

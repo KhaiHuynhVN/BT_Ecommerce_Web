@@ -204,8 +204,17 @@ const paymentMethodFormSchema = yup
    .object()
    .shape({
       payment: yup.string().default("transfer").required(),
-      bank: yup.string().default("").required("Vui lòng chọn ngân hàng!"),
+      bank: yup
+         .string()
+         .default("")
+         .test("is-transfer", "Vui lòng chọn ngân hàng!", function (value) {
+            const { payment } = this.parent;
+            return payment === "transfer" ? !!value : true;
+         }),
       invoice: yup.string().default(false),
+      companyName: yup.string().default(""),
+      taxCode: yup.string().default(""),
+      companyAddress: yup.string().default(""),
    })
    .required();
 

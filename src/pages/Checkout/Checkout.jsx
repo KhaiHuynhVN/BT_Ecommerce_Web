@@ -33,7 +33,7 @@ function Checkout() {
                }
                title={isHasUserData ? `Xác nhận đơn hàng` : `Vui lòng điền thông tin để tiếp tục mua hàng`}
                button={isHasUserData}
-               btnTitle={isHasUserData && `Trở về`}
+               btnTitle={isHasUserData ? `Trở về` : ""}
                btnLeftIcon={isHasUserData && <i className="bi bi-caret-left text-octonary-color"></i>}
             >
                {isHasUserData ? <OrderConfirm /> : <UiContainer />}

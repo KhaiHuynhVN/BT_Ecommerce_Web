@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 const OrderConfirm = () => {
    // const deliveryTermsFormBtnRef = useRef();
 
-   const onSubmithandle = (data) => {
+   const onSubmitHandle = (data) => {
       console.log(data);
    };
 
@@ -75,7 +75,7 @@ const OrderConfirm = () => {
                <div className={`bg-thirty-ninth-color p-2`}>
                   <DeliveryTermsForm
                      // ref={deliveryTermsFormRef}
-                     onSubmit={onSubmithandle}
+                     onSubmit={onSubmitHandle}
                   />
                </div>
             </SectionWrapper>
