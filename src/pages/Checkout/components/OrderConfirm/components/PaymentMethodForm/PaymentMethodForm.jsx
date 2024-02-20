@@ -1,8 +1,10 @@
+/* eslint-disable react/display-name */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from "@hookform/resolvers/yup";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import PropTypes from "prop-types";
 
 import Input from "../../../../../../components/Input";
 import Select from "../../../../../../components/Select";
@@ -30,7 +32,7 @@ const selectData = [
    },
 ];
 
-const PaymentMethodForm = () => {
+const PaymentMethodForm = forwardRef(({ onSubmit }, ref) => {
    const [bankData, setBankData] = useState({});
 
    const {
@@ -67,10 +69,6 @@ const PaymentMethodForm = () => {
       }
    }, [getValues("payment")]);
 
-   const onSubmitHandle = (data) => {
-      console.log(data);
-   };
-
    const handleChangeRadio = (value) => {
       setValue("payment", value, { shouldValidate: true });
    };
@@ -92,7 +90,7 @@ const PaymentMethodForm = () => {
    };
 
    return (
-      <form className={cx(`wrapper`, `flex gap-[1rem]`)} onSubmit={handleSubmit(onSubmitHandle)}>
+      <form className={cx(`wrapper`, `flex gap-[1rem]`)} onSubmit={handleSubmit(onSubmit)}>
          <div className={`flex-1`}>
             <div>
                <Input
@@ -160,7 +158,7 @@ const PaymentMethodForm = () => {
             )}
          </div>
 
-         <div className={`flex-1`}>
+         <div className={cx(`invoice-wrapper`, `flex-1`)}>
             <Input
                checked={getValues("invoice")}
                type="checkbox"
@@ -184,8 +182,13 @@ const PaymentMethodForm = () => {
                />
             )}
          </div>
+         <button ref={ref} className={"hidden"}></button>
       </form>
    );
+});
+
+PaymentMethodForm.propTypes = {
+   onSubmit: PropTypes.func,
 };
 
 export default PaymentMethodForm;

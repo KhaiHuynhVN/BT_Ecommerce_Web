@@ -1,10 +1,6 @@
-@import "../../../../../../components//GlobalStyles/GlobalStyles.scss";
+@import "../../../../../../../../components//GlobalStyles/GlobalStyles.scss";
 
 $border-width: 1px;
-
-.wrapper {
-   border-left: $border-width solid $thirty-eighth-color;
-}
 
 .tr {
    border-bottom: $border-width solid $thirty-eighth-color;
@@ -35,6 +31,10 @@ $border-width: 1px;
    .wrapper {
       .hide-767 {
          display: none;
+      }
+
+      .show-767 {
+         display: block;
       }
 
       .to-money {

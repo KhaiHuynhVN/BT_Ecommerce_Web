@@ -1,0 +1,9 @@
+@media (max-width: 767px) {
+   .wrapper {
+      flex-direction: column;
+
+      .invoice-wrapper {
+         margin-top: 16px;
+      }
+   }
+}

@@ -35,6 +35,7 @@ function Checkout() {
                button={isHasUserData}
                btnTitle={isHasUserData ? `Trở về` : ""}
                btnLeftIcon={isHasUserData && <i className="bi bi-caret-left text-octonary-color"></i>}
+               btnTo={routesConfig.cart.path}
             >
                {isHasUserData ? <OrderConfirm /> : <UiContainer />}
             </SectionWrapper>

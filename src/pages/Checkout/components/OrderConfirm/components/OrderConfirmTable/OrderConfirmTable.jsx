@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 
-import OrderConfirmTableItem from "../OrderConfirmTableItem/OrderConfirmTableItem";
+import OrderConfirmTableItem from "./components/OrderConfirmTableItem";
 
 import styles from "./OrderConfirmTable.module.scss";
 
@@ -13,13 +13,26 @@ const OrderConfirmTable = () => {
             <div className={cx(`tr`, `flex`)}>
                <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center w-[50px] shrink-0`)}>STT</div>
                <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center w-[60px] shrink-0`)}>Hình</div>
-               <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center flex-[calc(1/2)]`)}>Mã sản phẩm</div>
-               <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center flex-1 min-w-[90px]`)}>Tên sản phẩm</div>
-               <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center flex-[calc(1/2)]`)}>Nhãn hiệu</div>
-               <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center w-[80px] shrink-0`)}>Số lượng</div>
-               <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center w-[80px]`)}>ĐVT</div>
-               <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center w-[120px]`)}>Đơn giá</div>
-               <div className={cx(`th`, `text-forty-sixth-color p-[5px] text-center w-[120px]`)}>Thành tiền</div>
+               <div className={cx(`th`, `hide-990`, `text-forty-sixth-color p-[5px] text-center flex-[calc(1/2)]`)}>
+                  Mã sản phẩm
+               </div>
+               <div
+                  className={cx(
+                     `th`,
+                     `text-forty-sixth-color p-[5px] text-center flex-1 min-w-[90px] text-ellipsis text-nowrap overflow-hidden`,
+                  )}
+               >
+                  Tên sản phẩm
+               </div>
+               <div className={cx(`th`, `hide-1400`, `text-forty-sixth-color p-[5px] text-center flex-[calc(1/2)]`)}>
+                  Nhãn hiệu
+               </div>
+               <div className={cx(`th`, `hide-767`, `text-forty-sixth-color p-[5px] text-center w-[80px] shrink-0`)}>
+                  Số lượng
+               </div>
+               <div className={cx(`th`, `hide-767`, `text-forty-sixth-color p-[5px] text-center w-[80px]`)}>ĐVT</div>
+               <div className={cx(`th`, `hide-767`, `text-forty-sixth-color p-[5px] text-center w-[120px]`)}>Đơn giá</div>
+               <div className={cx(`th`, `to-money`, `text-forty-sixth-color p-[5px] text-center w-[120px]`)}>Thành tiền</div>
             </div>
          </div>
          <div className={cx(`tbody bg-white`)}>

@@ -7,11 +7,13 @@ import { useQuery } from "react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 import Input from "../../../../../../components/Input";
 import Select from "../../../../../../components/Select";
 import { provinceServices } from "../../../../../../services";
 import { schema } from "../../../../../../reactHookFormSchema";
+import { authSliceSelector } from "../../../../../../store/authSlice";
 
 import styles from "./DeliveryTermsForm.module.scss";
 
@@ -21,10 +23,24 @@ const DeliveryTermsForm = forwardRef(({ onSubmit }, ref) => {
    const [districtDatas, setDistrictDatas] = useState([]);
    const [isDisabled, setIsDisabled] = useState(false);
 
+   const userData = useSelector(authSliceSelector.userData);
+   const { address } = userData;
+   const addressArr = address?.split(", ");
+
    const { data: provinceDatas } = useQuery({
       queryKey: ["provinces"],
-      queryFn: () => provinceServices.getProvinceService(),
-      onSuccess: () => {},
+      queryFn: () => {
+         setIsDisabled(true);
+         return provinceServices.getProvinceService();
+      },
+      onSuccess: async (data) => {
+         const provinceId = data?.data?.results.find(
+            (item) => item.province_name === addressArr?.[addressArr.length - 1],
+         )?.province_id;
+         const districtDatas = await provinceServices.getDistrictService(provinceId);
+         setDistrictDatas(districtDatas?.data?.results);
+         setIsDisabled(false);
+      },
       onError: (err) => console.log(err),
    });
 
@@ -39,11 +55,11 @@ const DeliveryTermsForm = forwardRef(({ onSubmit }, ref) => {
    } = useForm({
       resolver: yupResolver(schema.deliveryTermsFormShema),
       defaultValues: {
-         fullName: "",
-         phoneNumber: "",
-         address: "",
-         province: "",
-         district: "",
+         fullName: userData?.fullName,
+         phoneNumber: userData?.phone.replace("+84", "0"),
+         address: userData?.address,
+         province: addressArr?.[addressArr.length - 1],
+         district: addressArr?.[addressArr.length - 2],
          note: "",
       },
    });
@@ -88,8 +104,8 @@ const DeliveryTermsForm = forwardRef(({ onSubmit }, ref) => {
             <span className={`text-thirtieth-color mr-2`}>*</span>
             <span className={`text-twentieth-color`}>là thông tin bắt buộc</span>
          </div>
-         <div className={`flex gap-4`}>
-            <div className={`flex-1`}>
+         <div className={`flex gap-4 flex-wrap`}>
+            <div className={cx(`field`, `flex-1`)}>
                <Input
                   value={getValues("fullName")}
                   register={{ ...register("fullName") }}
@@ -104,7 +120,7 @@ const DeliveryTermsForm = forwardRef(({ onSubmit }, ref) => {
                />
                {errors.fullName && <span className={`text-forty-second-color mt-1 block`}>{errors.fullName?.message}</span>}
             </div>
-            <div className={`flex-1`}>
+            <div className={cx(`field`, `flex-1`)}>
                <Input
                   value={getValues("phoneNumber")}
                   type="number"
@@ -123,8 +139,8 @@ const DeliveryTermsForm = forwardRef(({ onSubmit }, ref) => {
          </div>
          <div className={`mt-4`}>
             <span className={`block mb-1`}>Địa chỉ giao hàng</span>
-            <div className={`flex gap-4`}>
-               <div className={`flex-1`}>
+            <div className={`flex gap-4 flex-wrap`}>
+               <div className={cx(`field`, `flex-1`)}>
                   <Input
                      value={getValues("address")}
                      register={{ ...register("address") }}
@@ -138,8 +154,9 @@ const DeliveryTermsForm = forwardRef(({ onSubmit }, ref) => {
                   />
                   {errors.address && <span className={`text-forty-second-color mt-1 block`}>{errors.address?.message}</span>}
                </div>
-               <div className={`flex-1`}>
+               <div className={cx(`field`, `flex-1`)}>
                   <Select
+                     disabled={isDisabled}
                      value={getValues("province")}
                      register={{ ...register("province") }}
                      placeholder={`-- Chọn tỉnh thành`}

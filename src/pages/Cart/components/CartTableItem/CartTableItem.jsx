@@ -69,7 +69,7 @@ function CartTableItem({ data, id, onClick = () => {}, itemId, indx }) {
          <div className={cx("td", "hide-767", `p-[10px_5px] flex items-center justify-center w-[120px]`)}>290.500</div>
          <div className={cx("td", "hide-767", `p-[10px_5px] flex items-center justify-center w-[120px]`)}>290.500</div>
          <div className={cx("td", `p-[10px_5px] w-[200px]`)}>
-            <div className={cx("order-summary")}>
+            <div className={cx("show-767", `hidden`)}>
                <div className={`flex items-center justify-between`}>
                   <div className={`flex flex-1 shrink-0`}>
                      <span className={`text-twentieth-color mr-1`}>ĐVT:</span>
